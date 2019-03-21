@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">CrimeAndMissingReport</string>
+    <string name="tindacbiet">Special News</string>
+    <string name="tinmoinhat">News</string>
+    <string name="toiphamtruyna">Tội phạm truy nã</string>
+    <string name="presentLocation">News from current location</string>
+    <string name="selectLocation">News from selected location</string>
+    <string name="setting">Setting</string>
+    <string name="description">Description</string>
+    <string name="area">District:</string>
+    <string name="title">Thanh niên trộm cắp</string>
+    <string name="todo">TODO</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="remember_password">Remember password</string>
+    <string name="login">Login</string>
+    <string name="no_account_yet_create_one">No account yet? Create one</string>
+    <string name="crime_category">Crime category:</string>
+    <string name="area_title">Area:</string>
+    <string name="present_location">Current location</string>
+    <string name="choose_location">Choose location</string>
+    <string name="title_report">Title:</string>
+    <string name="content">Content:</string>
+    <string name="choose_image">Choose image</string>
+    <string name="comment">Comment</string>
+    <string name="write_your_comment">Write your comment...</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="fullname">Fullname</string>
+    <string name="address">Address</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="missing_person_news">Missing Person News</string>
+    <string name="post">Post</string>
+    <string name="date">20/08/2019</string>
+    <string name="date_submitted">Posted:</string>
+    <string name="images">Images:</string>
+    <string name="confirm_password">Confirm Password</string>
+</resources>

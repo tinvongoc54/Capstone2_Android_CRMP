@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="10dp"
+    android:id="@+id/relativeLayoutSpecial">
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="190dp"
+        android:layout_height="110dp"
+        android:scaleType="centerCrop"
+        />
+
+    <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_below="@+id/imageView"
+        android:textSize="12sp"
+        android:text="@string/toiphamtruyna"
+        android:textStyle="bold"
+        android:textColor="#ffffff"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+</RelativeLayout>

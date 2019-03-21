@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <ScrollView
+        android:id="@+id/scrollViewMissingPersonList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="5dp"
+            >
+            <TextView
+                android:id="@+id/textViewMissingPerson"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/recyclerViewSpecial"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/missing_person_news"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="#bfa134"
+                />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerViewMissingPerson"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewMissingPerson"
+                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                />
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>
