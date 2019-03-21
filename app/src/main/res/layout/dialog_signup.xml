@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="20dp"
+    android:background="@drawable/background_login"
+    >
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="15dp"
+        android:src="@drawable/avatar"
+        android:contentDescription="@string/todo"
+        />
+
+    <!-- Email Label -->
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:outlineSpotShadowColor="#bfa134"
+        android:textColorHint="#bfa134"
+        android:outlineAmbientShadowColor="#bfa134"
+        >
+        <EditText
+            android:id="@+id/editTextEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/email"
+            android:textColor="#bfa134"
+            android:textColorHint="#bfa134"
+            android:textColorHighlight="#bfa134"
+            android:shadowColor="#bfa134"
+            android:outlineAmbientShadowColor="#bfa134"
+            android:outlineSpotShadowColor="#bfa134"
+            android:inputType="textEmailAddress"
+            />
+    </android.support.design.widget.TextInputLayout>
+
+    <!-- Password Label -->
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:outlineSpotShadowColor="#bfa134"
+        android:outlineAmbientShadowColor="#bfa134"
+        android:textColorHint="#bfa134"
+        >
+        <EditText
+            android:id="@+id/editTextPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/password"
+            android:textColor="#bfa134"
+            android:textColorHint="#bfa134"
+            android:inputType="textPassword"
+            />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:outlineSpotShadowColor="#bfa134"
+        android:outlineAmbientShadowColor="#bfa134"
+        android:textColorHint="#bfa134"
+        >
+        <EditText
+            android:id="@+id/editTextPasswordConfirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/confirm_password"
+            android:textColor="#bfa134"
+            android:textColorHint="#bfa134"
+            android:inputType="textPassword"
+            />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:outlineSpotShadowColor="#bfa134"
+        android:outlineAmbientShadowColor="#bfa134"
+        android:textColorHint="#bfa134"
+        >
+        <EditText
+            android:id="@+id/editTextFullname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/fullname"
+            android:textColor="#bfa134"
+            android:textColorHint="#bfa134"
+            android:inputType="text"
+            tools:ignore="TextFields"
+            />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:outlineSpotShadowColor="#bfa134"
+        android:outlineAmbientShadowColor="#bfa134"
+        android:textColorHint="#bfa134"
+        >
+        <EditText
+            android:id="@+id/editTextPhoneNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/phone_number"
+            android:textColor="#bfa134"
+            android:textColorHint="#bfa134"
+            android:inputType="number"
+            tools:ignore="TextFields"
+            />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:outlineSpotShadowColor="#bfa134"
+        android:outlineAmbientShadowColor="#bfa134"
+        android:textColorHint="#bfa134"
+        >
+        <EditText
+            android:id="@+id/editTextAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/address"
+            android:textColor="#bfa134"
+            android:textColorHint="#bfa134"
+            android:inputType="text"
+            />
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/buttonSignUp"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:text="@string/sign_up"
+        android:background="#bfa134"
+        />
+</LinearLayout>
