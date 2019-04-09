@@ -47,7 +47,7 @@ public class RecyclerViewSpecialNewsAdapter
         arrayList.add(R.drawable.image7);
         Random random = new Random();
 
-        viewHolder.mImageView.setImageResource(arrayList.get(random.nextInt(arrayList.size())));
+//        viewHolder.mImageView.setImageResource(arrayList.get(random.nextInt(arrayList.size())));
         viewHolder.mTextView.setText(mCrimeReportList.get(i).getTitle());
 
         viewHolder.mRelativeLayout.setOnClickListener(new View.OnClickListener() {

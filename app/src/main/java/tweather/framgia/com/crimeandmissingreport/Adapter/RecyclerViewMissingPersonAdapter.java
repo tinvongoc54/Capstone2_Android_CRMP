@@ -39,7 +39,7 @@ public class RecyclerViewMissingPersonAdapter
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewMissingPersonAdapter.ViewHolder viewHolder,
             @SuppressLint("RecyclerView") final int i) {
-        viewHolder.mImageView.setImageResource(mReportList.get(i).getImage());
+//        viewHolder.mImageView.setImageResource(mReportList.get(i).getImage());
         viewHolder.mTextViewTitle.setText(mReportList.get(i).getTitle());
         viewHolder.mTextViewDes.setText(mReportList.get(i).getDescription());
         if (mReportList.get(i).getTime().equals("01/04/2019")) {
