@@ -40,4 +40,11 @@ public interface DataClient {
             @Field("title") String title,
             @Field("description") String description,
             @Field("user_id") int userId);
+
+    @FormUrlEncoded
+    @POST(APIUtils.API_GET_MISSING_PERSON_LIST_URL)
+    Call<JSONObject> CreateMissingPerson(@Field("title") String title,
+                                       @Field("description") String description,
+                                       @Field("phone_number") String phone_number,
+                                       @Field("user_id") int userId);
 }
