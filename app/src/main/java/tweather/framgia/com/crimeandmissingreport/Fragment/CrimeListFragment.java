@@ -43,10 +43,12 @@ public class CrimeListFragment extends Fragment {
     }
 
     private void getCrimeReportList() {
-        Call<List<Report>> callList = APIUtils.getData().GetCrimeReportList(APIUtils.API_GET_CRIME_REPORT_LIST_URL);
+        Call<List<Report>> callList =
+                APIUtils.getData().GetCrimeReportList(APIUtils.API_GET_CRIME_REPORT_LIST_URL);
         callList.enqueue(new Callback<List<Report>>() {
             @Override
-            public void onResponse(@NonNull Call<List<Report>> call, @NonNull Response<List<Report>> response) {
+            public void onResponse(@NonNull Call<List<Report>> call,
+                    @NonNull Response<List<Report>> response) {
                 if (response.body() != null) {
                     crimeReportArrayList = (ArrayList<Report>) response.body();
 
@@ -70,59 +72,60 @@ public class CrimeListFragment extends Fragment {
         mRecyclerViewNew.setHasFixedSize(true);
         mRecyclerViewNew.setLayoutManager(
                 new LinearLayoutManager(getActivity(), LinearLayout.VERTICAL, false));
-//        crimeReportArrayList.add(new Report.CrimeReportBuilder().setId(1)
-//                .setTitle("Trộm xe đạp")
-//                .setDescription("Một thanh niên khoảng 25t đã vào nhà ăn trộm xe đạp")
-//                .setCrimeCategory(40)
-//                .setArea("Hải Châu")
-//                .setTime("01/04/2019")
-//                .setImage(R.drawable.image7)
-//                .build());
-//
-//        crimeReportArrayList.add(new Report.CrimeReportBuilder().setId(2)
-//                .setTitle("Tấn công tạp hóa")
-//                .setDescription("Một thanh niên cao to mặc áo da đen đã tấn công tiệm tạp hóa")
-//                .setCrimeCategory(41)
-//                .setArea("Thanh Khê")
-//                .setTime("31/03/2019")
-//                .setImage(R.drawable.image6)
-//                .build());
-//
-//        crimeReportArrayList.add(new Report.CrimeReportBuilder().setId(3)
-//                .setTitle("Ăn trộm nhà dân")
-//                .setDescription("Tối ngày 20/3/2019 tôi đã thấy 1 thanh niên")
-//                .setCrimeCategory(42)
-//                .setArea("Sơn Trà")
-//                .setTime("31/03/2019")
-//                .setImage(R.drawable.image8)
-//                .build());
-//
-//        crimeReportArrayList.add(new Report.CrimeReportBuilder().setId(4)
-//                .setTitle("Băng nhóm đánh hội đồng 1 thanh niên")
-//                .setDescription("Vào trưa ngày 21/3/2019, 1 nhóm thanh niên")
-//                .setCrimeCategory(42)
-//                .setArea("Thanh Khê")
-//                .setTime("31/03/2019")
-//                .setImage(R.drawable.image7)
-//                .build());
-//
-//        crimeReportArrayList.add(new Report.CrimeReportBuilder().setId(5)
-//                .setTitle("Trộm xe đạp")
-//                .setDescription("Một thanh niên khoảng 25t đã vào nhà ăn trộm xe đạp")
-//                .setCrimeCategory(41)
-//                .setArea("Hải Châu")
-//                .setTime("01/04/2019")
-//                .setImage(R.drawable.image6)
-//                .build());
-//
-//        crimeReportArrayList.add(new Report.CrimeReportBuilder().setId(6)
-//                .setTitle("Ăn trộm nhà dân")
-//                .setDescription("Tối ngày 20/3/2019 tôi đã thấy 1 thanh niên")
-//                .setCrimeCategory(41)
-//                .setArea("Sơn Trà")
-//                .setTime("01/04/2019")
-//                .setImage(R.drawable.image7)
-//                .build());
+        //        crimeReportArrayList.add(new Report.CrimeReportBuilder().setId(1)
+        //                .setTitle("Trộm xe đạp")
+        //                .setDescription("Một thanh niên khoảng 25t đã vào nhà ăn trộm xe đạp")
+        //                .setCrimeCategory(40)
+        //                .setArea("Hải Châu")
+        //                .setTime("01/04/2019")
+        //                .setImage(R.drawable.image7)
+        //                .build());
+        //
+        //        crimeReportArrayList.add(new Report.CrimeReportBuilder().setId(2)
+        //                .setTitle("Tấn công tạp hóa")
+        //                .setDescription("Một thanh niên cao to mặc áo da đen đã tấn công tiệm
+        // tạp hóa")
+        //                .setCrimeCategory(41)
+        //                .setArea("Thanh Khê")
+        //                .setTime("31/03/2019")
+        //                .setImage(R.drawable.image6)
+        //                .build());
+        //
+        //        crimeReportArrayList.add(new Report.CrimeReportBuilder().setId(3)
+        //                .setTitle("Ăn trộm nhà dân")
+        //                .setDescription("Tối ngày 20/3/2019 tôi đã thấy 1 thanh niên")
+        //                .setCrimeCategory(42)
+        //                .setArea("Sơn Trà")
+        //                .setTime("31/03/2019")
+        //                .setImage(R.drawable.image8)
+        //                .build());
+        //
+        //        crimeReportArrayList.add(new Report.CrimeReportBuilder().setId(4)
+        //                .setTitle("Băng nhóm đánh hội đồng 1 thanh niên")
+        //                .setDescription("Vào trưa ngày 21/3/2019, 1 nhóm thanh niên")
+        //                .setCrimeCategory(42)
+        //                .setArea("Thanh Khê")
+        //                .setTime("31/03/2019")
+        //                .setImage(R.drawable.image7)
+        //                .build());
+        //
+        //        crimeReportArrayList.add(new Report.CrimeReportBuilder().setId(5)
+        //                .setTitle("Trộm xe đạp")
+        //                .setDescription("Một thanh niên khoảng 25t đã vào nhà ăn trộm xe đạp")
+        //                .setCrimeCategory(41)
+        //                .setArea("Hải Châu")
+        //                .setTime("01/04/2019")
+        //                .setImage(R.drawable.image6)
+        //                .build());
+        //
+        //        crimeReportArrayList.add(new Report.CrimeReportBuilder().setId(6)
+        //                .setTitle("Ăn trộm nhà dân")
+        //                .setDescription("Tối ngày 20/3/2019 tôi đã thấy 1 thanh niên")
+        //                .setCrimeCategory(41)
+        //                .setArea("Sơn Trà")
+        //                .setTime("01/04/2019")
+        //                .setImage(R.drawable.image7)
+        //                .build());
 
         RecyclerViewNewsAdapter recyclerViewNewsAdapter =
                 new RecyclerViewNewsAdapter(crimeReportArrayList, getContext());
@@ -134,50 +137,51 @@ public class CrimeListFragment extends Fragment {
         mRecyclerViewSpecial.setHasFixedSize(true);
         mRecyclerViewSpecial.setLayoutManager(
                 new LinearLayoutManager(getActivity(), LinearLayout.HORIZONTAL, false));
-//        crimeReportArrayList.add(new Report.CrimeReportBuilder().setId(7)
-//                .setTitle("Hacker đánh sập mạng Viettel")
-//                .setDescription("1 hacker đã phá hủy mạng của Viettel")
-//                .setCrimeCategory(41)
-//                .setArea("Thanh Khê")
-//                .setTime("01/04/2019")
-//                .setImage(R.drawable.image6)
-//                .build());
-//
-//        crimeReportArrayList.add(new Report.CrimeReportBuilder().setId(8)
-//                .setTitle("Truy nã hung thủ giết người")
-//                .setDescription("Nhiều người nhìn thấy 1 thanh niên mặc đồ đen tay cầm dao")
-//                .setCrimeCategory(42)
-//                .setArea("Cẩm Lệ")
-//                .setTime("01/04/2019")
-//                .setImage(R.drawable.image8)
-//                .build());
-//
-//        crimeReportArrayList.add(new Report.CrimeReportBuilder().setId(9)
-//                .setTitle("Cướp xe taxi")
-//                .setDescription("Vào lúc khoảng 23h đã xảy ra 1 vụ cướp trắng trợn")
-//                .setCrimeCategory(41)
-//                .setArea("Liên Chiểu")
-//                .setTime("01/04/2019")
-//                .setImage(R.drawable.image7)
-//                .build());
-//
-//        crimeReportArrayList.add(new Report.CrimeReportBuilder().setId(10)
-//                .setTitle("Hacker đánh sập mạng Viettel")
-//                .setDescription("1 hacker đã phá hủy mạng của Viettel")
-//                .setCrimeCategory("Hacker")
-//                .setArea("Thanh Khê")
-//                .setTime("01/04/2019")
-//                .setImage(R.drawable.image8)
-//                .build());
-//
-//        crimeReportArrayList.add(new Report.CrimeReportBuilder().setId(11)
-//                .setTitle("Truy nã hung thủ giết người")
-//                .setDescription("Nhiều người nhìn thấy 1 thanh niên mặc đồ đen tay cầm dao")
-//                .setCrimeCategory("Giết người")
-//                .setArea("Cẩm Lệ")
-//                .setTime("01/04/2019")
-//                .setImage(R.drawable.image7)
-//                .build());
+        //        crimeReportArrayList.add(new Report.CrimeReportBuilder().setId(7)
+        //                .setTitle("Hacker đánh sập mạng Viettel")
+        //                .setDescription("1 hacker đã phá hủy mạng của Viettel")
+        //                .setCrimeCategory(41)
+        //                .setArea("Thanh Khê")
+        //                .setTime("01/04/2019")
+        //                .setImage(R.drawable.image6)
+        //                .build());
+        //
+        //        crimeReportArrayList.add(new Report.CrimeReportBuilder().setId(8)
+        //                .setTitle("Truy nã hung thủ giết người")
+        //                .setDescription("Nhiều người nhìn thấy 1 thanh niên mặc đồ đen tay cầm
+        // dao")
+        //                .setCrimeCategory(42)
+        //                .setArea("Cẩm Lệ")
+        //                .setTime("01/04/2019")
+        //                .setImage(R.drawable.image8)
+        //                .build());
+        //
+        //        crimeReportArrayList.add(new Report.CrimeReportBuilder().setId(9)
+        //                .setTitle("Cướp xe taxi")
+        //                .setDescription("Vào lúc khoảng 23h đã xảy ra 1 vụ cướp trắng trợn")
+        //                .setCrimeCategory(41)
+        //                .setArea("Liên Chiểu")
+        //                .setTime("01/04/2019")
+        //                .setImage(R.drawable.image7)
+        //                .build());
+        //
+        //        crimeReportArrayList.add(new Report.CrimeReportBuilder().setId(10)
+        //                .setTitle("Hacker đánh sập mạng Viettel")
+        //                .setDescription("1 hacker đã phá hủy mạng của Viettel")
+        //                .setCrimeCategory("Hacker")
+        //                .setArea("Thanh Khê")
+        //                .setTime("01/04/2019")
+        //                .setImage(R.drawable.image8)
+        //                .build());
+        //
+        //        crimeReportArrayList.add(new Report.CrimeReportBuilder().setId(11)
+        //                .setTitle("Truy nã hung thủ giết người")
+        //                .setDescription("Nhiều người nhìn thấy 1 thanh niên mặc đồ đen tay cầm dao")
+        //                .setCrimeCategory("Giết người")
+        //                .setArea("Cẩm Lệ")
+        //                .setTime("01/04/2019")
+        //                .setImage(R.drawable.image7)
+        //                .build());
 
         RecyclerViewSpecialNewsAdapter recyclerViewSpecialNewsAdapter =
                 new RecyclerViewSpecialNewsAdapter(crimeReportArrayList, getContext());

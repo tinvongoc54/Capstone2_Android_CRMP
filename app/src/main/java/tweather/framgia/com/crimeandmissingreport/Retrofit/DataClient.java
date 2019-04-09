@@ -47,4 +47,7 @@ public interface DataClient {
                                        @Field("description") String description,
                                        @Field("phone_number") String phone_number,
                                        @Field("user_id") int userId);
+
+    @GET
+    Call<List<Report>> GetMissingReportList(@Url String url);
 }
