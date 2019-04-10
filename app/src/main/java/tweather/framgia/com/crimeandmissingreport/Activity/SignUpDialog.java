@@ -74,7 +74,7 @@ public class SignUpDialog {
         mProgressDialog.setMessage("Processing...");
         mProgressDialog.show();
 
-        Call<JSONObject> call = APIUtils.getData()
+        Call<JSONObject> call = APIUtils.getData(APIUtils.BASE_URL)
                 .CreateUser(mEditTextEmail.getText().toString(),
                         mEditTextPassword.getText().toString(),
                         mEditTextPasswordConfirm.getText().toString(),

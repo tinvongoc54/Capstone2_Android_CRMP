@@ -1,13 +1,19 @@
 package tweather.framgia.com.crimeandmissingreport.Fragment;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,12 +22,18 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import org.json.JSONObject;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,15 +41,24 @@ import retrofit2.Response;
 import tweather.framgia.com.crimeandmissingreport.Activity.LoginDialog;
 import tweather.framgia.com.crimeandmissingreport.Activity.MainActivity;
 import tweather.framgia.com.crimeandmissingreport.Object.CrimeCategory;
+import tweather.framgia.com.crimeandmissingreport.Object.DocumentHelper;
+import tweather.framgia.com.crimeandmissingreport.Object.ImageResponse;
+import tweather.framgia.com.crimeandmissingreport.Object.NotificationHelper;
 import tweather.framgia.com.crimeandmissingreport.R;
 import tweather.framgia.com.crimeandmissingreport.Retrofit.APIUtils;
 
 public class CrimeReportFragment extends Fragment {
 
+    private static final int REQUEST_CODE_CAMERA = 100;
+    private static final int REQUEST_CODE_GALLERY = 101;
     Spinner mSpinnerCategory, mSpinnerArea;
     RadioButton mRadioButtonPresentLocation, mRadioButtonSelectLocation;
     EditText mEditTextTitle, mEditTextDescription;
+    ImageView mImageViewCrime;
     Button mButtonSelectImage, mButtonPost;
+    NestedScrollView mNestedScrollView;
+    File mChosenFile;
+    Uri mReturnUri;
     private ProgressDialog mProgressDialog = null;
 
     @Nullable
@@ -61,7 +82,9 @@ public class CrimeReportFragment extends Fragment {
         mEditTextTitle = view.findViewById(R.id.editTextTitle);
         mEditTextDescription = view.findViewById(R.id.editTextDescription);
         mButtonSelectImage = view.findViewById(R.id.buttonSelectImage);
+        mImageViewCrime = view.findViewById(R.id.imageViewCrime);
         mButtonPost = view.findViewById(R.id.buttonPost);
+        mNestedScrollView = view.findViewById(R.id.nestedScrollView);
     }
 
     private void initEvent() {
@@ -77,12 +100,63 @@ public class CrimeReportFragment extends Fragment {
                     }
                 });
 
+        mButtonSelectImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialog();
+            }
+        });
+
         mButtonPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 clickPostButton();
             }
         });
+    }
+
+    private void showDialog() {
+        final Dialog dialog = new Dialog(Objects.requireNonNull(getContext()));
+        dialog.setContentView(R.layout.dialog_choose_gallery_or_camera);
+        dialog.show();
+        dialog.findViewById(R.id.imageViewCamera).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                startActivityForResult(new Intent(MediaStore.ACTION_IMAGE_CAPTURE),
+                        REQUEST_CODE_CAMERA);
+            }
+        });
+        dialog.findViewById(R.id.imageViewGallery).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                startActivityForResult(intent, REQUEST_CODE_GALLERY);
+            }
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == REQUEST_CODE_GALLERY) {
+                mReturnUri = data.getData();
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(
+                            Objects.requireNonNull(getContext()).getContentResolver(), mReturnUri);
+                    mImageViewCrime.setImageBitmap(bitmap);
+                } catch (IOException e) {
+                    Log.i("TAG", "Some exception " + e);
+                }
+            } else if (requestCode == REQUEST_CODE_CAMERA) {
+                Bitmap bitmap = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
+                mImageViewCrime.setImageBitmap(bitmap);
+            }
+            getFilePath();
+        }
     }
 
     private void clickPostButton() {
@@ -101,7 +175,12 @@ public class CrimeReportFragment extends Fragment {
         mProgressDialog.setMessage("Processing...");
         mProgressDialog.show();
 
-        Call<JSONObject> callReport = APIUtils.getData()
+        uploadImageToImgur();
+        postCrimeReport();
+    }
+
+    private void postCrimeReport() {
+        Call<JSONObject> callReport = APIUtils.getData(APIUtils.BASE_URL)
                 .CreateCrimeReport(((CrimeCategory) mSpinnerCategory.getSelectedItem()).getId(),
                         mSpinnerArea.getSelectedItem().toString(),
                         mEditTextTitle.getText().toString(),
@@ -130,6 +209,48 @@ public class CrimeReportFragment extends Fragment {
         });
     }
 
+    private void uploadImageToImgur() {
+        final NotificationHelper notificationHelper = new NotificationHelper(getContext());
+        notificationHelper.createUploadingNotification();
+
+        Call<ImageResponse> callImageToImgur = APIUtils.getData(APIUtils.API_IMGUR_URL)
+                .PostImageToImgur(MultipartBody.Part.createFormData("image", mChosenFile.getName(),
+                        RequestBody.create(MediaType.parse("image/*"), mChosenFile)));
+
+        callImageToImgur.enqueue(new Callback<ImageResponse>() {
+            @Override
+            public void onResponse(Call<ImageResponse> call, Response<ImageResponse> response) {
+
+                if (response == null) {
+                    notificationHelper.createFailedUploadNotification();
+                    Log.d("checkResponseNull", response.body().toString());
+                    return;
+                }
+                if (response.isSuccessful()) {
+                    notificationHelper.createUploadedNotification(response.body());
+                    Log.d("URL Picture", "http://imgur.com/" + response.body().data.id);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ImageResponse> call, Throwable t) {
+                Toast.makeText(getContext(), "An unknown error has occured.", Toast.LENGTH_SHORT)
+                        .show();
+                notificationHelper.createFailedUploadNotification();
+                Log.d("checkUploadImageFail", t.getMessage());
+                t.printStackTrace();
+            }
+        });
+    }
+
+    private void getFilePath() {
+        String filePath = DocumentHelper.getPath(getContext(), mReturnUri);
+        //Safety check to prevent null pointer exception
+        if (filePath == null || filePath.isEmpty()) return;
+        mChosenFile = new File(filePath);
+        Log.d("FilePath", filePath);
+    }
+
     private void getSpinnerArea() {
         ArrayList<String> arrayList = new ArrayList<>();
         arrayList.add("Cẩm Lệ");
@@ -146,8 +267,8 @@ public class CrimeReportFragment extends Fragment {
     }
 
     private void getSpinnerCrimeCategoryList() {
-        Call<List<CrimeCategory>> callCrimeCategory =
-                APIUtils.getData().GetCrimeCategoryList(APIUtils.API_GET_CRIME_CATEGORY_LIST_URL);
+        Call<List<CrimeCategory>> callCrimeCategory = APIUtils.getData(APIUtils.BASE_URL)
+                .GetCrimeCategoryList(APIUtils.API_GET_CRIME_CATEGORY_LIST_URL);
         callCrimeCategory.enqueue(new Callback<List<CrimeCategory>>() {
             @Override
             public void onResponse(@NonNull Call<List<CrimeCategory>> call,

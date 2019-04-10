@@ -92,7 +92,7 @@ public class LoginDialog {
         mProgressDialog.setMessage("Authenticating...");
         mProgressDialog.show();
 
-        Call<List<User>> call = APIUtils.getData()
+        Call<List<User>> call = APIUtils.getData(APIUtils.BASE_URL)
                 .RequestLogin(mEditTextEmail.getText().toString(),
                         mEditTextPassword.getText().toString());
         call.enqueue(new Callback<List<User>>() {

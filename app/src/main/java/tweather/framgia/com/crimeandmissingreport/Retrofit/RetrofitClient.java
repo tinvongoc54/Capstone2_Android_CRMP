@@ -23,4 +23,9 @@ public class RetrofitClient {
                 .build();
         return retrofit;
     }
+
+    public static final Retrofit retrofitImgur =
+            new Retrofit.Builder().baseUrl("https://api.imgur.com/3/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
 }
