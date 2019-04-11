@@ -48,12 +48,12 @@ public class RecyclerViewSpecialNewsAdapter
         Random random = new Random();
 
         viewHolder.mImageView.setImageResource(arrayList.get(random.nextInt(arrayList.size())));
-        viewHolder.mTextView.setText(mCrimeReportList.get(i).getTitle());
+        viewHolder.mTextView.setText(mCrimeReportList.get(mCrimeReportList.size()-i-1).getTitle());
         viewHolder.mRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, DetailCrimeActivity.class);
-                intent.putExtra("id", mCrimeReportList.get(i).getId());
+                intent.putExtra("id", mCrimeReportList.get(mCrimeReportList.size()-i-1).getId());
                 mContext.startActivity(intent);
             }
         });

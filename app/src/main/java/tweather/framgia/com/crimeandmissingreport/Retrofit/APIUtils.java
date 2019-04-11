@@ -8,9 +8,9 @@ public class APIUtils {
     public static final String API_GET_CRIME_CATEGORY_LIST_URL = API_URL + "categories";
     public static final String API_CREATE_USER_URL = API_URL + "users";
     public static final String API_CHECK_LOGIN_URL = API_URL + "login";
+    public static final String API_IMGUR_URL = "https://api.imgur.com/3/";
 
-
-    public static DataClient getData() {
-        return RetrofitClient.getClient(BASE_URL).create(DataClient.class);
+    public static DataClient getData(String url) {
+        return RetrofitClient.getClient(url).create(DataClient.class);
     }
 }

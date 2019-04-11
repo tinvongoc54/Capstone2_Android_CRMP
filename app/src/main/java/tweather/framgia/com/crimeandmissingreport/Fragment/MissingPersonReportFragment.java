@@ -71,7 +71,7 @@ public class MissingPersonReportFragment extends Fragment {
         mProgressDialog.setMessage("Processing...");
         mProgressDialog.show();
 
-        Call<JSONObject> callReport = APIUtils.getData()
+        Call<JSONObject> callReport = APIUtils.getData(APIUtils.BASE_URL)
                 .CreateMissingPerson(mEditTextTitle.getText().toString(),
                         mEditTextDescription.getText().toString(),
                         Objects.requireNonNull(getContext())

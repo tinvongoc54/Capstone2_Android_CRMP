@@ -5,59 +5,64 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-    <ScrollView
-        android:id="@+id/scrollViewCrimeList"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayoutCrimeList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
-        <RelativeLayout
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/scrollViewCrimeList"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="5dp"
+            android:layout_height="match_parent"
             >
-            <TextView
-                android:id="@+id/textViewSpecial"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:text="@string/tindacbiet"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:textColor="#bfa134"
-                />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerViewSpecial"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/textViewSpecial"
-                android:scrollbars="horizontal"
-                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-                />
-
-            <TextView
-                android:id="@+id/textViewNew"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/recyclerViewSpecial"
-                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="5dp"
-                android:text="@string/tinmoinhat"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:textColor="#bfa134"
-                />
+                >
+                <TextView
+                    android:id="@+id/textViewSpecial"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="@string/tindacbiet"
+                    android:textColor="#bfa134"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerViewNew"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/textViewNew"
-                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-                />
-        </RelativeLayout>
-    </ScrollView>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerViewSpecial"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textViewSpecial"
+                    android:scrollbars="horizontal"
+                    app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                    />
 
+                <TextView
+                    android:id="@+id/textViewNew"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/recyclerViewSpecial"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/tinmoinhat"
+                    android:textColor="#bfa134"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerViewNew"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textViewNew"
+                    app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                    />
+            </RelativeLayout>
+        </android.support.v4.widget.NestedScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </RelativeLayout>

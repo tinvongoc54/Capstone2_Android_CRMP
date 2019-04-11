@@ -52,22 +52,22 @@ public class RecyclerViewNewsAdapter
         Random random = new Random();
 
         viewHolder.mImageView.setImageResource(arrayList.get(random.nextInt(arrayList.size())));
-        viewHolder.mTextViewTitle.setText(mCrimeReportList.get(i).getTitle());
-        viewHolder.mTextViewArea.setText(mCrimeReportList.get(i).getArea());
-        viewHolder.mTextViewDes.setText(mCrimeReportList.get(i).getDescription());
+        viewHolder.mTextViewTitle.setText(mCrimeReportList.get(mCrimeReportList.size()-i-1).getTitle());
+        viewHolder.mTextViewArea.setText(mCrimeReportList.get(mCrimeReportList.size()-i-1).getArea());
+        viewHolder.mTextViewDes.setText(mCrimeReportList.get(mCrimeReportList.size()-i-1).getDescription());
 
         if (mCrimeReportList.get(i).getTime().equals("01/04/2019")) {
             viewHolder.mTextViewTime.setText("Hôm nay");
         } else if (mCrimeReportList.get(i).getTime().equals("31/03/2019")) {
             viewHolder.mTextViewTime.setText("Hôm qua");
         } else {
-            viewHolder.mTextViewTime.setText(mCrimeReportList.get(i).getTime());
+            viewHolder.mTextViewTime.setText(mCrimeReportList.get(mCrimeReportList.size()-i-1).getTime());
         }
         viewHolder.mRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, DetailCrimeActivity.class);
-                intent.putExtra("idCrime", mCrimeReportList.get(i).getId());
+                intent.putExtra("idCrime", mCrimeReportList.get(mCrimeReportList.size()-i-1).getId());
                 mContext.startActivity(intent);
             }
         });
