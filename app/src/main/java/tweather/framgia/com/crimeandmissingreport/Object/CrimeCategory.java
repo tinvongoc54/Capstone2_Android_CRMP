@@ -5,7 +5,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class CrimeCategory {
-
     @SerializedName("id")
     @Expose
     private Integer id;
