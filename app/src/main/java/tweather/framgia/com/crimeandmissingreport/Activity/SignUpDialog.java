@@ -80,8 +80,7 @@ public class SignUpDialog {
                         mEditTextPasswordConfirm.getText().toString(),
                         mEditTextFullName.getText().toString(),
                         mEditTextPhoneNumber.getText().toString(),
-                        mEditTextAddress.getText().toString(),
-                        2);
+                        mEditTextAddress.getText().toString(), 2);
         call.enqueue(new Callback<JSONObject>() {
             @Override
             public void onResponse(@NonNull Call<JSONObject> call,
@@ -161,7 +160,9 @@ public class SignUpDialog {
             mEditTextAddress.setError(null);
         }
 
-        if (mEditTextPassword.getText()
+        if (mEditTextPasswordConfirm.getText().toString().isEmpty()) {
+            mEditTextPasswordConfirm.setError("Confirm password can't be empty!");
+        } else if (mEditTextPassword.getText()
                 .toString()
                 .equals(mEditTextPasswordConfirm.getText().toString())) {
             mEditTextPassword.setError(null);

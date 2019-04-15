@@ -10,7 +10,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import java.util.Objects;
+import tweather.framgia.com.crimeandmissingreport.Fragment.CrimeListFragment;
 import tweather.framgia.com.crimeandmissingreport.Fragment.MissingPersonListFragment;
+import tweather.framgia.com.crimeandmissingreport.Fragment.ProfileCrimeReportListFragment;
+import tweather.framgia.com.crimeandmissingreport.Fragment.ProfileMissingReportListFragment;
 import tweather.framgia.com.crimeandmissingreport.Object.Report;
 import tweather.framgia.com.crimeandmissingreport.R;
 
@@ -44,14 +48,21 @@ public class DetailMissingPersonActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     public void getData() {
         Intent intent = getIntent();
-        int id = intent.getIntExtra("idMissingPerson", 123);
-        Report report = MissingPersonListFragment.missingPersonReportArrayList.get(id);
-        Log.d("checkID", "id" + id);
-        mToolbar.setTitle(report.getTitle());
-        mImageView.setImageResource(report.getImage());
-        mTextViewTitle.setText(report.getTitle());
-        mTextViewTime.setText("Posted: " + report.getTime());
-        mTextViewDes.setText(report.getDescription());
+        int positionMissing = intent.getIntExtra("position", 10000);
+        int positionProfileMissing = intent.getIntExtra("positionProfileMissingList", 10001);
+
+        Report missingReport = null;
+        if (positionMissing != 10000) {
+            missingReport = MissingPersonListFragment.missingPersonReportArrayList.get(positionMissing);
+        } else if (positionProfileMissing != 10001) {
+            missingReport = ProfileMissingReportListFragment.reportArrayList.get(positionProfileMissing);
+        }
+
+        mToolbar.setTitle(Objects.requireNonNull(missingReport).getTitle());
+//        mImageView.setImageResource(missingReport.getImage());
+        mTextViewTitle.setText(missingReport.getTitle());
+        mTextViewTime.setText("Posted: " + missingReport.getTime());
+        mTextViewDes.setText(missingReport.getDescription());
     }
 
     public void initEvent() {

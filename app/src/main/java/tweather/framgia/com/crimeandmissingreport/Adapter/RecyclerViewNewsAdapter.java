@@ -11,12 +11,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import com.squareup.picasso.Picasso;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 import tweather.framgia.com.crimeandmissingreport.Activity.DetailCrimeActivity;
 import tweather.framgia.com.crimeandmissingreport.Object.Report;
 import tweather.framgia.com.crimeandmissingreport.R;
@@ -43,31 +42,24 @@ public class RecyclerViewNewsAdapter
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder,
             @SuppressLint("RecyclerView") final int i) {
-        ArrayList<Integer> arrayList = new ArrayList<>();
-        arrayList.add(R.drawable.image1);
-        arrayList.add(R.drawable.image2);
-        arrayList.add(R.drawable.image8);
-        arrayList.add(R.drawable.image6);
-        arrayList.add(R.drawable.image7);
-        Random random = new Random();
+        Picasso.with(mContext)
+                .load(mCrimeReportList.get(mCrimeReportList.size() - i - 1).getImage())
+                .placeholder(R.drawable.wait)
+                .into(viewHolder.mImageView);
 
-        viewHolder.mImageView.setImageResource(arrayList.get(random.nextInt(arrayList.size())));
-        viewHolder.mTextViewTitle.setText(mCrimeReportList.get(mCrimeReportList.size()-i-1).getTitle());
-        viewHolder.mTextViewArea.setText(mCrimeReportList.get(mCrimeReportList.size()-i-1).getArea());
-        viewHolder.mTextViewDes.setText(mCrimeReportList.get(mCrimeReportList.size()-i-1).getDescription());
-
-        if (mCrimeReportList.get(i).getTime().equals("01/04/2019")) {
-            viewHolder.mTextViewTime.setText("Hôm nay");
-        } else if (mCrimeReportList.get(i).getTime().equals("31/03/2019")) {
-            viewHolder.mTextViewTime.setText("Hôm qua");
-        } else {
-            viewHolder.mTextViewTime.setText(mCrimeReportList.get(mCrimeReportList.size()-i-1).getTime());
-        }
+        viewHolder.mTextViewTitle.setText(
+                mCrimeReportList.get(mCrimeReportList.size() - i - 1).getTitle());
+        viewHolder.mTextViewArea.setText(
+                mCrimeReportList.get(mCrimeReportList.size() - i - 1).getArea());
+        viewHolder.mTextViewDes.setText(
+                mCrimeReportList.get(mCrimeReportList.size() - i - 1).getDescription());
+        viewHolder.mTextViewTime.setText(
+                mCrimeReportList.get(mCrimeReportList.size() - i - 1).getTime());
         viewHolder.mRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, DetailCrimeActivity.class);
-                intent.putExtra("idCrime", mCrimeReportList.get(mCrimeReportList.size()-i-1).getId());
+                intent.putExtra("position", mCrimeReportList.size() - i - 1);
                 mContext.startActivity(intent);
             }
         });

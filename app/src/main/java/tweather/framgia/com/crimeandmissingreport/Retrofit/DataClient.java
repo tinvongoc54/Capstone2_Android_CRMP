@@ -1,18 +1,19 @@
 package tweather.framgia.com.crimeandmissingreport.Retrofit;
 
-import android.media.Image;
 import java.util.List;
 import okhttp3.MultipartBody;
 import org.json.JSONObject;
 import retrofit2.Call;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Part;
-import retrofit2.http.Query;
+import retrofit2.http.Path;
 import retrofit2.http.Url;
 import tweather.framgia.com.crimeandmissingreport.Object.CrimeCategory;
 import tweather.framgia.com.crimeandmissingreport.Object.ImageResponse;
@@ -25,7 +26,7 @@ public interface DataClient {
     Call<List<User>> RequestLogin(@Field("email") String email, @Field("password") String password);
 
     @FormUrlEncoded
-    @POST(APIUtils.API_CREATE_USER_URL)
+    @POST(APIUtils.API_USERS_URL)
     Call<JSONObject> CreateUser(@Field("email") String email, @Field("password") String password,
             @Field("password_confirmation") String password_confirmation,
             @Field("fullname") String fullname, @Field("phone_number") String phone_number,
@@ -38,13 +39,13 @@ public interface DataClient {
     Call<List<CrimeCategory>> GetCrimeCategoryList(@Url String url);
 
     @FormUrlEncoded
-    @POST(APIUtils.API_GET_CRIME_REPORT_LIST_URL)
+    @POST(APIUtils.API_GET_CRIMES_URL)
     Call<JSONObject> CreateCrimeReport(@Field("category_id") int categoryId,
             @Field("area") String area, @Field("title") String title,
             @Field("description") String description, @Field("user_id") int userId);
 
     @FormUrlEncoded
-    @POST(APIUtils.API_GET_MISSING_PERSON_LIST_URL)
+    @POST(APIUtils.API_GET_MISSINGS_URL)
     Call<JSONObject> CreateMissingPerson(@Field("title") String title,
             @Field("description") String description, @Field("phone_number") String phone_number,
             @Field("user_id") int userId);
@@ -58,4 +59,22 @@ public interface DataClient {
     })
     @POST(APIUtils.API_IMGUR_URL + "image/")
     Call<ImageResponse> PostImageToImgur(@Part MultipartBody.Part file);
+
+    @GET
+    Call<List<Report>> GetReportListOfUser(@Url String url);
+
+    @GET
+    Call<List<Report>> GetMissingReportListOfUser(@Url String url);
+
+    @FormUrlEncoded
+    @PUT(APIUtils.API_UPDATE_USER_URL + "{user_id}")
+    Call<User> UpdateUserProfile(@Path("user_id") int userId, @Field("email") String email,
+            @Field("password") String password, @Field("fullname") String fullname,
+            @Field("phone_number") String phone_number, @Field("address") String address);
+
+    @DELETE(APIUtils.API_GET_CRIMES_URL + "{id}")
+    Call<JSONObject> DeleteCrimeReport(@Path("id") int reportId);
+
+    @DELETE(APIUtils.API_GET_MISSINGS_URL + "{id}")
+    Call<JSONObject> DeleteMissingReport(@Path("id") int reportId);
 }

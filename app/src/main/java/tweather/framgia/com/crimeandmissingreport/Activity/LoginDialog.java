@@ -23,6 +23,14 @@ import tweather.framgia.com.crimeandmissingreport.Retrofit.APIUtils;
 
 public class LoginDialog {
 
+    public static final String SHAREDPREFERENCES_EMAIL = "email";
+    public static final String SHAREDPREFERENCES_PASSWORD = "password";
+    public static final String SHAREDPREFERENCES_ID_USER = "idUser";
+    public static final String SHAREDPREFERENCES_FULLNAME = "fullName";
+    public static final String SHAREDPREFERENCES_PHONE_NUMBER = "phoneNumber";
+    public static final String SHAREDPREFERENCES_ADDRESS = "address";
+    public static final String SHAREDPREFERENCES = "dataLogin";
+
     private Button mButtonLogin;
     @SuppressLint("StaticFieldLeak")
 
@@ -47,7 +55,7 @@ public class LoginDialog {
         mDialog.setContentView(R.layout.dialog_login);
         initViewDialog();
         initEvent();
-        sharedPreferences = mContext.getSharedPreferences("dataLogin", Context.MODE_PRIVATE);
+        sharedPreferences = mContext.getSharedPreferences(SHAREDPREFERENCES, Context.MODE_PRIVATE);
 
         mDialog.show();
     }
@@ -105,11 +113,12 @@ public class LoginDialog {
                         isLogged = true;
                         @SuppressLint("CommitPrefEdits") SharedPreferences.Editor editor =
                                 sharedPreferences.edit();
-                        editor.putString("email", mEditTextEmail.getText().toString());
-                        editor.putString("password", mEditTextPassword.getText().toString());
-                        editor.putInt("idUser", response.body().get(0).getId());
-                        editor.putString("fullName", response.body().get(0).getFullname());
-                        editor.putString("phoneNumber", response.body().get(0).getPhoneNumber());
+                        editor.putString(SHAREDPREFERENCES_EMAIL, mEditTextEmail.getText().toString());
+                        editor.putString(SHAREDPREFERENCES_PASSWORD, mEditTextPassword.getText().toString());
+                        editor.putInt(SHAREDPREFERENCES_ID_USER, response.body().get(0).getId());
+                        editor.putString(SHAREDPREFERENCES_FULLNAME, response.body().get(0).getFullname());
+                        editor.putString(SHAREDPREFERENCES_PHONE_NUMBER, response.body().get(0).getPhoneNumber());
+                        editor.putString(SHAREDPREFERENCES_ADDRESS, response.body().get(0).getAddress());
                         if (mCheckBox.isChecked()) {
                             Log.d("checkRemember1", String.valueOf(mCheckBox.isChecked()));
                             editor.putBoolean("save", true);
