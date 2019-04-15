@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +52,8 @@ public class RecyclerViewNewsAdapter
         arrayList.add(R.drawable.image7);
         Random random = new Random();
 
+        Log.d("checkSize3", String.valueOf(mCrimeReportList.size()));
+
         viewHolder.mImageView.setImageResource(arrayList.get(random.nextInt(arrayList.size())));
         viewHolder.mTextViewTitle.setText(mCrimeReportList.get(mCrimeReportList.size()-i-1).getTitle());
         viewHolder.mTextViewArea.setText(mCrimeReportList.get(mCrimeReportList.size()-i-1).getArea());
@@ -67,7 +70,7 @@ public class RecyclerViewNewsAdapter
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, DetailCrimeActivity.class);
-                intent.putExtra("idCrime", mCrimeReportList.get(mCrimeReportList.size()-i-1).getId());
+                intent.putExtra("position", mCrimeReportList.size()-i-1);
                 mContext.startActivity(intent);
             }
         });

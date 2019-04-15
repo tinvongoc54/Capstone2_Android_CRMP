@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relativeLayoutReportList"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp">
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_marginEnd="5dp"
+        android:layout_width="80dp"
+        android:layout_height="70dp"
+        android:scaleType="centerCrop"
+        />
+    <TextView
+        android:id="@+id/textViewTitle"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:textColor="#ffffff"
+        android:text="@string/title"
+        android:layout_toEndOf="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+    <TextView
+        android:id="@+id/textViewDescription"
+        android:textSize="12sp"
+        android:textColor="#c1c1c1"
+        android:text="@string/description"
+        android:layout_below="@+id/textViewTitle"
+        android:layout_toEndOf="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+    <TextView
+        android:id="@+id/textViewTime"
+        android:text="@string/date"
+        android:textStyle="italic"
+        android:textColor="#ffffff"
+        android:textSize="10sp"
+        android:layout_below="@+id/textViewDescription"
+        android:layout_toEndOf="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+    <Button
+        android:id="@+id/buttonEdit"
+        android:background="@drawable/custom_button"
+        android:text="Edit"
+        android:textSize="10sp"
+        android:textColor="@drawable/custom_text_color"
+        android:layout_width="40dp"
+        android:layout_height="20dp"
+        android:layout_below="@+id/textViewDescription"
+        android:layout_toStartOf="@+id/buttonDelete"
+        android:layout_marginEnd="5dp"
+        />
+
+    <Button
+        android:id="@+id/buttonDelete"
+        android:background="@drawable/custom_button"
+        android:text="Delete"
+        android:textSize="10sp"
+        android:textColor="@drawable/custom_text_color"
+        android:layout_width="40dp"
+        android:layout_height="20dp"
+        android:layout_below="@+id/textViewDescription"
+        android:layout_alignParentEnd="true"
+        />
+</RelativeLayout>

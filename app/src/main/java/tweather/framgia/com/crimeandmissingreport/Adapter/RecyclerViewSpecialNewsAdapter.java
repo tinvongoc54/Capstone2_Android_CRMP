@@ -53,7 +53,7 @@ public class RecyclerViewSpecialNewsAdapter
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, DetailCrimeActivity.class);
-                intent.putExtra("id", mCrimeReportList.get(mCrimeReportList.size()-i-1).getId());
+                intent.putExtra("position", mCrimeReportList.size()-i-1);
                 mContext.startActivity(intent);
             }
         });

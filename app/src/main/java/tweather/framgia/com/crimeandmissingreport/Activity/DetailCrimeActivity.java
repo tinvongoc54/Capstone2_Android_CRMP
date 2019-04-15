@@ -4,12 +4,15 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
+import java.util.Objects;
 import tweather.framgia.com.crimeandmissingreport.Fragment.CrimeListFragment;
+import tweather.framgia.com.crimeandmissingreport.Fragment.ProfileCrimeReportListFragment;
 import tweather.framgia.com.crimeandmissingreport.Object.Report;
 import tweather.framgia.com.crimeandmissingreport.R;
 
@@ -45,9 +48,17 @@ public class DetailCrimeActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     public void getData() {
         Intent intent = getIntent();
-        int id = intent.getIntExtra("idCrime", 123);
-        Report crimeReport = CrimeListFragment.crimeReportArrayList.get(id - 1);
-        mToolbar.setTitle(crimeReport.getTitle());
+        int positionCrime = intent.getIntExtra("position", 10000);
+        int positionProfileCrime = intent.getIntExtra("positionProfileCrimeList", 10001);
+
+        Report crimeReport = null;
+        if (positionCrime != 10000) {
+            crimeReport = CrimeListFragment.crimeReportArrayList.get(positionCrime);
+        } else if (positionProfileCrime != 10001) {
+            crimeReport = ProfileCrimeReportListFragment.reportArrayList.get(positionProfileCrime);
+        }
+
+        mToolbar.setTitle(Objects.requireNonNull(crimeReport).getTitle());
         mImageView.setImageResource(crimeReport.getImage());
         mTextViewTitle.setText(crimeReport.getTitle());
         mTextViewArea.setText("District: " + crimeReport.getArea());
