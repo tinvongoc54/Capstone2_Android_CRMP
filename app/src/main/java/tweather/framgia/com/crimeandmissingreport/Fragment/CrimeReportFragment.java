@@ -175,7 +175,9 @@ public class CrimeReportFragment extends Fragment {
         mProgressDialog.setMessage("Processing...");
         mProgressDialog.show();
 
-        uploadImageToImgur();
+        if (mChosenFile != null) {
+            uploadImageToImgur();
+        }
         postCrimeReport();
     }
 

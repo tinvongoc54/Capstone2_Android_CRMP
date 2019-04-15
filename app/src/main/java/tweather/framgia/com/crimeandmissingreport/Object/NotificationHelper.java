@@ -35,7 +35,7 @@ public class NotificationHelper {
 
     public void createUploadedNotification(ImageResponse response) {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mContext.get());
-        mBuilder.setSmallIcon(android.R.drawable.ic_menu_gallery);
+        mBuilder.setSmallIcon(android.R.drawable.ic_menu_agenda);
         mBuilder.setContentTitle(mContext.get().getString(R.string.notification_success));
 
         mBuilder.setContentText(response.data.link);
