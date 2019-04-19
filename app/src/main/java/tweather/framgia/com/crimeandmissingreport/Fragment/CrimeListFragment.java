@@ -64,14 +64,13 @@ public class CrimeListFragment extends Fragment {
 
     private void getCrimeReportList() {
         Call<List<Report>> callList =
-                APIUtils.getData(APIUtils.BASE_URL).GetCrimeReportList(APIUtils.API_GET_CRIME_REPORT_LIST_URL);
+                APIUtils.getData(APIUtils.BASE_URL).GetCrimeReportList(APIUtils.API_GET_CRIMES_URL);
         callList.enqueue(new Callback<List<Report>>() {
             @Override
             public void onResponse(@NonNull Call<List<Report>> call,
                     @NonNull Response<List<Report>> response) {
                 if (response.body() != null) {
                     crimeReportArrayList = (ArrayList<Report>) response.body();
-
                     initRecyclerViewSpecial(view);
                     initRecyclerViewNew(view);
                 } else {
@@ -94,6 +93,7 @@ public class CrimeListFragment extends Fragment {
                 new LinearLayoutManager(getActivity(), LinearLayout.VERTICAL, false));
         RecyclerViewNewsAdapter recyclerViewNewsAdapter =
                 new RecyclerViewNewsAdapter(crimeReportArrayList, getContext());
+        Log.d("checkSize1", String.valueOf(crimeReportArrayList.size()));
         mRecyclerViewNew.setAdapter(recyclerViewNewsAdapter);
     }
 
@@ -104,6 +104,7 @@ public class CrimeListFragment extends Fragment {
                 new LinearLayoutManager(getActivity(), LinearLayout.HORIZONTAL, false));
         RecyclerViewSpecialNewsAdapter recyclerViewSpecialNewsAdapter =
                 new RecyclerViewSpecialNewsAdapter(crimeReportArrayList, getContext());
+        Log.d("checkSize2", String.valueOf(crimeReportArrayList.size()));
         mRecyclerViewSpecial.setAdapter(recyclerViewSpecialNewsAdapter);
     }
 }

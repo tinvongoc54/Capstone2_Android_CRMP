@@ -53,7 +53,7 @@ public class RecyclerViewMissingPersonAdapter
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, DetailMissingPersonActivity.class);
-                intent.putExtra("idMissingPerson", i);
+                intent.putExtra("position", i);
                 mContext.startActivity(intent);
             }
         });

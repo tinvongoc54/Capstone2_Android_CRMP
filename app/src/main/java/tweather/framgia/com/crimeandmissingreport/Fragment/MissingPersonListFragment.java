@@ -61,11 +61,13 @@ public class MissingPersonListFragment extends Fragment {
         });
     }
 
-    private void getMissingPersonReportList() {        Call<List<Report>> call =
-                APIUtils.getData(APIUtils.BASE_URL).GetMissingReportList(APIUtils.API_GET_MISSING_PERSON_LIST_URL);
+    private void getMissingPersonReportList() {
+        Call<List<Report>> call = APIUtils.getData(APIUtils.BASE_URL)
+                .GetMissingReportList(APIUtils.API_GET_MISSINGS_URL);
         call.enqueue(new Callback<List<Report>>() {
             @Override
-            public void onResponse(@NonNull Call<List<Report>> call, @NonNull Response<List<Report>> response) {
+            public void onResponse(@NonNull Call<List<Report>> call,
+                    @NonNull Response<List<Report>> response) {
                 if (response.body() != null) {
                     missingPersonReportArrayList = (ArrayList<Report>) response.body();
                     initRecyclerViewMissingPerson(mView);
