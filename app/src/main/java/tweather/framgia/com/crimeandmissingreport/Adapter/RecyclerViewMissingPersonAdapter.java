@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import com.squareup.picasso.Picasso;
 import java.util.List;
 import tweather.framgia.com.crimeandmissingreport.Activity.DetailMissingPersonActivity;
 import tweather.framgia.com.crimeandmissingreport.Object.Report;
@@ -39,7 +40,11 @@ public class RecyclerViewMissingPersonAdapter
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewMissingPersonAdapter.ViewHolder viewHolder,
             @SuppressLint("RecyclerView") final int i) {
-        viewHolder.mImageView.setImageResource(mReportList.get(i).getImage());
+        Picasso.with(mContext)
+                .load(mReportList.get(mReportList.size() - i - 1).getImage())
+                .placeholder(R.drawable.wait)
+                .into(viewHolder.mImageView);
+
         viewHolder.mTextViewTitle.setText(mReportList.get(i).getTitle());
         viewHolder.mTextViewDes.setText(mReportList.get(i).getDescription());
         if (mReportList.get(i).getTime().equals("01/04/2019")) {
@@ -68,6 +73,7 @@ public class RecyclerViewMissingPersonAdapter
         ImageView mImageView;
         TextView mTextViewTitle, mTextViewDes, mTextViewTime;
         RelativeLayout mRelativeLayout;
+
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             mImageView = itemView.findViewById(R.id.imageView);

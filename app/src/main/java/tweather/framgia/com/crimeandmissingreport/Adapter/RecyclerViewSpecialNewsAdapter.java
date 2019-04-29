@@ -3,6 +3,9 @@ package tweather.framgia.com.crimeandmissingreport.Adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import com.squareup.picasso.Picasso;
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -31,29 +36,27 @@ public class RecyclerViewSpecialNewsAdapter
 
     @NonNull
     @Override
-    public RecyclerViewSpecialNewsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public RecyclerViewSpecialNewsAdapter.ViewHolder onCreateViewHolder(
+            @NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.item_recyclerview_special_news, viewGroup, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, @SuppressLint("RecyclerView") final int i) {
-        ArrayList<Integer> arrayList = new ArrayList<>();
-        arrayList.add(R.drawable.image1);
-        arrayList.add(R.drawable.image2);
-        arrayList.add(R.drawable.image8);
-        arrayList.add(R.drawable.image6);
-        arrayList.add(R.drawable.image7);
-        Random random = new Random();
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder,
+            @SuppressLint("RecyclerView") final int i) {
+        Picasso.with(mContext)
+                .load(mCrimeReportList.get(mCrimeReportList.size() - i - 1).getImage())
+                .into(viewHolder.mImageView);
 
-        viewHolder.mImageView.setImageResource(arrayList.get(random.nextInt(arrayList.size())));
-        viewHolder.mTextView.setText(mCrimeReportList.get(mCrimeReportList.size()-i-1).getTitle());
+        viewHolder.mTextView.setText(
+                mCrimeReportList.get(mCrimeReportList.size() - i - 1).getTitle());
         viewHolder.mRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, DetailCrimeActivity.class);
-                intent.putExtra("position", mCrimeReportList.size()-i-1);
+                intent.putExtra("position", mCrimeReportList.size() - i - 1);
                 mContext.startActivity(intent);
             }
         });
@@ -68,6 +71,7 @@ public class RecyclerViewSpecialNewsAdapter
         ImageView mImageView;
         TextView mTextView;
         RelativeLayout mRelativeLayout;
+
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             mImageView = itemView.findViewById(R.id.imageView);
