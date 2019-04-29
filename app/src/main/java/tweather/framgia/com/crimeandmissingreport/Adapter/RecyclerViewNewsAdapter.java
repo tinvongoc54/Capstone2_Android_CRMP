@@ -3,6 +3,7 @@ package tweather.framgia.com.crimeandmissingreport.Adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -40,11 +41,10 @@ public class RecyclerViewNewsAdapter
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder,
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder,
             @SuppressLint("RecyclerView") final int i) {
         Picasso.with(mContext)
                 .load(mCrimeReportList.get(mCrimeReportList.size() - i - 1).getImage())
-                .placeholder(R.drawable.wait)
                 .into(viewHolder.mImageView);
 
         viewHolder.mTextViewTitle.setText(

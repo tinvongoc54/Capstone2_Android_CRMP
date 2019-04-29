@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import com.squareup.picasso.Picasso;
 import java.util.Objects;
 import tweather.framgia.com.crimeandmissingreport.Fragment.CrimeListFragment;
 import tweather.framgia.com.crimeandmissingreport.Fragment.MissingPersonListFragment;
@@ -59,7 +60,7 @@ public class DetailMissingPersonActivity extends AppCompatActivity {
         }
 
         mToolbar.setTitle(Objects.requireNonNull(missingReport).getTitle());
-//        mImageView.setImageResource(missingReport.getImage());
+        Picasso.with(DetailMissingPersonActivity.this).load(missingReport.getImage()).into(mImageView);
         mTextViewTitle.setText(missingReport.getTitle());
         mTextViewTime.setText("Posted: " + missingReport.getTime());
         mTextViewDes.setText(missingReport.getDescription());

@@ -3,6 +3,9 @@ package tweather.framgia.com.crimeandmissingreport.Adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.squareup.picasso.Picasso;
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -40,12 +44,11 @@ public class RecyclerViewSpecialNewsAdapter
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder,
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder,
             @SuppressLint("RecyclerView") final int i) {
-            Picasso.with(mContext)
-                    .load(mCrimeReportList.get(mCrimeReportList.size() - i - 1).getImage())
-                    .placeholder(R.drawable.wait)
-                    .into(viewHolder.mImageView);
+        Picasso.with(mContext)
+                .load(mCrimeReportList.get(mCrimeReportList.size() - i - 1).getImage())
+                .into(viewHolder.mImageView);
 
         viewHolder.mTextView.setText(
                 mCrimeReportList.get(mCrimeReportList.size() - i - 1).getTitle());

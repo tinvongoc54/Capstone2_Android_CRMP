@@ -2,6 +2,8 @@ package tweather.framgia.com.crimeandmissingreport.Activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -10,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
+import com.squareup.picasso.Picasso;
 import java.util.Objects;
 import tweather.framgia.com.crimeandmissingreport.Fragment.CrimeListFragment;
 import tweather.framgia.com.crimeandmissingreport.Fragment.ProfileCrimeReportListFragment;
@@ -59,7 +62,7 @@ public class DetailCrimeActivity extends AppCompatActivity {
         }
 
         mToolbar.setTitle(Objects.requireNonNull(crimeReport).getTitle());
-//        mImageView.setImageResource(crimeReport.getImage());
+        Picasso.with(DetailCrimeActivity.this).load(crimeReport.getImage()).into(mImageView);
         mTextViewTitle.setText(crimeReport.getTitle());
         mTextViewArea.setText("District: " + crimeReport.getArea());
         mTextViewTime.setText("Posted: " + crimeReport.getTime());
