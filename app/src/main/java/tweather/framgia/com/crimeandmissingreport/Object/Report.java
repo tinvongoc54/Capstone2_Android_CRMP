@@ -24,13 +24,13 @@ public class Report {
   private String mTime;
   @SerializedName("image")
   @Expose
-  private int mImage;
+  private String mImage;
   private boolean mStatus;
 
   public Report (){}
 
   public Report(int id, String title, String description, int crimeCategory, String area,
-          String time, int image, boolean status) {
+          String time, String image, boolean status) {
     mId = id;
     mTitle = title;
     mDescription = description;
@@ -100,11 +100,11 @@ public class Report {
     mTime = time;
   }
 
-  public int getImage() {
+  public String getImage() {
     return mImage;
   }
 
-  public void setImage(int image) {
+  public void setImage(String image) {
     mImage = image;
   }
 
@@ -123,7 +123,7 @@ public class Report {
     private int mCrimeCategory;
     private String mArea;
     private String mTime;
-    private int mImage;
+    private String mImage;
     private boolean mStatus;
 
     public CrimeReportBuilder() {
@@ -159,7 +159,7 @@ public class Report {
       return this;
     }
 
-    public CrimeReportBuilder setImage(int image) {
+    public CrimeReportBuilder setImage(String image) {
       mImage = image;
       return this;
     }

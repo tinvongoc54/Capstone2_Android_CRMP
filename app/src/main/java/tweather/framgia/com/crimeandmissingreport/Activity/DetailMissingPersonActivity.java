@@ -59,7 +59,7 @@ public class DetailMissingPersonActivity extends AppCompatActivity {
         }
 
         mToolbar.setTitle(Objects.requireNonNull(missingReport).getTitle());
-        mImageView.setImageResource(missingReport.getImage());
+        mImageView.setImageResource(Integer.parseInt(missingReport.getImage()));
         mTextViewTitle.setText(missingReport.getTitle());
         mTextViewTime.setText("Posted: " + missingReport.getTime());
         mTextViewDes.setText(missingReport.getDescription());

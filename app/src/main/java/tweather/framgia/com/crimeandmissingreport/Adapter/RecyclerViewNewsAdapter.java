@@ -3,6 +3,9 @@ package tweather.framgia.com.crimeandmissingreport.Adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,6 +15,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -54,7 +64,9 @@ public class RecyclerViewNewsAdapter
 
         Log.d("checkSize3", String.valueOf(mCrimeReportList.size()));
 
-        viewHolder.mImageView.setImageResource(arrayList.get(random.nextInt(arrayList.size())));
+//        viewHolder.mImageView.setImageBitmap(bitmap);
+        new LoadImageFromUrl(viewHolder.mImageView).execute(mCrimeReportList.get(mCrimeReportList.size()-i-1).getImage());
+//        viewHolder.mImageView.setImageResource(arrayList.get(random.nextInt(4)));
         viewHolder.mTextViewTitle.setText(mCrimeReportList.get(mCrimeReportList.size()-i-1).getTitle());
         viewHolder.mTextViewArea.setText(mCrimeReportList.get(mCrimeReportList.size()-i-1).getArea());
         viewHolder.mTextViewDes.setText(mCrimeReportList.get(mCrimeReportList.size()-i-1).getDescription());
@@ -80,6 +92,33 @@ public class RecyclerViewNewsAdapter
     public int getItemCount() {
         return mCrimeReportList.size();
     }
+
+   public  class LoadImageFromUrl extends AsyncTask<String, Void, Bitmap>{
+        ImageView imageView;
+        Bitmap bitmap = null;
+        public LoadImageFromUrl(ImageView imageView) {
+            this.imageView = imageView;
+        }
+       @Override
+       protected Bitmap doInBackground(String... strings) {
+           try {
+               URL url = new URL(strings[0]);
+               InputStream inputStream = url.openConnection().getInputStream();
+               bitmap = BitmapFactory.decodeStream(inputStream);
+           } catch (MalformedURLException e) {
+               e.printStackTrace();
+           } catch (IOException e) {
+               e.printStackTrace();
+           }
+           return bitmap;
+       }
+
+       @Override
+       protected void onPostExecute(Bitmap bitmap) {
+           super.onPostExecute(bitmap);
+           imageView.setImageBitmap(bitmap);
+       }
+   }
 
     private String formatDate(Date date) {
         @SuppressLint("SimpleDateFormat") DateFormat simpleDateFormat =

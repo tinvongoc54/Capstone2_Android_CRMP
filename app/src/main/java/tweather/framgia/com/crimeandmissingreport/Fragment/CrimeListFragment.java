@@ -1,6 +1,8 @@
 package tweather.framgia.com.crimeandmissingreport.Fragment;
 
 import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -17,6 +19,10 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import retrofit2.Call;
@@ -63,6 +69,7 @@ public class CrimeListFragment extends Fragment {
     }
 
     private void getCrimeReportList() {
+
         Call<List<Report>> callList =
                 APIUtils.getData(APIUtils.BASE_URL).GetCrimeReportList(APIUtils.API_GET_CRIMES_URL);
         callList.enqueue(new Callback<List<Report>>() {

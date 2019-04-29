@@ -59,7 +59,7 @@ public class DetailCrimeActivity extends AppCompatActivity {
         }
 
         mToolbar.setTitle(Objects.requireNonNull(crimeReport).getTitle());
-        mImageView.setImageResource(crimeReport.getImage());
+        mImageView.setImageResource(Integer.parseInt(crimeReport.getImage()));
         mTextViewTitle.setText(crimeReport.getTitle());
         mTextViewArea.setText("District: " + crimeReport.getArea());
         mTextViewTime.setText("Posted: " + crimeReport.getTime());

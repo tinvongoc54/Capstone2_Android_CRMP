@@ -3,6 +3,9 @@ package tweather.framgia.com.crimeandmissingreport.Adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +14,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -47,7 +55,8 @@ public class RecyclerViewSpecialNewsAdapter
         arrayList.add(R.drawable.image7);
         Random random = new Random();
 
-        viewHolder.mImageView.setImageResource(arrayList.get(random.nextInt(arrayList.size())));
+        new LoadImageFromUrl(viewHolder.mImageView).execute(mCrimeReportList.get(mCrimeReportList.size()-i-1).getImage());
+//        viewHolder.mImageView.setImageResource(arrayList.get(random.nextInt(arrayList.size())));
         viewHolder.mTextView.setText(mCrimeReportList.get(mCrimeReportList.size()-i-1).getTitle());
         viewHolder.mRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +82,34 @@ public class RecyclerViewSpecialNewsAdapter
             mImageView = itemView.findViewById(R.id.imageView);
             mTextView = itemView.findViewById(R.id.textViewTitle);
             mRelativeLayout = itemView.findViewById(R.id.relativeLayoutSpecial);
+        }
+    }
+
+    //Convert Image Url to bitmap android
+    public  class LoadImageFromUrl extends AsyncTask<String, Void, Bitmap> {
+        ImageView imageView;
+        Bitmap bitmap = null;
+        public LoadImageFromUrl(ImageView imageView) {
+            this.imageView = imageView;
+        }
+        @Override
+        protected Bitmap doInBackground(String... strings) {
+            try {
+                URL url = new URL(strings[0]);
+                InputStream inputStream = url.openConnection().getInputStream();
+                bitmap = BitmapFactory.decodeStream(inputStream);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return bitmap;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            super.onPostExecute(bitmap);
+            imageView.setImageBitmap(bitmap);
         }
     }
 }
