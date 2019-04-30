@@ -76,10 +76,9 @@ public class ProfileCrimeReportListFragment extends Fragment {
         @SuppressLint("SetTextI18n")
         @Override
         public void onReceive(Context context, Intent intent) {
-            reportArrayList.remove(intent.getIntExtra("positionDelete", 10000));
-            recyclerViewProfileReportListAdapter.notifyDataSetChanged();
-            mTextViewReportListProfile.setText(
-                    "Crime Report List (" + reportArrayList.size() + ")");
+            if (intent.getBooleanExtra("delete", false)) {
+                getReportList();
+            }
         }
     };
 

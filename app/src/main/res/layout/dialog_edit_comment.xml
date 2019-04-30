@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_login"
+    android:orientation="vertical"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="10dp"
+    >
+    <EditText
+        android:id="@+id/editTextEditComment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:outlineAmbientShadowColor="#bfa134"
+        android:outlineSpotShadowColor="#bfa134"
+        android:shadowColor="#bfa134"
+        android:textColor="#bfa134"
+        android:textColorHighlight="#bfa134"
+        android:textColorHint="#bfa134"
+        />
+    <Button
+        android:id="@+id/buttonEditComment"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="10dp"
+        android:background="#bfa134"
+        android:text="Edit"
+        />
+</LinearLayout>

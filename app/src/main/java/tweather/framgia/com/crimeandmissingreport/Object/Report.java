@@ -19,6 +19,9 @@ public class Report {
   @SerializedName("area")
   @Expose
   private String mArea;
+  @SerializedName("user_id")
+  @Expose
+  private int mUserId;
   @SerializedName("created_at")
   @Expose
   private String mTime;
@@ -29,23 +32,12 @@ public class Report {
 
   public Report (){}
 
-  public Report(int id, String title, String description, int crimeCategory, String area,
-          String time, String image, boolean status) {
-    mId = id;
-    mTitle = title;
-    mDescription = description;
-    mCrimeCategory = crimeCategory;
-    mArea = area;
-    mTime = time;
-    mImage = image;
-    mStatus = status;
-  }
-
   public Report(CrimeReportBuilder crimeReportBuilder) {
     mId = crimeReportBuilder.mId;
     mTitle = crimeReportBuilder.mTitle;
     mDescription = crimeReportBuilder.mDescription;
     mCrimeCategory = crimeReportBuilder.mCrimeCategory;
+    mUserId = crimeReportBuilder.mUserId;
     mArea = crimeReportBuilder.mArea;
     mTime = crimeReportBuilder.mTime;
     mImage = crimeReportBuilder.mImage;
@@ -82,6 +74,14 @@ public class Report {
 
   public void setCrimeCategory(int crimeCategory) {
     mCrimeCategory = crimeCategory;
+  }
+
+  public int getUserId() {
+    return mUserId;
+  }
+
+  public void setUserId(int userId) {
+    this.mUserId = userId;
   }
 
   public String getArea() {
@@ -121,6 +121,7 @@ public class Report {
     private String mTitle;
     private String mDescription;
     private int mCrimeCategory;
+    private int mUserId;
     private String mArea;
     private String mTime;
     private String mImage;
@@ -146,6 +147,11 @@ public class Report {
 
     public CrimeReportBuilder setCrimeCategory(int category) {
       mCrimeCategory = category;
+      return this;
+    }
+
+    public CrimeReportBuilder setUserId(int userId) {
+      mUserId = userId;
       return this;
     }
 

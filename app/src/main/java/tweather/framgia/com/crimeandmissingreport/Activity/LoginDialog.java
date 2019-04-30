@@ -13,7 +13,9 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,6 +31,7 @@ public class LoginDialog {
     public static final String SHAREDPREFERENCES_FULLNAME = "fullName";
     public static final String SHAREDPREFERENCES_PHONE_NUMBER = "phoneNumber";
     public static final String SHAREDPREFERENCES_ADDRESS = "address";
+    public static final String SHAREDPREFERENCES_REMEMBER_LOGIN = "save";
     public static final String SHAREDPREFERENCES = "dataLogin";
 
     private Button mButtonLogin;
@@ -40,7 +43,6 @@ public class LoginDialog {
     private ProgressDialog mProgressDialog = null;
     private Dialog mDialog;
     private Context mContext;
-    public static SharedPreferences sharedPreferences;
     public static boolean isLogged = false;
 
     private static final String TAG = "LoginDialog";
@@ -55,8 +57,6 @@ public class LoginDialog {
         mDialog.setContentView(R.layout.dialog_login);
         initViewDialog();
         initEvent();
-        sharedPreferences = mContext.getSharedPreferences(SHAREDPREFERENCES, Context.MODE_PRIVATE);
-
         mDialog.show();
     }
 
@@ -106,25 +106,30 @@ public class LoginDialog {
         call.enqueue(new Callback<List<User>>() {
             @Override
             public void onResponse(@NonNull Call<List<User>> call,
-                    @NonNull Response<List<User>> response) {
+                                   @NonNull Response<List<User>> response) {
                 if (response.body() != null) {
                     if (response.body().get(0).getMessage().equals("success")) {
                         onLoginSuccess();
                         isLogged = true;
-                        @SuppressLint("CommitPrefEdits") SharedPreferences.Editor editor =
+                        SharedPreferences sharedPreferences =
+                                mContext.getSharedPreferences(SHAREDPREFERENCES, Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor =
                                 sharedPreferences.edit();
-                        editor.putString(SHAREDPREFERENCES_EMAIL, mEditTextEmail.getText().toString());
-                        editor.putString(SHAREDPREFERENCES_PASSWORD, mEditTextPassword.getText().toString());
+                        editor.putString(SHAREDPREFERENCES_EMAIL,
+                                mEditTextEmail.getText().toString());
+                        editor.putString(SHAREDPREFERENCES_PASSWORD,
+                                mEditTextPassword.getText().toString());
                         editor.putInt(SHAREDPREFERENCES_ID_USER, response.body().get(0).getId());
-                        editor.putString(SHAREDPREFERENCES_FULLNAME, response.body().get(0).getFullname());
-                        editor.putString(SHAREDPREFERENCES_PHONE_NUMBER, response.body().get(0).getPhoneNumber());
-                        editor.putString(SHAREDPREFERENCES_ADDRESS, response.body().get(0).getAddress());
+                        editor.putString(SHAREDPREFERENCES_FULLNAME,
+                                response.body().get(0).getFullname());
+                        editor.putString(SHAREDPREFERENCES_PHONE_NUMBER,
+                                response.body().get(0).getPhoneNumber());
+                        editor.putString(SHAREDPREFERENCES_ADDRESS,
+                                response.body().get(0).getAddress());
                         if (mCheckBox.isChecked()) {
-                            Log.d("checkRemember1", String.valueOf(mCheckBox.isChecked()));
-                            editor.putBoolean("save", true);
+                            editor.putBoolean(SHAREDPREFERENCES_REMEMBER_LOGIN, true);
                         } else {
-                            Log.d("checkRemember3", String.valueOf(mCheckBox.isChecked()));
-                            editor.putBoolean("save", false);
+                            editor.putBoolean(SHAREDPREFERENCES_REMEMBER_LOGIN, false);
                         }
                         editor.apply();
                     } else {

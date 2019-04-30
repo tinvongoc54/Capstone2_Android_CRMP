@@ -3,7 +3,6 @@ package tweather.framgia.com.crimeandmissingreport.Adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,6 +19,7 @@ import java.util.List;
 import tweather.framgia.com.crimeandmissingreport.Activity.DetailCrimeActivity;
 import tweather.framgia.com.crimeandmissingreport.Object.Report;
 import tweather.framgia.com.crimeandmissingreport.R;
+import tweather.framgia.com.crimeandmissingreport.Retrofit.APIUtils;
 
 public class RecyclerViewNewsAdapter
         extends RecyclerView.Adapter<RecyclerViewNewsAdapter.ViewHolder> {
@@ -40,6 +40,7 @@ public class RecyclerViewNewsAdapter
         return new ViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder,
             @SuppressLint("RecyclerView") final int i) {
@@ -51,10 +52,18 @@ public class RecyclerViewNewsAdapter
                 mCrimeReportList.get(mCrimeReportList.size() - i - 1).getTitle());
         viewHolder.mTextViewArea.setText(
                 mCrimeReportList.get(mCrimeReportList.size() - i - 1).getArea());
-        viewHolder.mTextViewDes.setText(
-                mCrimeReportList.get(mCrimeReportList.size() - i - 1).getDescription());
-        viewHolder.mTextViewTime.setText(
-                mCrimeReportList.get(mCrimeReportList.size() - i - 1).getTime());
+
+        if (mCrimeReportList.get(mCrimeReportList.size() - i - 1).getDescription().length() > 120) {
+            viewHolder.mTextViewDes.setText(mCrimeReportList.get(mCrimeReportList.size() - i - 1)
+                    .getDescription()
+                    .substring(0, 119) + "...");
+        } else {
+            viewHolder.mTextViewDes.setText(
+                    mCrimeReportList.get(mCrimeReportList.size() - i - 1).getDescription());
+        }
+
+        viewHolder.mTextViewTime.setText(APIUtils.convertTime(
+                mCrimeReportList.get(mCrimeReportList.size() - i - 1).getTime()));
         viewHolder.mRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,12 +77,6 @@ public class RecyclerViewNewsAdapter
     @Override
     public int getItemCount() {
         return mCrimeReportList.size();
-    }
-
-    private String formatDate(Date date) {
-        @SuppressLint("SimpleDateFormat") DateFormat simpleDateFormat =
-                new SimpleDateFormat("dd/mm/yyyy");
-        return simpleDateFormat.format(date);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

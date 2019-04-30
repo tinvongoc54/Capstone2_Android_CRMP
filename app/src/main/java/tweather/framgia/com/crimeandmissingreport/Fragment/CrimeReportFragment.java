@@ -51,6 +51,7 @@ public class CrimeReportFragment extends Fragment {
 
     private static final int REQUEST_CODE_CAMERA = 100;
     private static final int REQUEST_CODE_GALLERY = 101;
+    private static String image = "";
     Spinner mSpinnerCategory, mSpinnerArea;
     RadioButton mRadioButtonPresentLocation, mRadioButtonSelectLocation;
     EditText mEditTextTitle, mEditTextDescription;
@@ -187,6 +188,7 @@ public class CrimeReportFragment extends Fragment {
                         mSpinnerArea.getSelectedItem().toString(),
                         mEditTextTitle.getText().toString(),
                         mEditTextDescription.getText().toString(),
+                        image,
                         Objects.requireNonNull(getContext())
                                 .getSharedPreferences("dataLogin", Context.MODE_PRIVATE)
                                 .getInt("idUser", 1000));
@@ -197,6 +199,7 @@ public class CrimeReportFragment extends Fragment {
                 if (response.body() != null) {
                     mProgressDialog.dismiss();
                     mProgressDialog = null;
+                    clearInput();
                     Toast.makeText(getContext(), "Post successfully!", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getContext(), "Post failure!", Toast.LENGTH_SHORT).show();
@@ -221,16 +224,15 @@ public class CrimeReportFragment extends Fragment {
 
         callImageToImgur.enqueue(new Callback<ImageResponse>() {
             @Override
-            public void onResponse(Call<ImageResponse> call, Response<ImageResponse> response) {
+            public void onResponse(@NonNull Call<ImageResponse> call, @NonNull Response<ImageResponse> response) {
 
                 if (response == null) {
                     notificationHelper.createFailedUploadNotification();
-                    Log.d("checkResponseNull", response.body().toString());
                     return;
                 }
                 if (response.isSuccessful()) {
                     notificationHelper.createUploadedNotification(response.body());
-                    Log.d("URL Picture", "http://imgur.com/" + response.body().data.id);
+                    image = "http://i.imgur.com/" + Objects.requireNonNull(response.body()).data.id;
                 }
             }
 
@@ -293,6 +295,18 @@ public class CrimeReportFragment extends Fragment {
                 Log.d("checkGetCrimeCategoryList", t.getMessage());
             }
         });
+
+        Log.d("checkSpinner", String.valueOf(mSpinnerCategory.getSelectedItemId()));
+
+    }
+
+    private void clearInput() {
+        mEditTextTitle.setText("");
+        mEditTextDescription.setText("");
+        mImageViewCrime.setImageBitmap(null);
+        mRadioButtonPresentLocation.setChecked(false);
+        mRadioButtonSelectLocation.setChecked(false);
+        mSpinnerArea.setEnabled(false);
     }
 
     private boolean validate() {

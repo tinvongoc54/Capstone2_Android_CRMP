@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:layout_marginStart="5dp"
+    android:layout_marginEnd="5dp">
+    <TextView
+        android:id="@+id/textViewUsername"
+        android:text="Võ Ngọc Tín"
+        android:textStyle="bold"
+        android:textColor="#ffff"
+        style="@style/TextViewComment"
+        />
+    <TextView
+        android:id="@+id/textViewTime"
+        android:text="15h"
+        android:textColor="#aeaeae"
+        android:textStyle="italic"
+        android:layout_toEndOf="@+id/textViewUsername"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="3dp"
+        style="@style/TextViewComment"
+        android:textSize="12sp"
+        />
+    <TextView
+        android:id="@+id/textViewDelete"
+        android:text="Delete"
+        android:textColor="#ae9d3d"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="3dp"
+        android:textSize="12sp"
+        style="@style/TextViewComment"
+        />
+    <TextView
+        android:id="@+id/textViewEdit"
+        android:text="Edit"
+        android:textColor="#ae9d3d"
+        android:layout_toStartOf="@+id/textViewDelete"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="3dp"
+        android:textSize="12sp"
+        style="@style/TextViewComment"
+        />
+    <TextView
+        android:id="@+id/textViewContent"
+        android:textColor="#aeaeae"
+        android:layout_below="@+id/textViewUsername"
+        style="@style/TextViewComment"
+        />
+</RelativeLayout>

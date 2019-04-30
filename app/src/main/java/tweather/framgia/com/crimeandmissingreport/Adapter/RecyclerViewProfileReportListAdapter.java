@@ -49,29 +49,32 @@ public class RecyclerViewProfileReportListAdapter
         return new ViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder,
             @SuppressLint("RecyclerView") final int i) {
-        Picasso.with(mContext)
-                .load(mReportList.get(i).getImage())
-                .placeholder(R.drawable.wait)
-                .into(viewHolder.mImageView);
+        Picasso.with(mContext).load(mReportList.get(mReportList.size() - i - 1).getImage()).into(viewHolder.mImageView);
 
-        viewHolder.mTextViewTitle.setText(mReportList.get(i).getTitle());
-        viewHolder.mTextViewDes.setText(
-                mReportList.get(i).getDescription());
-        viewHolder.mTextViewTime.setText(mReportList.get(i).getTime());
+        viewHolder.mTextViewTitle.setText(mReportList.get(mReportList.size() - i - 1).getTitle());
 
+        if (mReportList.get(mReportList.size() - i - 1).getDescription().length() > 80) {
+            viewHolder.mTextViewDes.setText(
+                    mReportList.get(mReportList.size() - i - 1).getDescription().substring(0, 79) + "...");
+        } else {
+            viewHolder.mTextViewDes.setText(mReportList.get(mReportList.size() - i - 1).getDescription());
+        }
+
+        viewHolder.mTextViewTime.setText(APIUtils.convertTime(mReportList.get(mReportList.size() - i - 1).getTime()));
         viewHolder.mRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (ProfileFragment.checkFragment) {
                     Intent intent = new Intent(mContext, DetailCrimeActivity.class);
-                    intent.putExtra("positionProfileCrimeList", i);
+                    intent.putExtra("positionProfileCrimeList", mReportList.size() - i - 1);
                     mContext.startActivity(intent);
                 } else {
                     Intent intent = new Intent(mContext, DetailMissingPersonActivity.class);
-                    intent.putExtra("positionProfileMissingList", i);
+                    intent.putExtra("positionProfileMissingList", mReportList.size() - i - 1);
                     mContext.startActivity(intent);
                 }
             }
@@ -88,16 +91,16 @@ public class RecyclerViewProfileReportListAdapter
             @Override
             public void onClick(View view) {
                 if (ProfileFragment.checkFragment) {
-                    confirmDelete(true, i);
+                    confirmDelete(true, mReportList.size() - i - 1);
                 } else {
-                    confirmDelete(false, i);
+                    confirmDelete(false, mReportList.size() - i - 1);
                 }
             }
         });
     }
 
     private void confirmDelete(final boolean isCrimeFragment, final int position) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.AppTheme_Dark_Dialog);
         builder.setMessage("Do you want to delete this report?")
                 .setCancelable(false)
                 .setNegativeButton("Yes", new DialogInterface.OnClickListener() {
@@ -118,10 +121,11 @@ public class RecyclerViewProfileReportListAdapter
                 });
         AlertDialog alertDialog = builder.create();
         alertDialog.setTitle("Question");
+
         alertDialog.show();
     }
 
-    private void deleteMissingReport(final int position) {
+    private void deleteMissingReport(int position) {
         Call<JSONObject> callDelete = APIUtils.getData(APIUtils.API_GET_MISSINGS_URL)
                 .DeleteMissingReport(mReportList.get(position).getId());
         callDelete.enqueue(new Callback<JSONObject>() {
@@ -131,7 +135,7 @@ public class RecyclerViewProfileReportListAdapter
                 if (response.body() != null) {
                     Toast.makeText(mContext, "Deleted!", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent("deleteMissingReport");
-                    intent.putExtra("positionDelete", position);
+                    intent.putExtra("delete", true);
                     LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
                 } else {
                     Toast.makeText(mContext, "An error occurred!", Toast.LENGTH_SHORT).show();
@@ -145,7 +149,7 @@ public class RecyclerViewProfileReportListAdapter
         });
     }
 
-    private void deleteCrimeReport(final int position) {
+    private void deleteCrimeReport(int position) {
         Call<JSONObject> callDelete = APIUtils.getData(APIUtils.API_GET_CRIMES_URL)
                 .DeleteCrimeReport(mReportList.get(position).getId());
         callDelete.enqueue(new Callback<JSONObject>() {
@@ -155,7 +159,7 @@ public class RecyclerViewProfileReportListAdapter
                 if (response.body() != null) {
                     Toast.makeText(mContext, "Deleted!", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent("deleteCrimeReport");
-                    intent.putExtra("positionDelete", position);
+                    intent.putExtra("delete", true);
                     LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
                 } else {
                     Toast.makeText(mContext, "An error occurred!", Toast.LENGTH_SHORT).show();
