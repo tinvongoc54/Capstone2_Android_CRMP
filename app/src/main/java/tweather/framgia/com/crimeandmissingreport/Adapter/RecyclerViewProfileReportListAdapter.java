@@ -49,19 +49,22 @@ public class RecyclerViewProfileReportListAdapter
         return new ViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder,
             @SuppressLint("RecyclerView") final int i) {
-        Picasso.with(mContext)
-                .load(mReportList.get(i).getImage())
-                .placeholder(R.drawable.wait)
-                .into(viewHolder.mImageView);
+        Picasso.with(mContext).load(mReportList.get(i).getImage()).into(viewHolder.mImageView);
 
         viewHolder.mTextViewTitle.setText(mReportList.get(i).getTitle());
-        viewHolder.mTextViewDes.setText(
-                mReportList.get(i).getDescription());
-        viewHolder.mTextViewTime.setText(mReportList.get(i).getTime());
 
+        if (mReportList.get(i).getDescription().length() > 80) {
+            viewHolder.mTextViewDes.setText(
+                    mReportList.get(i).getDescription().substring(0, 79) + "...");
+        } else {
+            viewHolder.mTextViewDes.setText(mReportList.get(i).getDescription());
+        }
+
+        viewHolder.mTextViewTime.setText(APIUtils.convertTime(mReportList.get(i).getTime()));
         viewHolder.mRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

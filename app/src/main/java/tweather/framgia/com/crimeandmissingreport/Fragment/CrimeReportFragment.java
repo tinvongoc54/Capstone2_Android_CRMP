@@ -197,6 +197,7 @@ public class CrimeReportFragment extends Fragment {
                 if (response.body() != null) {
                     mProgressDialog.dismiss();
                     mProgressDialog = null;
+                    clearInput();
                     Toast.makeText(getContext(), "Post successfully!", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getContext(), "Post failure!", Toast.LENGTH_SHORT).show();
@@ -293,6 +294,15 @@ public class CrimeReportFragment extends Fragment {
                 Log.d("checkGetCrimeCategoryList", t.getMessage());
             }
         });
+    }
+
+    private void clearInput() {
+        mEditTextTitle.setText("");
+        mEditTextDescription.setText("");
+        mImageViewCrime.setImageBitmap(null);
+        mRadioButtonPresentLocation.setChecked(false);
+        mRadioButtonSelectLocation.setChecked(false);
+        mSpinnerArea.setEnabled(false);
     }
 
     private boolean validate() {

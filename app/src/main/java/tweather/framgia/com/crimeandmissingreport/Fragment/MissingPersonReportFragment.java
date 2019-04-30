@@ -204,6 +204,7 @@ public class MissingPersonReportFragment extends Fragment {
                 if (response.body() != null) {
                     mProgressDialog.dismiss();
                     mProgressDialog = null;
+                    clearInput();
                     Toast.makeText(getContext(), "Post successfully!", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getContext(), "Post failure!", Toast.LENGTH_SHORT).show();
@@ -216,6 +217,12 @@ public class MissingPersonReportFragment extends Fragment {
                 Toast.makeText(getContext(), "Post failure!", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void clearInput() {
+        mEditTextTitle.setText("");
+        mEditTextDescription.setText("");
+        mImageViewMissing.setImageBitmap(null);
     }
 
     private boolean validate() {
