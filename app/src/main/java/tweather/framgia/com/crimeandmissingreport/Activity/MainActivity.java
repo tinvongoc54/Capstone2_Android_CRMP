@@ -4,10 +4,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
+
 import tweather.framgia.com.crimeandmissingreport.Fragment.CrimeFragment;
 import tweather.framgia.com.crimeandmissingreport.Fragment.MissingPersonFragment;
 import tweather.framgia.com.crimeandmissingreport.Fragment.ProfileFragment;
@@ -44,26 +44,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-        SharedPreferences sharedPreferences = getSharedPreferences("dataLogin", MODE_PRIVATE);
-        Log.d("checkRemember2", String.valueOf(sharedPreferences.getBoolean("save", false)));
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
-        SharedPreferences sharedPreferences = getSharedPreferences("dataLogin", MODE_PRIVATE);
-        Log.d("checkRemember2", String.valueOf(sharedPreferences.getBoolean("save", false)));
-        if (!sharedPreferences.getBoolean("save", false)) {
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.remove("email");
-            editor.remove("password");
-            editor.remove("save");
-            editor.remove("idUser");
-            editor.remove("fullName");
-            editor.remove("phoneNumber");
-            editor.apply();
+        SharedPreferences sharedPreferences = getSharedPreferences(LoginDialog.SHAREDPREFERENCES, MODE_PRIVATE);
+        if (!sharedPreferences.getBoolean(LoginDialog.SHAREDPREFERENCES_REMEMBER_LOGIN, false)) {
+            sharedPreferences.edit().clear().apply();
             LoginDialog.isLogged = false;
         }
     }
@@ -78,6 +63,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.buttonCrime).setOnClickListener(this);
         findViewById(R.id.buttonMissingPerson).setOnClickListener(this);
         findViewById(R.id.buttonProfile).setOnClickListener(this);
+
+        if (getSharedPreferences(LoginDialog.SHAREDPREFERENCES, MODE_PRIVATE)
+                .contains(LoginDialog.SHAREDPREFERENCES_EMAIL)) {
+            LoginDialog.isLogged = true;
+        }
     }
 
     private void initCrimeLayout() {
@@ -93,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initProfileLayout() {
-        if (LoginDialog.isLogged) {
+        if (getSharedPreferences(LoginDialog.SHAREDPREFERENCES, MODE_PRIVATE).contains(LoginDialog.SHAREDPREFERENCES_EMAIL)) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.frameLayout, new ProfileFragment())
                     .commit();

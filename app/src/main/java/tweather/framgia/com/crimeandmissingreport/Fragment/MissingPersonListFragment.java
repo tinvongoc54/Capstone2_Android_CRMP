@@ -56,7 +56,7 @@ public class MissingPersonListFragment extends Fragment {
                     public void run() {
                         mSwipeRefreshLayout.setRefreshing(false);
                     }
-                }, 2000);
+                }, 1500);
             }
         });
     }

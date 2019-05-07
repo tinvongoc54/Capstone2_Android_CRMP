@@ -41,6 +41,7 @@ public class MissingPersonReportFragment extends Fragment {
 
     private static final int REQUEST_CODE_CAMERA = 100;
     private static final int REQUEST_CODE_GALLERY = 101;
+    private static String image = "";
     EditText mEditTextTitle, mEditTextDescription;
     Button mButtonSelectImage, mButtonPost;
     ImageView mImageViewMissing;
@@ -170,8 +171,7 @@ public class MissingPersonReportFragment extends Fragment {
                     @NonNull Response<ImageResponse> response) {
                 if (response.isSuccessful()) {
                     notificationHelper.createUploadedNotification(response.body());
-                    Log.d("URL Picture",
-                            "http://imgur.com/" + Objects.requireNonNull(response.body()).data.id);
+                    image = "http://i.imgur.com/" + Objects.requireNonNull(response.body()).data.id;
                 }
             }
 
@@ -192,7 +192,9 @@ public class MissingPersonReportFragment extends Fragment {
                         mEditTextDescription.getText().toString(),
                         Objects.requireNonNull(getContext())
                                 .getSharedPreferences("dataLogin", Context.MODE_PRIVATE)
-                                .getString("phoneNumber", ""), Objects.requireNonNull(getContext())
+                                .getString("phoneNumber", ""),
+                        image,
+                        Objects.requireNonNull(getContext())
                                 .getSharedPreferences("dataLogin", Context.MODE_PRIVATE)
                                 .getInt("idUser", 1000)
 
@@ -204,6 +206,7 @@ public class MissingPersonReportFragment extends Fragment {
                 if (response.body() != null) {
                     mProgressDialog.dismiss();
                     mProgressDialog = null;
+                    clearInput();
                     Toast.makeText(getContext(), "Post successfully!", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getContext(), "Post failure!", Toast.LENGTH_SHORT).show();
@@ -216,6 +219,12 @@ public class MissingPersonReportFragment extends Fragment {
                 Toast.makeText(getContext(), "Post failure!", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void clearInput() {
+        mEditTextTitle.setText("");
+        mEditTextDescription.setText("");
+        mImageViewMissing.setImageBitmap(null);
     }
 
     private boolean validate() {

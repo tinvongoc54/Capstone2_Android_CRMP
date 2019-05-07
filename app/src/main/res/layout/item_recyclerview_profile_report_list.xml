@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/relativeLayoutReportList"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="70dp"
     android:layout_marginTop="10dp">
     <ImageView
         android:id="@+id/imageView"
@@ -54,8 +54,8 @@
         android:textColor="@drawable/custom_text_color"
         android:layout_width="40dp"
         android:layout_height="20dp"
-        android:layout_below="@+id/textViewDescription"
         android:layout_toStartOf="@+id/buttonDelete"
+        android:layout_alignParentBottom="true"
         android:layout_marginEnd="5dp"
         />
 
@@ -67,7 +67,7 @@
         android:textColor="@drawable/custom_text_color"
         android:layout_width="40dp"
         android:layout_height="20dp"
-        android:layout_below="@+id/textViewDescription"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         />
 </RelativeLayout>

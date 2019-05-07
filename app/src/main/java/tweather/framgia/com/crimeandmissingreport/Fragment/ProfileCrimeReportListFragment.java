@@ -46,6 +46,10 @@ public class ProfileCrimeReportListFragment extends Fragment {
 
         LocalBroadcastManager.getInstance(Objects.requireNonNull(getContext()))
                 .registerReceiver(mMessageReceiver, new IntentFilter("deleteCrimeReport"));
+
+        LocalBroadcastManager.getInstance(Objects.requireNonNull(getContext()))
+                .registerReceiver(mResfreshReceiver, new IntentFilter("updateCrimeReport"));
+        reportArrayList = new ArrayList<>();
         initView(view);
         getReportList();
         return view;
@@ -76,10 +80,17 @@ public class ProfileCrimeReportListFragment extends Fragment {
         @SuppressLint("SetTextI18n")
         @Override
         public void onReceive(Context context, Intent intent) {
-            reportArrayList.remove(intent.getIntExtra("positionDelete", 10000));
-            recyclerViewProfileReportListAdapter.notifyDataSetChanged();
-            mTextViewReportListProfile.setText(
-                    "Crime Report List (" + reportArrayList.size() + ")");
+            if (intent.getBooleanExtra("delete", false)) {
+                getReportList();
+            }
+        }
+    };
+
+    BroadcastReceiver mResfreshReceiver = new BroadcastReceiver() {
+        @SuppressLint("SetTextI18n")
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            getReportList();
         }
     };
 

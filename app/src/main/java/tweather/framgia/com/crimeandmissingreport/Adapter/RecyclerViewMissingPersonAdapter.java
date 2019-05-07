@@ -16,6 +16,7 @@ import java.util.List;
 import tweather.framgia.com.crimeandmissingreport.Activity.DetailMissingPersonActivity;
 import tweather.framgia.com.crimeandmissingreport.Object.Report;
 import tweather.framgia.com.crimeandmissingreport.R;
+import tweather.framgia.com.crimeandmissingreport.Retrofit.APIUtils;
 
 public class RecyclerViewMissingPersonAdapter
         extends RecyclerView.Adapter<RecyclerViewMissingPersonAdapter.ViewHolder> {
@@ -37,28 +38,33 @@ public class RecyclerViewMissingPersonAdapter
         return new ViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewMissingPersonAdapter.ViewHolder viewHolder,
             @SuppressLint("RecyclerView") final int i) {
         Picasso.with(mContext)
                 .load(mReportList.get(mReportList.size() - i - 1).getImage())
-                .placeholder(R.drawable.wait)
                 .into(viewHolder.mImageView);
 
-        viewHolder.mTextViewTitle.setText(mReportList.get(i).getTitle());
-        viewHolder.mTextViewDes.setText(mReportList.get(i).getDescription());
-        if (mReportList.get(i).getTime().equals("01/04/2019")) {
-            viewHolder.mTextViewTime.setText("Hôm nay");
-        } else if (mReportList.get(i).getTime().equals("31/03/2019")) {
-            viewHolder.mTextViewTime.setText("Hôm qua");
+        viewHolder.mTextViewTitle.setText(mReportList.get(mReportList.size() - i - 1).getTitle());
+
+        if (mReportList.get(mReportList.size() - i - 1).getDescription().length() > 120) {
+            viewHolder.mTextViewDes.setText(
+                    mReportList.get(mReportList.size() - i - 1).getDescription().substring(0, 119)
+                            + "...");
         } else {
-            viewHolder.mTextViewTime.setText(mReportList.get(i).getTime());
+            viewHolder.mTextViewDes.setText(
+                    mReportList.get(mReportList.size() - i - 1).getDescription());
         }
+
+        viewHolder.mTextViewTime.setText(
+                APIUtils.convertTime(mReportList.get(mReportList.size() - i - 1).getTime()));
+
         viewHolder.mRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, DetailMissingPersonActivity.class);
-                intent.putExtra("position", i);
+                intent.putExtra("position", mReportList.size() - i - 1);
                 mContext.startActivity(intent);
             }
         });
