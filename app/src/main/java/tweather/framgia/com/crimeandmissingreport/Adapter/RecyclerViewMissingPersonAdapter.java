@@ -44,7 +44,6 @@ public class RecyclerViewMissingPersonAdapter
             @SuppressLint("RecyclerView") final int i) {
         Picasso.with(mContext)
                 .load(mReportList.get(mReportList.size() - i - 1).getImage())
-                .placeholder(R.drawable.wait)
                 .into(viewHolder.mImageView);
 
         viewHolder.mTextViewTitle.setText(mReportList.get(mReportList.size() - i - 1).getTitle());

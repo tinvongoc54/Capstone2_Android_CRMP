@@ -74,10 +74,9 @@ public class ProfileMissingReportListFragment extends Fragment {
         @SuppressLint("SetTextI18n")
         @Override
         public void onReceive(Context context, Intent intent) {
-            reportArrayList.remove(intent.getIntExtra("positionDelete", 10000));
-            recyclerViewProfileReportListAdapter.notifyDataSetChanged();
-            mTextViewReportListProfile.setText(
-                    "Missing Person Report List (" + reportArrayList.size() + ")");
+            if (intent.getBooleanExtra("delete", false)) {
+                getReportList();
+            }
         }
     };
 

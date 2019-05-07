@@ -43,12 +43,13 @@ public interface DataClient {
     @POST(APIUtils.API_GET_CRIMES_URL)
     Call<JSONObject> CreateCrimeReport(@Field("category_id") int categoryId,
             @Field("area") String area, @Field("title") String title,
-            @Field("description") String description, @Field("user_id") int userId);
+            @Field("description") String description, @Field("image") String image, @Field("user_id") int userId);
 
     @FormUrlEncoded
     @POST(APIUtils.API_GET_MISSINGS_URL)
     Call<JSONObject> CreateMissingPerson(@Field("title") String title,
             @Field("description") String description, @Field("phone_number") String phone_number,
+            @Field("image") String image,
             @Field("user_id") int userId);
 
     @GET
@@ -84,14 +85,29 @@ public interface DataClient {
 
     @FormUrlEncoded
     @POST(APIUtils.API_POST_COMMENT_CRIME_URL)
-    Call<JSONObject> PostCommentCrimeReport(@Field("crime_id") int crimeId, @Field("user_id") int userId,
-            @Field("content") String content);
+    Call<JSONObject> PostCommentCrimeReport(@Field("crime_id") int crimeId,
+            @Field("user_id") int userId, @Field("content") String content);
 
     @GET
     Call<List<Comment>> GetCommentOfMissingReport(@Url String url);
 
     @FormUrlEncoded
     @POST(APIUtils.API_POST_COMMENT_MISSING_URL)
-    Call<JSONObject> PostCommentMissingReport(@Field("missing_id") int crimeId, @Field("user_id") int userId,
+    Call<JSONObject> PostCommentMissingReport(@Field("missing_id") int missingId,
+            @Field("user_id") int userId, @Field("fullname") String fullName,
             @Field("content") String content);
+
+    @DELETE(APIUtils.API_POST_COMMENT_CRIME_URL + "{id}")
+    Call<JSONObject> DeleteCrimeComment(@Path("id") int idComment);
+
+    @DELETE(APIUtils.API_POST_COMMENT_MISSING_URL + "{id}")
+    Call<JSONObject> DeleteMissingComment(@Path("id") int idComment);
+
+    @FormUrlEncoded
+    @PUT(APIUtils.API_POST_COMMENT_CRIME_URL + "{id}")
+    Call<JSONObject> UpdateCrimeComment(@Path("id") int id, @Field("content") String content);
+
+    @FormUrlEncoded
+    @PUT(APIUtils.API_POST_COMMENT_MISSING_URL + "{id}")
+    Call<JSONObject> UpdateMissingComment(@Path("id") int id, @Field("content") String content);
 }

@@ -1,10 +1,16 @@
 package tweather.framgia.com.crimeandmissingreport.Activity;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -39,6 +45,7 @@ public class DetailMissingPersonActivity extends AppCompatActivity {
     Button mButtonPostComment;
     EditText mEditTextComment;
     RecyclerView mRecyclerViewComment;
+    SwipeRefreshLayout mSwipeRefreshLayout;
     Report missingReport;
 
     @Override
@@ -48,7 +55,11 @@ public class DetailMissingPersonActivity extends AppCompatActivity {
 
         initView();
         initEvent();
+        initSwipeRefreshLayout();
         getData();
+
+        LocalBroadcastManager.getInstance(Objects.requireNonNull(this))
+                .registerReceiver(mMessageReceiver, new IntentFilter("LoadMissingComment"));
     }
 
     private void initView() {
@@ -86,6 +97,24 @@ public class DetailMissingPersonActivity extends AppCompatActivity {
         mTextViewTitle.setText(missingReport.getTitle());
         mTextViewTime.setText("Posted: " + APIUtils.convertTime(missingReport.getTime()));
         mTextViewDes.setText(missingReport.getDescription());
+
+        getListComment();
+    }
+
+    private void initSwipeRefreshLayout() {
+        mSwipeRefreshLayout = findViewById(R.id.swipeRefreshLayoutDetailMissing);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getListComment();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+                }, 1500);
+            }
+        });
     }
 
     public void initEvent() {
@@ -105,6 +134,17 @@ public class DetailMissingPersonActivity extends AppCompatActivity {
             }
         });
     }
+
+    BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @SuppressLint("SetTextI18n")
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getBooleanExtra("confirm", false)) {
+                Toast.makeText(context, "Success!", Toast.LENGTH_SHORT).show();
+                getListComment();
+            }
+        }
+    };
 
     private void getListComment() {
         Call<List<Comment>> callComment = APIUtils.getData(APIUtils.BASE_URL)
@@ -130,7 +170,8 @@ public class DetailMissingPersonActivity extends AppCompatActivity {
 
     private void initRecyclerView(ArrayList<Comment> commentArrayList) {
         RecyclerViewCommentAdapter recyclerViewCommentAdapter =
-                new RecyclerViewCommentAdapter(commentArrayList, this);
+                new RecyclerViewCommentAdapter(commentArrayList, this, false,
+                        missingReport.getUserId());
         mRecyclerViewComment.setAdapter(recyclerViewCommentAdapter);
     }
 
@@ -142,7 +183,9 @@ public class DetailMissingPersonActivity extends AppCompatActivity {
             Call<JSONObject> call = APIUtils.getData(APIUtils.BASE_URL)
                     .PostCommentMissingReport(missingReport.getId(),
                             getSharedPreferences("dataLogin", MODE_PRIVATE).getInt(
-                                    LoginDialog.SHAREDPREFERENCES_ID_USER, 10000),
+                                    LoginDialog.SHAREDPREFERENCES_ID_USER, 0),
+                            getSharedPreferences("dataLogin", MODE_PRIVATE).getString(
+                                    LoginDialog.SHAREDPREFERENCES_FULLNAME, ""),
                             mEditTextComment.getText().toString());
             call.enqueue(new Callback<JSONObject>() {
                 @Override

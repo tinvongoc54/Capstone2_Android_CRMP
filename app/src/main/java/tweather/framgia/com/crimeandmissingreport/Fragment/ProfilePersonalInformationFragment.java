@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -21,6 +22,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import tweather.framgia.com.crimeandmissingreport.Activity.LoginDialog;
+import tweather.framgia.com.crimeandmissingreport.Activity.MainActivity;
 import tweather.framgia.com.crimeandmissingreport.Object.User;
 import tweather.framgia.com.crimeandmissingreport.R;
 import tweather.framgia.com.crimeandmissingreport.Retrofit.APIUtils;
@@ -56,6 +58,7 @@ public class ProfilePersonalInformationFragment extends Fragment implements View
                 mSharedPreferences.getString(LoginDialog.SHAREDPREFERENCES_PHONE_NUMBER, ""));
 
         view.findViewById(R.id.buttonEditProfile).setOnClickListener(this);
+        view.findViewById(R.id.buttonLogout).setOnClickListener(this);
     }
 
     @Override
@@ -65,9 +68,21 @@ public class ProfilePersonalInformationFragment extends Fragment implements View
                 EditDialog editDialog = new EditDialog(getContext());
                 editDialog.showEditDialog();
                 break;
+            case R.id.buttonLogout:
+                logout();
+                break;
             default:
                 break;
         }
+    }
+
+    @SuppressLint("CommitTransaction")
+    private void logout() {
+        mSharedPreferences.edit().clear().apply();
+        LoginDialog.isLogged = false;
+        Toast.makeText(getContext(), "Successful Logout!", Toast.LENGTH_SHORT).show();
+        Objects.requireNonNull(getActivity()).finish();
+        startActivity(new Intent(getContext(), MainActivity.class));
     }
 
     private class EditDialog {

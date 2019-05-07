@@ -1,9 +1,14 @@
 package tweather.framgia.com.crimeandmissingreport.Activity;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -51,7 +56,11 @@ public class DetailCrimeActivity extends AppCompatActivity {
 
         initView();
         initEvent();
+        initSwipeRefreshLayout();
         getData();
+
+        LocalBroadcastManager.getInstance(Objects.requireNonNull(this))
+                .registerReceiver(mMessageReceiver, new IntentFilter("LoadCrimeComment"));
     }
 
     private void initView() {
@@ -64,11 +73,37 @@ public class DetailCrimeActivity extends AppCompatActivity {
         mToolbar = findViewById(R.id.toolbarCrimeDetail);
         setSupportActionBar(mToolbar);
         mToolbar.setNavigationIcon(R.drawable.back);
-        mSwipeRefreshLayout = findViewById(R.id.swipeRefreshLayoutDetailCrime);
         mRecyclerViewComment = findViewById(R.id.recyclerViewCommentDetail);
         mEditTextComment = findViewById(R.id.editTextComment);
         mButtonPostComment = findViewById(R.id.buttonPostComment);
     }
+
+    private void initSwipeRefreshLayout() {
+        mSwipeRefreshLayout = findViewById(R.id.swipeRefreshLayoutDetailCrime);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getListComment();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+                }, 1500);
+            }
+        });
+    }
+
+    BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @SuppressLint("SetTextI18n")
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getBooleanExtra("confirm", false)) {
+                Toast.makeText(context, "Success!", Toast.LENGTH_SHORT).show();
+                getListComment();
+            }
+        }
+    };
 
     private void getListComment() {
         Call<List<Comment>> callComment = APIUtils.getData(APIUtils.BASE_URL)
@@ -94,7 +129,8 @@ public class DetailCrimeActivity extends AppCompatActivity {
 
     private void initRecyclerView(ArrayList<Comment> commentArrayList) {
         RecyclerViewCommentAdapter recyclerViewCommentAdapter =
-                new RecyclerViewCommentAdapter(commentArrayList, this);
+                new RecyclerViewCommentAdapter(commentArrayList, this, true,
+                        crimeReport.getUserId());
         mRecyclerViewComment.setAdapter(recyclerViewCommentAdapter);
     }
 

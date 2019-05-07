@@ -8,6 +8,9 @@ public class Comment {
     @SerializedName("id")
     @Expose
     private Integer id;
+    @SerializedName("user_name")
+    @Expose
+    private String username;
     @SerializedName("content")
     @Expose
     private String content;
@@ -30,6 +33,14 @@ public class Comment {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getContent() {
@@ -71,5 +82,4 @@ public class Comment {
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
     }
-
 }

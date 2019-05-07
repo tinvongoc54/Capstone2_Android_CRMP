@@ -20,9 +20,28 @@
         android:textStyle="italic"
         android:layout_toEndOf="@+id/textViewUsername"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="3dp"
         style="@style/TextViewComment"
-        android:textSize="13sp"
+        android:textSize="12sp"
+        />
+    <TextView
+        android:id="@+id/textViewDelete"
+        android:text="Delete"
+        android:textColor="#ae9d3d"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="3dp"
+        android:textSize="12sp"
+        style="@style/TextViewComment"
+        />
+    <TextView
+        android:id="@+id/textViewEdit"
+        android:text="Edit"
+        android:textColor="#ae9d3d"
+        android:layout_toStartOf="@+id/textViewDelete"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="3dp"
+        android:textSize="12sp"
+        style="@style/TextViewComment"
         />
     <TextView
         android:id="@+id/textViewContent"

@@ -57,7 +57,7 @@ public class CrimeListFragment extends Fragment {
                     public void run() {
                         mSwipeRefreshLayout.setRefreshing(false);
                     }
-                }, 2000);
+                }, 1500);
             }
         });
     }
