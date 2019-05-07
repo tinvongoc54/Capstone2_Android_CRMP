@@ -32,6 +32,17 @@ public class Report {
 
   public Report (){}
 
+  public Report(int id, String title, String description, int crimeCategory, String area, String time, String image, boolean status) {
+    mId = id;
+    mTitle = title;
+    mDescription = description;
+    mCrimeCategory = crimeCategory;
+    mArea = area;
+    mTime = time;
+    mImage = image;
+    mStatus = status;
+  }
+
   public Report(CrimeReportBuilder crimeReportBuilder) {
     mId = crimeReportBuilder.mId;
     mTitle = crimeReportBuilder.mTitle;
