@@ -97,6 +97,7 @@ public interface DataClient {
             @Field("user_id") int userId, @Field("fullname") String fullName,
             @Field("content") String content);
 
+<<<<<<< HEAD
     @DELETE(APIUtils.API_POST_COMMENT_CRIME_URL + "{id}")
     Call<JSONObject> DeleteCrimeComment(@Path("id") int idComment);
 
@@ -110,4 +111,16 @@ public interface DataClient {
     @FormUrlEncoded
     @PUT(APIUtils.API_POST_COMMENT_MISSING_URL + "{id}")
     Call<JSONObject> UpdateMissingComment(@Path("id") int id, @Field("content") String content);
+=======
+
+    @FormUrlEncoded
+    @PUT(APIUtils.API_EDIT_MISSING_REPORT_URL + "{id}")
+    Call<Report> EditMissingReport(@Path("id") int id, @Field("title") String title,
+                                 @Field("description") String description, @Field("image") String image);
+
+    @FormUrlEncoded
+    @PUT(APIUtils.API_EDIT_CRIME_REPORT_URL + "{id}")
+    Call<Report> EditCrimeReport(@Path("id") int id, @Field("title") String title,@Field("area") String area,
+                                   @Field("description") String description,@Field("category_id") int category_id, @Field("image") String image);
+>>>>>>> Add edit comment report
 }

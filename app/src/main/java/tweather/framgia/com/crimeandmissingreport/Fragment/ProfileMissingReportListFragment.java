@@ -44,6 +44,10 @@ public class ProfileMissingReportListFragment extends Fragment {
         LocalBroadcastManager.getInstance(Objects.requireNonNull(getContext()))
                 .registerReceiver(mMessageReceiver, new IntentFilter("deleteMissingReport"));
         reportArrayList = new ArrayList<>();
+
+        LocalBroadcastManager.getInstance(Objects.requireNonNull(getContext()))
+                .registerReceiver(mResfreshReceiver, new IntentFilter("updateMissingReport"));
+        reportArrayList = new ArrayList<>();
         initView(view);
         getReportList();
         return view;
@@ -77,6 +81,14 @@ public class ProfileMissingReportListFragment extends Fragment {
             if (intent.getBooleanExtra("delete", false)) {
                 getReportList();
             }
+        }
+    };
+
+    BroadcastReceiver mResfreshReceiver = new BroadcastReceiver() {
+        @SuppressLint("SetTextI18n")
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            getReportList();
         }
     };
 

@@ -3,9 +3,6 @@ package tweather.framgia.com.crimeandmissingreport.Adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,11 +11,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.squareup.picasso.Picasso;
-import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
+
 import java.util.List;
-import java.util.Random;
+
 import tweather.framgia.com.crimeandmissingreport.Activity.DetailCrimeActivity;
 import tweather.framgia.com.crimeandmissingreport.Object.Report;
 import tweather.framgia.com.crimeandmissingreport.R;

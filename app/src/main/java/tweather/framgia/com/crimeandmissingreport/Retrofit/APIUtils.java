@@ -18,6 +18,8 @@ public class APIUtils {
     public static final String API_USERS_URL = API_URL + "users";
     public static final String API_UPDATE_USER_URL = API_URL + "users/";
     public static final String API_CHECK_LOGIN_URL = API_URL + "login";
+    public static final String API_EDIT_MISSING_REPORT_URL = API_URL + "missings/";
+    public static final String API_EDIT_CRIME_REPORT_URL = API_URL + "crimes/";
     public static final String API_IMGUR_URL = "https://api.imgur.com/3/";
 
     public static DataClient getData(String url) {
