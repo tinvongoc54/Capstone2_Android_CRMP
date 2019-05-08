@@ -2,6 +2,8 @@ package tweather.framgia.com.crimeandmissingreport.Retrofit;
 
 import java.util.List;
 import okhttp3.MultipartBody;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 import retrofit2.Call;
 import retrofit2.http.DELETE;
@@ -17,6 +19,7 @@ import retrofit2.http.Path;
 import retrofit2.http.Url;
 import tweather.framgia.com.crimeandmissingreport.Object.Comment;
 import tweather.framgia.com.crimeandmissingreport.Object.CrimeCategory;
+import tweather.framgia.com.crimeandmissingreport.Object.Hotline;
 import tweather.framgia.com.crimeandmissingreport.Object.ImageResponse;
 import tweather.framgia.com.crimeandmissingreport.Object.Report;
 import tweather.framgia.com.crimeandmissingreport.Object.User;
@@ -43,7 +46,9 @@ public interface DataClient {
     @POST(APIUtils.API_GET_CRIMES_URL)
     Call<JSONObject> CreateCrimeReport(@Field("category_id") int categoryId,
             @Field("area") String area, @Field("title") String title,
-            @Field("description") String description, @Field("image") String image, @Field("user_id") int userId);
+            @Field("description") String description,
+                                       @Field("image") String image,
+                                       @Field("user_id") int userId);
 
     @FormUrlEncoded
     @POST(APIUtils.API_GET_MISSINGS_URL)
@@ -97,7 +102,6 @@ public interface DataClient {
             @Field("user_id") int userId, @Field("fullname") String fullName,
             @Field("content") String content);
 
-<<<<<<< HEAD
     @DELETE(APIUtils.API_POST_COMMENT_CRIME_URL + "{id}")
     Call<JSONObject> DeleteCrimeComment(@Path("id") int idComment);
 
@@ -111,7 +115,6 @@ public interface DataClient {
     @FormUrlEncoded
     @PUT(APIUtils.API_POST_COMMENT_MISSING_URL + "{id}")
     Call<JSONObject> UpdateMissingComment(@Path("id") int id, @Field("content") String content);
-=======
 
     @FormUrlEncoded
     @PUT(APIUtils.API_EDIT_MISSING_REPORT_URL + "{id}")
@@ -121,6 +124,9 @@ public interface DataClient {
     @FormUrlEncoded
     @PUT(APIUtils.API_EDIT_CRIME_REPORT_URL + "{id}")
     Call<Report> EditCrimeReport(@Path("id") int id, @Field("title") String title,@Field("area") String area,
-                                   @Field("description") String description,@Field("category_id") int category_id, @Field("image") String image);
->>>>>>> Add edit comment report
+                                   @Field("description") String description,@Field("category_id") int category_id,
+                                 @Field("image") String image);
+
+    @GET
+    Call<List<Hotline>> GetHotlineByLocation(@Url String url);
 }

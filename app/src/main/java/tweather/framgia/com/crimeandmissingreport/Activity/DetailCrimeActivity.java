@@ -21,11 +21,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import org.json.JSONObject;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -151,7 +155,13 @@ public class DetailCrimeActivity extends AppCompatActivity {
         }
 
         mToolbar.setTitle(Objects.requireNonNull(crimeReport).getTitle());
-        Picasso.with(DetailCrimeActivity.this).load(crimeReport.getImage()).into(mImageView);
+        if (!crimeReport.getImage().equals("")) {
+            Picasso.get()
+                    .load(crimeReport.getImage())
+                    .into(mImageView);
+        } else {
+            mImageView.setImageResource(R.drawable.avatar);
+        }
         mTextViewTitle.setText(crimeReport.getTitle());
         mTextViewArea.setText("District: " + crimeReport.getArea());
         mTextViewTime.setText("Posted: " + APIUtils.convertTime(crimeReport.getTime()));

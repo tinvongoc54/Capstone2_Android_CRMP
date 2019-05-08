@@ -20,7 +20,8 @@
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayoutDetailCrime"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="9.2"
         >
         <android.support.v4.widget.NestedScrollView
             android:id="@+id/nestedScrollViewDetailCrime"

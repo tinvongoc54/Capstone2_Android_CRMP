@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -17,5 +17,9 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">15sp</item>
+    </style>
+    <style name="menu_labels_style">
+        <item name="android:background">@drawable/fab_lable_background</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 </resources>
