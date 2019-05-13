@@ -43,9 +43,14 @@ public class RecyclerViewSpecialNewsAdapter
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder,
             @SuppressLint("RecyclerView") final int i) {
-        Picasso.with(mContext)
-                .load(mCrimeReportList.get(mCrimeReportList.size() - i - 1).getImage())
-                .into(viewHolder.mImageView);
+        if (!mCrimeReportList.get(mCrimeReportList.size() - i - 1).getImage().equals("")) {
+            Picasso.get()
+                    .load(mCrimeReportList.get(mCrimeReportList.size() - i - 1).getImage())
+                    .placeholder(R.drawable.avatar)
+                    .into(viewHolder.mImageView);
+        } else {
+            viewHolder.mImageView.setImageResource(R.drawable.avatar);
+        }
 
         viewHolder.mTextView.setText(
                 mCrimeReportList.get(mCrimeReportList.size() - i - 1).getTitle());

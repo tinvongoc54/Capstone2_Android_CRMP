@@ -5,13 +5,16 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,13 +23,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
+
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import org.json.JSONObject;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -41,12 +50,11 @@ public class MissingPersonReportFragment extends Fragment {
 
     private static final int REQUEST_CODE_CAMERA = 100;
     private static final int REQUEST_CODE_GALLERY = 101;
-    private static String image = "";
     EditText mEditTextTitle, mEditTextDescription;
     Button mButtonSelectImage, mButtonPost;
     ImageView mImageViewMissing;
     File mChosenFile;
-    Uri mReturnUri;
+    String realPath;
     private ProgressDialog mProgressDialog = null;
 
     @Nullable
@@ -91,16 +99,31 @@ public class MissingPersonReportFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 dialog.dismiss();
-                startActivityForResult(new Intent(MediaStore.ACTION_IMAGE_CAPTURE),
-                        REQUEST_CODE_CAMERA);
+
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+                    File file;
+                    try {
+                        file = createImageFile();
+                    } catch (IOException ex) {
+                        // Error occurred while creating the File
+                        ex.printStackTrace();
+                        return;
+                    }
+                    // Continue only if the File was successfully created
+                    Uri photoUri = FileProvider.getUriForFile(getContext(),
+                            getActivity().getPackageName() + ".provider", file);
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                    startActivityForResult(intent, REQUEST_CODE_CAMERA);
+                }
             }
         });
         dialog.findViewById(R.id.imageViewGallery).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialog.dismiss();
-                Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setType("image/*");
+                Intent intent = new Intent(Intent.ACTION_PICK,
+                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(intent, REQUEST_CODE_GALLERY);
             }
         });
@@ -111,28 +134,20 @@ public class MissingPersonReportFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == REQUEST_CODE_GALLERY) {
-                mReturnUri = data.getData();
+                //tạo file từ uri của data
+                mChosenFile = new File(getRealPath(data.getData()));
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(
-                            Objects.requireNonNull(getContext()).getContentResolver(), mReturnUri);
+                            Objects.requireNonNull(getContext()).getContentResolver(), data.getData());
                     mImageViewMissing.setImageBitmap(bitmap);
                 } catch (IOException e) {
                     Log.i("TAG", "Some exception " + e);
                 }
             } else if (requestCode == REQUEST_CODE_CAMERA) {
-                Bitmap bitmap = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
-                mImageViewMissing.setImageBitmap(bitmap);
+                mChosenFile = new File(realPath);
+                mImageViewMissing.setImageURI(Uri.parse(realPath));
             }
-            getFilePath();
         }
-    }
-
-    private void getFilePath() {
-        String filePath = DocumentHelper.getPath(getContext(), mReturnUri);
-        //Safety check to prevent null pointer exception
-        if (filePath == null || filePath.isEmpty()) return;
-        mChosenFile = new File(filePath);
-        Log.d("FilePath", filePath);
     }
 
     private void clickPostButton() {
@@ -153,40 +168,12 @@ public class MissingPersonReportFragment extends Fragment {
 
         if (mChosenFile != null) {
             uploadImageToImgur();
+        } else {
+            postMissingPersonReport("");
         }
-        postMissingPersonReport();
     }
 
-    private void uploadImageToImgur() {
-        final NotificationHelper notificationHelper = new NotificationHelper(getContext());
-        notificationHelper.createUploadingNotification();
-
-        Call<ImageResponse> callImageToImgur = APIUtils.getData(APIUtils.API_IMGUR_URL)
-                .PostImageToImgur(MultipartBody.Part.createFormData("image", mChosenFile.getName(),
-                        RequestBody.create(MediaType.parse("image/*"), mChosenFile)));
-
-        callImageToImgur.enqueue(new Callback<ImageResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<ImageResponse> call,
-                    @NonNull Response<ImageResponse> response) {
-                if (response.isSuccessful()) {
-                    notificationHelper.createUploadedNotification(response.body());
-                    image = "http://i.imgur.com/" + Objects.requireNonNull(response.body()).data.id;
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ImageResponse> call, @NonNull Throwable t) {
-                Toast.makeText(getContext(), "An unknown error has occured.", Toast.LENGTH_SHORT)
-                        .show();
-                notificationHelper.createFailedUploadNotification();
-                Log.d("checkUploadImageFail", t.getMessage());
-                t.printStackTrace();
-            }
-        });
-    }
-
-    private void postMissingPersonReport() {
+    private void postMissingPersonReport(String image) {
         Call<JSONObject> callReport = APIUtils.getData(APIUtils.BASE_URL)
                 .CreateMissingPerson(mEditTextTitle.getText().toString(),
                         mEditTextDescription.getText().toString(),
@@ -219,6 +206,54 @@ public class MissingPersonReportFragment extends Fragment {
                 Toast.makeText(getContext(), "Post failure!", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void uploadImageToImgur() {
+        final NotificationHelper notificationHelper = new NotificationHelper(getContext());
+        notificationHelper.createUploadingNotification();
+
+        Call<ImageResponse> callImageToImgur = APIUtils.getData(APIUtils.API_IMGUR_URL)
+                .PostImageToImgur(MultipartBody.Part.createFormData("image", mChosenFile.getName(),
+                        RequestBody.create(MediaType.parse("multipart/form-data"), mChosenFile)));
+        callImageToImgur.enqueue(new Callback<ImageResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<ImageResponse> call, @NonNull Response<ImageResponse> response) {
+                if (response.isSuccessful()) {
+                    notificationHelper.createUploadedNotification(response.body());
+                    postMissingPersonReport(Objects.requireNonNull(response.body()).data.link);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ImageResponse> call, Throwable t) {
+                Toast.makeText(getContext(), "An unknown error has occured.", Toast.LENGTH_SHORT)
+                        .show();
+                notificationHelper.createFailedUploadNotification();
+                Log.d("checkUploadImageFail", t.getMessage());
+                t.printStackTrace();
+            }
+        });
+    }
+
+    private File createImageFile() throws IOException {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        String imageFileName = "IMG_" + timeStamp + "_";
+        File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
+        realPath = image.getAbsolutePath();
+        return image;
+    }
+
+    private String getRealPath(Uri contentUri) {
+        String path = null;
+        String[] proj = {MediaStore.MediaColumns.DATA};
+        Cursor cursor = Objects.requireNonNull(getActivity())
+                .getContentResolver().query(contentUri, proj, null, null, null);
+        if (Objects.requireNonNull(cursor).moveToFirst()) {
+            path = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA));
+        }
+        cursor.close();
+        return path;
     }
 
     private void clearInput() {

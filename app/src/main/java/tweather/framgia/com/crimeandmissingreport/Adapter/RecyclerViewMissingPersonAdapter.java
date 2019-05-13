@@ -11,8 +11,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.squareup.picasso.Picasso;
+
 import java.util.List;
+
 import tweather.framgia.com.crimeandmissingreport.Activity.DetailMissingPersonActivity;
 import tweather.framgia.com.crimeandmissingreport.Object.Report;
 import tweather.framgia.com.crimeandmissingreport.R;
@@ -42,9 +45,14 @@ public class RecyclerViewMissingPersonAdapter
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewMissingPersonAdapter.ViewHolder viewHolder,
             @SuppressLint("RecyclerView") final int i) {
-        Picasso.with(mContext)
-                .load(mReportList.get(mReportList.size() - i - 1).getImage())
-                .into(viewHolder.mImageView);
+        if (!mReportList.get(mReportList.size() - i - 1).getImage().equals("")) {
+            Picasso.get()
+                    .load(mReportList.get(mReportList.size() - i - 1).getImage())
+                    .placeholder(R.drawable.avatar)
+                    .into(viewHolder.mImageView);
+        } else {
+            viewHolder.mImageView.setImageResource(R.drawable.avatar);
+        }
 
         viewHolder.mTextViewTitle.setText(mReportList.get(mReportList.size() - i - 1).getTitle());
 

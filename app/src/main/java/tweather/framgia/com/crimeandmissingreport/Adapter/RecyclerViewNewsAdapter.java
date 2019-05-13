@@ -5,18 +5,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.squareup.picasso.Picasso;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
 import java.util.List;
+
 import tweather.framgia.com.crimeandmissingreport.Activity.DetailCrimeActivity;
 import tweather.framgia.com.crimeandmissingreport.Object.Report;
 import tweather.framgia.com.crimeandmissingreport.R;
@@ -45,10 +44,14 @@ public class RecyclerViewNewsAdapter
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder,
             @SuppressLint("RecyclerView") final int i) {
-        Picasso.with(mContext)
-                .load(mCrimeReportList.get(mCrimeReportList.size() - i - 1).getImage())
-                .into(viewHolder.mImageView);
-
+        if (!mCrimeReportList.get(mCrimeReportList.size() - i - 1).getImage().equals("")) {
+            Picasso.get()
+                    .load(mCrimeReportList.get(mCrimeReportList.size() - i - 1).getImage())
+                    .placeholder(R.drawable.avatar)
+                    .into(viewHolder.mImageView);
+        } else {
+            viewHolder.mImageView.setImageResource(R.drawable.avatar);
+        }
 
         viewHolder.mTextViewTitle.setText(
                 mCrimeReportList.get(mCrimeReportList.size() - i - 1).getTitle());

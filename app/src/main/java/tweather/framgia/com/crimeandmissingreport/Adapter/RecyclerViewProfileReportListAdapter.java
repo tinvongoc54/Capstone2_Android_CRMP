@@ -8,9 +8,11 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v4.content.FileProvider;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -28,12 +30,16 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-
 import org.json.JSONObject;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -43,13 +49,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import tweather.framgia.com.crimeandmissingreport.Activity.DetailCrimeActivity;
 import tweather.framgia.com.crimeandmissingreport.Activity.DetailMissingPersonActivity;
-import tweather.framgia.com.crimeandmissingreport.Activity.LoginDialog;
 import tweather.framgia.com.crimeandmissingreport.Fragment.ProfileFragment;
 import tweather.framgia.com.crimeandmissingreport.Object.CrimeCategory;
 import tweather.framgia.com.crimeandmissingreport.Object.ImageResponse;
 import tweather.framgia.com.crimeandmissingreport.Object.NotificationHelper;
 import tweather.framgia.com.crimeandmissingreport.Object.Report;
-import tweather.framgia.com.crimeandmissingreport.Object.User;
 import tweather.framgia.com.crimeandmissingreport.R;
 import tweather.framgia.com.crimeandmissingreport.Retrofit.APIUtils;
 
@@ -78,8 +82,15 @@ public class RecyclerViewProfileReportListAdapter
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder,
-            @SuppressLint("RecyclerView") final int i) {
-        Picasso.with(mContext).load(mReportList.get(mReportList.size() - i - 1).getImage()).into(viewHolder.mImageView);
+                                 @SuppressLint("RecyclerView") final int i) {
+        if (!mReportList.get(mReportList.size() - i - 1).getImage().equals("")) {
+            Picasso.get()
+                    .load(mReportList.get(mReportList.size() - i - 1).getImage())
+                    .placeholder(R.drawable.avatar)
+                    .into(viewHolder.mImageView);
+        } else {
+            viewHolder.mImageView.setImageResource(R.drawable.avatar);
+        }
         viewHolder.mTextViewTitle.setText(mReportList.get(mReportList.size() - i - 1).getTitle());
 
         if (mReportList.get(mReportList.size() - i - 1).getDescription().length() > 80) {
@@ -110,9 +121,11 @@ public class RecyclerViewProfileReportListAdapter
             public void onClick(View view) {
                 DiaglogEdit diaglogEdit = new DiaglogEdit(mContext);
                 if (ProfileFragment.checkFragment) {
-                    diaglogEdit.showEditCrimeDialog(i);
+                    diaglogEdit.showEditCrimeDialog(mReportList
+                            .size() - i - 1);
                 } else {
-                    diaglogEdit.showEditMissingDialog(i);
+                    diaglogEdit.showEditMissingDialog(mReportList
+                            .size() - i - 1);
                 }
             }
         });
@@ -152,9 +165,12 @@ public class RecyclerViewProfileReportListAdapter
 
             mEditTextTile.setText(mReportList.get(position).getTitle());
             mEditTextDescription.setText(mReportList.get(position).getDescription());
-            Picasso.with(mContext)
-                    .load(mReportList.get(position).getImage())
-                    .into(mImageView);
+
+            if (!mReportList.get(position).getImage().equals("")) {
+                Picasso.get()
+                        .load(mReportList.get(position).getImage())
+                        .into(mImageView);
+            }
 
             mDialog.show();
             mChooseImage.setOnClickListener(new View.OnClickListener() {
@@ -184,7 +200,7 @@ public class RecyclerViewProfileReportListAdapter
             mEditTextTile.setText(mReportList.get(position).getTitle());
             mEditTextDescription.setText(mReportList.get(position).getDescription());
 
-            Picasso.with(mContext)
+            Picasso.get()
                     .load(mReportList.get(position).getImage())
                     .into(mImageView);
 
@@ -307,16 +323,9 @@ public class RecyclerViewProfileReportListAdapter
             callImageToImgur.enqueue(new Callback<ImageResponse>() {
                 @Override
                 public void onResponse(Call<ImageResponse> call, Response<ImageResponse> response) {
-
-                    if (response == null) {
-                        notificationHelper.createFailedUploadNotification();
-                        Log.d("checkResponseNull", response.body().toString());
-                        return;
-                    }
                     if (response.isSuccessful()) {
                         notificationHelper.createUploadedNotification(response.body());
-                        imageReport = ("http://imgur.com/" + response.body().data.id);
-                        Log.d("URL Picture", "http://imgur.com/" + response.body().data.id);
+                        imageReport = response.body().data.link;
                     }
                 }
 
@@ -345,7 +354,7 @@ public class RecyclerViewProfileReportListAdapter
                                         R.layout.spinner_textview, Objects.requireNonNull(arrayListCategory));
                         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         mSpinnerCategory.setAdapter(adapter);
-                        for (int i = 0 ; i<arrayListCategory.size() ; i++) {
+                        for (int i = 0; i < arrayListCategory.size(); i++) {
                             if (mReportList.get(postion).getCrimeCategory() == arrayListCategory.get(i).getId()) {
                                 int spinnerPosition = adapter.getPosition(arrayListCategory.get(i));
                                 mSpinnerCategory.setSelection(spinnerPosition);
@@ -376,7 +385,7 @@ public class RecyclerViewProfileReportListAdapter
                             arrayList);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             mSpinnerArea.setAdapter(adapter);
-            for (int i = 0 ; i<arrayList.size() ; i++) {
+            for (int i = 0; i < arrayList.size(); i++) {
                 if (mReportList.get(position).getArea().equals(arrayList.get(i))) {
                     int spinnerPosition = adapter.getPosition(arrayList.get(i));
                     mSpinnerArea.setSelection(spinnerPosition);
@@ -393,8 +402,26 @@ public class RecyclerViewProfileReportListAdapter
             @Override
             public void onClick(View view) {
                 dialog.dismiss();
+
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if (intent.resolveActivity(mContext.getPackageManager()) != null) {
+                    File file;
+                    try {
+                        file = createImageFile();
+                    } catch (IOException ex) {
+                        // Error occurred while creating the File
+                        ex.printStackTrace();
+                        return;
+                    }
+                    // Continue only if the File was successfully created
+                    Uri photoUri = FileProvider.getUriForFile(mContext,
+                            mContext.getPackageName() + ".provider", file);
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                    ((Activity) mContext).startActivityForResult(intent, REQUEST_CODE_CAMERA);
+                }
                 ((Activity) mContext).startActivityForResult(new Intent(MediaStore.ACTION_IMAGE_CAPTURE),
                         REQUEST_CODE_CAMERA);
+
             }
         });
         dialog.findViewById(R.id.imageViewGallery).setOnClickListener(new View.OnClickListener() {
@@ -406,6 +433,15 @@ public class RecyclerViewProfileReportListAdapter
                 ((Activity) mContext).startActivityForResult(intent, REQUEST_CODE_GALLERY);
             }
         });
+    }
+
+    private File createImageFile() throws IOException {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        String imageFileName = "IMG_" + timeStamp + "_";
+        File storageDir = mContext.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
+        ProfileFragment.realPath = image.getAbsolutePath();
+        return image;
     }
 
     private void confirmDelete(final boolean isCrimeFragment, final int position) {

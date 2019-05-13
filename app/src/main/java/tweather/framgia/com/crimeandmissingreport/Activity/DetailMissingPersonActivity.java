@@ -21,11 +21,17 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import org.json.JSONObject;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -54,6 +60,7 @@ public class DetailMissingPersonActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail_missing_person);
 
         initView();
+        initViewFAB();
         initEvent();
         initSwipeRefreshLayout();
         getData();
@@ -76,6 +83,23 @@ public class DetailMissingPersonActivity extends AppCompatActivity {
         mRecyclerViewComment = findViewById(R.id.recyclerViewCommentDetail);
     }
 
+    private void initViewFAB() {
+        final View actionB = findViewById(R.id.action_b);
+
+        FloatingActionButton actionC = new FloatingActionButton(getBaseContext());
+        actionC.setTitle("Hide/Show Action above");
+        actionC.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(DetailMissingPersonActivity.this, "C", Toast.LENGTH_SHORT).show();
+                actionB.setVisibility(actionB.getVisibility() == View.GONE ? View.VISIBLE : View.GONE);
+            }
+        });
+
+        final FloatingActionsMenu menuMultipleActions = findViewById(R.id.multiple_actions);
+        menuMultipleActions.addButton(actionC);
+    }
+
     @SuppressLint("SetTextI18n")
     public void getData() {
         Intent intent = getIntent();
@@ -91,9 +115,13 @@ public class DetailMissingPersonActivity extends AppCompatActivity {
         }
 
         mToolbar.setTitle(Objects.requireNonNull(missingReport).getTitle());
-        Picasso.with(DetailMissingPersonActivity.this)
-                .load(missingReport.getImage())
-                .into(mImageView);
+        if (!missingReport.getImage().equals("")) {
+            Picasso.get()
+                    .load(missingReport.getImage())
+                    .into(mImageView);
+        } else {
+            mImageView.setImageResource(R.drawable.avatar);
+        }
         mTextViewTitle.setText(missingReport.getTitle());
         mTextViewTime.setText("Posted: " + APIUtils.convertTime(missingReport.getTime()));
         mTextViewDes.setText(missingReport.getDescription());
