@@ -45,34 +45,34 @@ public class RecyclerViewMissingPersonAdapter
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewMissingPersonAdapter.ViewHolder viewHolder,
             @SuppressLint("RecyclerView") final int i) {
-        if (!mReportList.get(mReportList.size() - i - 1).getImage().equals("")) {
+        if (!mReportList.get(i).getImage().equals("")) {
             Picasso.get()
-                    .load(mReportList.get(mReportList.size() - i - 1).getImage())
+                    .load(mReportList.get(i).getImage())
                     .placeholder(R.drawable.avatar)
                     .into(viewHolder.mImageView);
         } else {
             viewHolder.mImageView.setImageResource(R.drawable.avatar);
         }
 
-        viewHolder.mTextViewTitle.setText(mReportList.get(mReportList.size() - i - 1).getTitle());
+        viewHolder.mTextViewTitle.setText(mReportList.get(i).getTitle());
 
-        if (mReportList.get(mReportList.size() - i - 1).getDescription().length() > 120) {
+        if (mReportList.get(i).getDescription().length() > 120) {
             viewHolder.mTextViewDes.setText(
-                    mReportList.get(mReportList.size() - i - 1).getDescription().substring(0, 119)
+                    mReportList.get(i).getDescription().substring(0, 119)
                             + "...");
         } else {
             viewHolder.mTextViewDes.setText(
-                    mReportList.get(mReportList.size() - i - 1).getDescription());
+                    mReportList.get(i).getDescription());
         }
 
         viewHolder.mTextViewTime.setText(
-                APIUtils.convertTime(mReportList.get(mReportList.size() - i - 1).getTime()));
+                APIUtils.convertTime(mReportList.get(i).getTime()));
 
         viewHolder.mRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, DetailMissingPersonActivity.class);
-                intent.putExtra("position", mReportList.size() - i - 1);
+                intent.putExtra("position", i);
                 mContext.startActivity(intent);
             }
         });

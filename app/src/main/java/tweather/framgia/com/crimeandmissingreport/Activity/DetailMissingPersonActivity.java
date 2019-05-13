@@ -1,13 +1,21 @@
 package tweather.framgia.com.crimeandmissingreport.Activity;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -22,9 +30,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.share.Sharer;
+import com.facebook.share.model.ShareHashtag;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.model.SharePhoto;
+import com.facebook.share.model.SharePhotoContent;
+import com.facebook.share.widget.ShareDialog;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import org.json.JSONObject;
 
@@ -43,6 +61,9 @@ import tweather.framgia.com.crimeandmissingreport.Object.Report;
 import tweather.framgia.com.crimeandmissingreport.R;
 import tweather.framgia.com.crimeandmissingreport.Retrofit.APIUtils;
 
+import static tweather.framgia.com.crimeandmissingreport.Activity.MainActivity.MY_PERMISSION_REQUEST_CALL_PHONE;
+import static tweather.framgia.com.crimeandmissingreport.Activity.MainActivity.MY_PERMISSION_REQUEST_SMS;
+
 public class DetailMissingPersonActivity extends AppCompatActivity {
     ImageView mImageView;
     TextView mTextViewTitle, mTextViewDes, mTextViewTime;
@@ -53,6 +74,30 @@ public class DetailMissingPersonActivity extends AppCompatActivity {
     RecyclerView mRecyclerViewComment;
     SwipeRefreshLayout mSwipeRefreshLayout;
     Report missingReport;
+    FloatingActionButton mActionShareFacebook, mActionCall, mActionSms;
+    FloatingActionsMenu mActionMenu;
+    CallbackManager mCallbackManager;
+    ShareDialog mShareDialog;
+
+//    Target target = new Target() {
+//        @Override
+//        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+//            SharePhoto sharePhoto = new SharePhoto.Builder().setBitmap(bitmap).build();
+//            if (ShareDialog.canShow(SharePhotoContent.class)) {
+//                mShareDialog.show(new SharePhotoContent.Builder().addPhoto(sharePhoto).build());
+//            }
+//        }
+//
+//        @Override
+//        public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+//
+//        }
+//
+//        @Override
+//        public void onPrepareLoad(Drawable placeHolderDrawable) {
+//
+//        }
+//    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +107,7 @@ public class DetailMissingPersonActivity extends AppCompatActivity {
         initView();
         initViewFAB();
         initEvent();
+        initEventFAB();
         initSwipeRefreshLayout();
         getData();
 
@@ -84,20 +130,84 @@ public class DetailMissingPersonActivity extends AppCompatActivity {
     }
 
     private void initViewFAB() {
-        final View actionB = findViewById(R.id.action_b);
+        mActionMenu = findViewById(R.id.multiple_actions);
+        mActionShareFacebook = new FloatingActionButton(this);
+        mActionShareFacebook.setIcon(R.drawable.facebook);
+        mActionCall = new FloatingActionButton(this);
+        mActionCall.setIcon(R.drawable.call);
+        mActionSms = new FloatingActionButton(this);
+        mActionSms.setIcon(R.drawable.sms);
+        mActionMenu.addButton(mActionShareFacebook);
+        mActionMenu.addButton(mActionCall);
+        mActionMenu.addButton(mActionSms);
 
-        FloatingActionButton actionC = new FloatingActionButton(getBaseContext());
-        actionC.setTitle("Hide/Show Action above");
-        actionC.setOnClickListener(new View.OnClickListener() {
+        mCallbackManager = CallbackManager.Factory.create();
+        mShareDialog = new ShareDialog(this);
+    }
+
+    private void initEventFAB() {
+        mActionShareFacebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(DetailMissingPersonActivity.this, "C", Toast.LENGTH_SHORT).show();
-                actionB.setVisibility(actionB.getVisibility() == View.GONE ? View.VISIBLE : View.GONE);
+                //register callback
+                mShareDialog.registerCallback(mCallbackManager, new FacebookCallback<Sharer.Result>() {
+                    @Override
+                    public void onSuccess(Sharer.Result result) {
+                        Toast.makeText(DetailMissingPersonActivity.this, "Share Successful!", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        Toast.makeText(DetailMissingPersonActivity.this, "Share Cancle!", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onError(FacebookException error) {
+                        Toast.makeText(DetailMissingPersonActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+//
+                //load ảnh vào facebook
+//                Picasso.get().load(missingReport.getImage()).into(target);
+                ShareLinkContent linkContent;
+                if (!missingReport.getImage().equals("")) {
+                    linkContent = new ShareLinkContent.Builder()
+                            .setQuote(missingReport.getTitle() + "\n\n" + missingReport.getDescription())
+                            .setContentUrl(Uri.parse(missingReport.getImage()))
+                            .build();
+                } else {
+                    linkContent = new ShareLinkContent.Builder()
+                            .setQuote(missingReport.getTitle() + "\n\n" + missingReport.getDescription())
+                            .setContentUrl(Uri.parse("https://i.imgur.com/zXO7Xk8.png"))
+                            .build();
+                }
+                mShareDialog.show(linkContent);  // Show facebook ShareDialog
             }
         });
-
-        final FloatingActionsMenu menuMultipleActions = findViewById(R.id.multiple_actions);
-        menuMultipleActions.addButton(actionC);
+        mActionCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (getSharedPreferences(LoginDialog.SHAREDPREFERENCES, MODE_PRIVATE)
+                        .contains(LoginDialog.SHAREDPREFERENCES_EMAIL)) {
+                    checkCallPhonePermission();
+                } else {
+                    Toast.makeText(DetailMissingPersonActivity.this, "You are not logged in!", Toast.LENGTH_SHORT).show();
+                    new LoginDialog(DetailMissingPersonActivity.this).clickButtonProfile();
+                }
+            }
+        });
+        mActionSms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (getSharedPreferences(LoginDialog.SHAREDPREFERENCES, MODE_PRIVATE)
+                        .contains(LoginDialog.SHAREDPREFERENCES_EMAIL)) {
+                    checkSmsPermission();
+                } else {
+                    Toast.makeText(DetailMissingPersonActivity.this, "You are not logged in!", Toast.LENGTH_SHORT).show();
+                    new LoginDialog(DetailMissingPersonActivity.this).clickButtonProfile();
+                }
+            }
+        });
     }
 
     @SuppressLint("SetTextI18n")
@@ -232,6 +342,101 @@ public class DetailMissingPersonActivity extends AppCompatActivity {
                     Log.d("checkFailPostComment", throwable.getMessage());
                 }
             });
+        }
+    }
+
+    private void showDialogCallHotline() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dark_Dialog);
+        builder.setMessage("Do you want to call the report owner?")
+                .setCancelable(false)
+                .setNegativeButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent(Intent.ACTION_CALL );
+                        intent.setData(Uri.parse("tel:" +
+                                getSharedPreferences(LoginDialog.SHAREDPREFERENCES, MODE_PRIVATE)
+                                        .getString(LoginDialog.SHAREDPREFERENCES_PHONE_NUMBER,"")));
+                        startActivity(intent);
+                    }
+                })
+                .setPositiveButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.setTitle("Question");
+        alertDialog.setCancelable(true);
+        alertDialog.show();
+    }
+
+    private void showDialogSms() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dark_Dialog);
+        builder.setMessage("Do you want to send message the report owner?")
+                .setCancelable(false)
+                .setNegativeButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent(Intent.ACTION_SENDTO);
+                        intent.setData(Uri.parse("sms:" +
+                                getSharedPreferences(LoginDialog.SHAREDPREFERENCES, MODE_PRIVATE)
+                                        .getString(LoginDialog.SHAREDPREFERENCES_PHONE_NUMBER,"")));
+                        startActivity(intent);
+                    }
+                })
+                .setPositiveButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.setTitle("Question");
+        alertDialog.setCancelable(true);
+        alertDialog.show();
+    }
+
+    private void checkSmsPermission() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.CALL_PHONE}, MY_PERMISSION_REQUEST_SMS);
+        } else {
+            showDialogSms();
+        }
+    }
+
+    private void checkCallPhonePermission() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.CALL_PHONE}, MY_PERMISSION_REQUEST_CALL_PHONE);
+        } else {
+            showDialogCallHotline();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSION_REQUEST_CALL_PHONE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE)
+                            != PackageManager.PERMISSION_GRANTED) {
+                        showDialogCallHotline();
+                    }
+                }
+                break;
+            case MY_PERMISSION_REQUEST_SMS:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)
+                            != PackageManager.PERMISSION_GRANTED) {
+                        showDialogSms();
+                    }
+                }
+                break;
         }
     }
 }

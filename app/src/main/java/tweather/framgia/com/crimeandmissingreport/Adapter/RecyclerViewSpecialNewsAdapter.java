@@ -43,9 +43,9 @@ public class RecyclerViewSpecialNewsAdapter
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder,
             @SuppressLint("RecyclerView") final int i) {
-        if (!mCrimeReportList.get(mCrimeReportList.size() - i - 1).getImage().equals("")) {
+        if (!mCrimeReportList.get(i).getImage().equals("")) {
             Picasso.get()
-                    .load(mCrimeReportList.get(mCrimeReportList.size() - i - 1).getImage())
+                    .load(mCrimeReportList.get(i).getImage())
                     .placeholder(R.drawable.avatar)
                     .into(viewHolder.mImageView);
         } else {
@@ -53,12 +53,12 @@ public class RecyclerViewSpecialNewsAdapter
         }
 
         viewHolder.mTextView.setText(
-                mCrimeReportList.get(mCrimeReportList.size() - i - 1).getTitle());
+                mCrimeReportList.get(i).getTitle());
         viewHolder.mRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, DetailCrimeActivity.class);
-                intent.putExtra("position", mCrimeReportList.size() - i - 1);
+                intent.putExtra("position", i);
                 mContext.startActivity(intent);
             }
         });

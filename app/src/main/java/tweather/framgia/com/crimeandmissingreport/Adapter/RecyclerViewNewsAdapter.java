@@ -44,9 +44,9 @@ public class RecyclerViewNewsAdapter
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder,
             @SuppressLint("RecyclerView") final int i) {
-        if (!mCrimeReportList.get(mCrimeReportList.size() - i - 1).getImage().equals("")) {
+        if (!mCrimeReportList.get(i).getImage().equals("")) {
             Picasso.get()
-                    .load(mCrimeReportList.get(mCrimeReportList.size() - i - 1).getImage())
+                    .load(mCrimeReportList.get(i).getImage())
                     .placeholder(R.drawable.avatar)
                     .into(viewHolder.mImageView);
         } else {
@@ -54,26 +54,26 @@ public class RecyclerViewNewsAdapter
         }
 
         viewHolder.mTextViewTitle.setText(
-                mCrimeReportList.get(mCrimeReportList.size() - i - 1).getTitle());
+                mCrimeReportList.get(i).getTitle());
         viewHolder.mTextViewArea.setText(
-                mCrimeReportList.get(mCrimeReportList.size() - i - 1).getArea());
+                mCrimeReportList.get(i).getArea());
 
-        if (mCrimeReportList.get(mCrimeReportList.size() - i - 1).getDescription().length() > 120) {
-            viewHolder.mTextViewDes.setText(mCrimeReportList.get(mCrimeReportList.size() - i - 1)
+        if (mCrimeReportList.get(i).getDescription().length() > 120) {
+            viewHolder.mTextViewDes.setText(mCrimeReportList.get(i)
                     .getDescription()
                     .substring(0, 119) + "...");
         } else {
             viewHolder.mTextViewDes.setText(
-                    mCrimeReportList.get(mCrimeReportList.size() - i - 1).getDescription());
+                    mCrimeReportList.get(i).getDescription());
         }
 
         viewHolder.mTextViewTime.setText(APIUtils.convertTime(
-                mCrimeReportList.get(mCrimeReportList.size() - i - 1).getTime()));
+                mCrimeReportList.get(i).getTime()));
         viewHolder.mRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, DetailCrimeActivity.class);
-                intent.putExtra("position", mCrimeReportList.size() - i - 1);
+                intent.putExtra("position", i);
                 mContext.startActivity(intent);
             }
         });

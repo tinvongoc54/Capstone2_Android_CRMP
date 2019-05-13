@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">CrimeAndMissingReport</string>
+    <string name="facebook_app_id">389379588327152</string>
+    <string name="facebook_login_protocol_scheme">fb389379588327152</string>
     <string name="tindacbiet">Special News</string>
     <string name="tinmoinhat">News</string>
     <string name="toiphamtruyna">Tội phạm truy nã</string>

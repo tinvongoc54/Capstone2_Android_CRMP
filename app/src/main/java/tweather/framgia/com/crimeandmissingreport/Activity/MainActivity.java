@@ -1,12 +1,15 @@
 package tweather.framgia.com.crimeandmissingreport.Activity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.location.Address;
 import android.location.Criteria;
 import android.location.Geocoder;
@@ -19,12 +22,15 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -42,6 +48,7 @@ import tweather.framgia.com.crimeandmissingreport.Retrofit.APIUtils;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, LocationListener {
     public static final int MY_PERMISSION_REQUEST_LOCATION = 1;
     public static final int MY_PERMISSION_REQUEST_CALL_PHONE = 2;
+    public static final int MY_PERMISSION_REQUEST_SMS = 4;
     private static String mDistrictName = "";
     LocationManager locationManager;
 
@@ -52,6 +59,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         initView();
         statusCheck();
+        printKey();
+    }
+
+    private void printKey() {
+        try {
+            @SuppressLint("PackageManagerGetSignatures") PackageInfo infor = getPackageManager()
+                    .getPackageInfo("tweather.framgia.com.crimeandmissingreport",
+                            PackageManager.GET_SIGNATURES);
+            for (Signature signature : infor.signatures) {
+                MessageDigest messageDigest = MessageDigest.getInstance("SHA");
+                messageDigest.update(signature.toByteArray());
+                Log.d("SHAKEY", Base64.encodeToString(messageDigest.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -143,14 +168,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dark_Dialog);
         builder.setMessage("Your location seems to be disabled, do you want to enable it?")
                 .setCancelable(false)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(final DialogInterface dialog, final int id) {
-                        startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-                    }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                .setPositiveButton("No", new DialogInterface.OnClickListener() {
                     public void onClick(final DialogInterface dialog, final int id) {
                         dialog.cancel();
+                    }
+                })
+                .setNegativeButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, final int id) {
+                        startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
                     }
                 });
         final AlertDialog alert = builder.create();
@@ -230,7 +255,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case MY_PERMISSION_REQUEST_CALL_PHONE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE)
                             != PackageManager.PERMISSION_GRANTED) {
                         showDialogCallHotline();
                     }
