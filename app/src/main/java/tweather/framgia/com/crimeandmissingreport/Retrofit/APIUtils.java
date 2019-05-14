@@ -9,6 +9,7 @@ public class APIUtils {
     public static final String BASE_URL = "https://capstone2.herokuapp.com/";
     public static final String API_URL = "https://capstone2-api.herokuapp.com/";
     public static final String API_GET_CRIMES_URL = API_URL + "crimes/";
+    public static final String API_GET_CRIMES_BY_AREA = API_GET_CRIMES_URL + "area/";
     public static final String API_GET_MISSINGS_URL = API_URL + "missings/";
     public static final String API_GET_CRIME_CATEGORY_LIST_URL = API_URL + "categories";
     public static final String API_GET_COMMENT_OF_CRIME_REPORT_URL = API_URL + "crime/";

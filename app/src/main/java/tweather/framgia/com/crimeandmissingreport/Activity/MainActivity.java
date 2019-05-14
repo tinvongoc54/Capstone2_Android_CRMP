@@ -3,6 +3,7 @@ package tweather.framgia.com.crimeandmissingreport.Activity;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,10 +28,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -38,10 +43,13 @@ import java.util.Objects;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import tweather.framgia.com.crimeandmissingreport.Adapter.RecyclerViewNewsAdapter;
 import tweather.framgia.com.crimeandmissingreport.Fragment.CrimeFragment;
+import tweather.framgia.com.crimeandmissingreport.Fragment.CrimeListFragment;
 import tweather.framgia.com.crimeandmissingreport.Fragment.MissingPersonFragment;
 import tweather.framgia.com.crimeandmissingreport.Fragment.ProfileFragment;
 import tweather.framgia.com.crimeandmissingreport.Object.Hotline;
+import tweather.framgia.com.crimeandmissingreport.Object.Report;
 import tweather.framgia.com.crimeandmissingreport.R;
 import tweather.framgia.com.crimeandmissingreport.Retrofit.APIUtils;
 
@@ -49,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static final int MY_PERMISSION_REQUEST_LOCATION = 1;
     public static final int MY_PERMISSION_REQUEST_CALL_PHONE = 2;
     public static final int MY_PERMISSION_REQUEST_SMS = 4;
-    private static String mDistrictName = "";
+    public static String mDistrictName = "";
     LocationManager locationManager;
 
     @Override
@@ -110,13 +118,48 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.currentLocation:
-                statusCheck();
                 checkLocationPermission();
+                statusCheck();
+                break;
+            case R.id.selectLocation:
+                showDialogSelectArea();
                 break;
             default:
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showDialogSelectArea() {
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_select_area);
+        final Spinner spinnerArea = dialog.findViewById(R.id.spinnerSelectArea);
+        getSpinnerArea(spinnerArea);
+        Button buttonSelect = dialog.findViewById(R.id.buttonSelect);
+        buttonSelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                callRequestFilter(spinnerArea.getSelectedItem().toString());
+            }
+        });
+        dialog.show();
+    }
+
+    private void getSpinnerArea(Spinner spinner) {
+        ArrayList<String> arrayList = new ArrayList<>();
+        arrayList.add("Cẩm Lệ");
+        arrayList.add("Hải Châu");
+        arrayList.add("Liên Chiểu");
+        arrayList.add("Thanh Khê");
+        arrayList.add("Sơn Trà");
+        arrayList.add("Ngũ Hành Sơn");
+
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<>(this, R.layout.spinner_textview,
+                        arrayList);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
     }
 
     private void checkLocationPermission() {
@@ -161,7 +204,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             buildAlertMessageNoGps();
+        } else {
+            callRequestFilter(mDistrictName);
         }
+    }
+
+    public void callRequestFilter(String location) {
+        Call<List<Report>> call = APIUtils.getData(APIUtils.BASE_URL)
+                .GetCrimesByArea(APIUtils.API_GET_CRIMES_BY_AREA + location);
+        call.enqueue(new Callback<List<Report>>() {
+            @Override
+            public void onResponse(Call<List<Report>> call, Response<List<Report>> response) {
+                if (response.isSuccessful()) {
+                    if (response.body().size() > 0) {
+                        CrimeListFragment.crimeReportArrayList = (ArrayList<Report>) response.body();
+                        CrimeListFragment.mRecyclerViewNewsAdapter =
+                                new RecyclerViewNewsAdapter(CrimeListFragment.crimeReportArrayList,
+                                        MainActivity.this);
+                        CrimeListFragment.mRecyclerViewNew.setAdapter(CrimeListFragment.mRecyclerViewNewsAdapter);
+                    } else {
+                        Toast.makeText(MainActivity.this, "No report about this location!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Report>> call, Throwable t) {
+                Log.d("checkFail", t.getMessage());
+            }
+        });
     }
 
     private void buildAlertMessageNoGps() {

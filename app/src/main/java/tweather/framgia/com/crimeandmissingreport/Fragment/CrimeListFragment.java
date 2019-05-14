@@ -17,11 +17,14 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import tweather.framgia.com.crimeandmissingreport.Activity.MainActivity;
 import tweather.framgia.com.crimeandmissingreport.Adapter.RecyclerViewNewsAdapter;
 import tweather.framgia.com.crimeandmissingreport.Adapter.RecyclerViewSpecialNewsAdapter;
 import tweather.framgia.com.crimeandmissingreport.Object.Report;
@@ -29,24 +32,39 @@ import tweather.framgia.com.crimeandmissingreport.R;
 import tweather.framgia.com.crimeandmissingreport.Retrofit.APIUtils;
 
 public class CrimeListFragment extends Fragment {
-    RecyclerView mRecyclerViewSpecial, mRecyclerViewNew;
+    public static RecyclerView mRecyclerViewSpecial, mRecyclerViewNew;
+    public static RecyclerViewNewsAdapter mRecyclerViewNewsAdapter;
+    public static RecyclerViewSpecialNewsAdapter mRecyclerViewSpecialNewsAdapter;
     public static ArrayList<Report> crimeReportArrayList = new ArrayList<>();
     NestedScrollView mNestedScrollView;
     SwipeRefreshLayout mSwipeRefreshLayout;
-    View view;
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_crime_list, container, false);
+                             @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_crime_list, container, false);
+        initView(view);
         getCrimeReportList();
-        initSwipeRefreshLayout();
+        initSwipeRefreshLayout(view);
         mNestedScrollView = view.findViewById(R.id.scrollViewCrimeList);
         return view;
     }
 
-    private void initSwipeRefreshLayout() {
+    private void initView(View view) {
+        mRecyclerViewSpecial = view.findViewById(R.id.recyclerViewSpecial);
+        mRecyclerViewSpecial.setHasFixedSize(true);
+        mRecyclerViewSpecial.setLayoutManager(
+                new LinearLayoutManager(getActivity(), LinearLayout.HORIZONTAL, false));
+
+        mRecyclerViewNew = view.findViewById(R.id.recyclerViewNew);
+        mRecyclerViewNew.setHasFixedSize(true);
+        mRecyclerViewNew.setLayoutManager(
+                new LinearLayoutManager(getActivity(), LinearLayout.VERTICAL, false));
+    }
+
+    private void initSwipeRefreshLayout(View view) {
         mSwipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayoutCrimeList);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -68,11 +86,11 @@ public class CrimeListFragment extends Fragment {
         callList.enqueue(new Callback<List<Report>>() {
             @Override
             public void onResponse(@NonNull Call<List<Report>> call,
-                    @NonNull Response<List<Report>> response) {
+                                   @NonNull Response<List<Report>> response) {
                 if (response.body() != null) {
                     crimeReportArrayList = (ArrayList<Report>) response.body();
-                    initRecyclerViewSpecial(view);
-                    initRecyclerViewNew(view);
+                    initRecyclerViewSpecial();
+                    initRecyclerViewNew();
                 } else {
                     Toast.makeText(getContext(), "No data!", Toast.LENGTH_SHORT).show();
                 }
@@ -86,25 +104,13 @@ public class CrimeListFragment extends Fragment {
         });
     }
 
-    private void initRecyclerViewNew(View view) {
-        mRecyclerViewNew = view.findViewById(R.id.recyclerViewNew);
-        mRecyclerViewNew.setHasFixedSize(true);
-        mRecyclerViewNew.setLayoutManager(
-                new LinearLayoutManager(getActivity(), LinearLayout.VERTICAL, false));
-        RecyclerViewNewsAdapter recyclerViewNewsAdapter =
-                new RecyclerViewNewsAdapter(crimeReportArrayList, getContext());
-        Log.d("checkSize1", String.valueOf(crimeReportArrayList.size()));
-        mRecyclerViewNew.setAdapter(recyclerViewNewsAdapter);
+    private void initRecyclerViewNew() {
+        mRecyclerViewNewsAdapter = new RecyclerViewNewsAdapter(crimeReportArrayList, getContext());
+        mRecyclerViewNew.setAdapter(mRecyclerViewNewsAdapter);
     }
 
-    public void initRecyclerViewSpecial(View view) {
-        mRecyclerViewSpecial = view.findViewById(R.id.recyclerViewSpecial);
-        mRecyclerViewSpecial.setHasFixedSize(true);
-        mRecyclerViewSpecial.setLayoutManager(
-                new LinearLayoutManager(getActivity(), LinearLayout.HORIZONTAL, false));
-        RecyclerViewSpecialNewsAdapter recyclerViewSpecialNewsAdapter =
-                new RecyclerViewSpecialNewsAdapter(crimeReportArrayList, getContext());
-        Log.d("checkSize2", String.valueOf(crimeReportArrayList.size()));
-        mRecyclerViewSpecial.setAdapter(recyclerViewSpecialNewsAdapter);
+    public void initRecyclerViewSpecial() {
+        mRecyclerViewSpecialNewsAdapter = new RecyclerViewSpecialNewsAdapter(crimeReportArrayList, getContext());
+        mRecyclerViewSpecial.setAdapter(mRecyclerViewSpecialNewsAdapter);
     }
 }

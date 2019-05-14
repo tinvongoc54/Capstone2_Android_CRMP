@@ -391,6 +391,7 @@ public class CrimeReportFragment extends Fragment implements LocationListener {
         arrayList.add("Liên Chiểu");
         arrayList.add("Thanh Khê");
         arrayList.add("Sơn Trà");
+        arrayList.add("Ngũ Hành Sơn");
 
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<>(Objects.requireNonNull(getContext()), R.layout.spinner_textview,

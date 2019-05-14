@@ -42,6 +42,9 @@ public interface DataClient {
     @GET
     Call<List<CrimeCategory>> GetCrimeCategoryList(@Url String url);
 
+    @GET
+    Call<List<Report>> GetCrimesByArea(@Url String url);
+
     @FormUrlEncoded
     @POST(APIUtils.API_GET_CRIMES_URL)
     Call<JSONObject> CreateCrimeReport(@Field("category_id") int categoryId,
