@@ -28,7 +28,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
                     android:text="@string/tindacbiet"
-                    android:textColor="#bfa134"
+                    android:textColor="@color/white"
                     android:textSize="15sp"
                     android:textStyle="bold"
                     />
@@ -47,13 +47,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/recyclerViewSpecial"
-                    android:layout_marginBottom="5dp"
                     android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
                     android:text="@string/tinmoinhat"
-                    android:textColor="#bfa134"
+                    android:textColor="@color/white"
                     android:textSize="15sp"
-                    android:textStyle="bold"
-                    />
+                    android:textStyle="bold" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recyclerViewNew"

@@ -16,14 +16,17 @@
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
             android:layout_height="25dp"
-            android:layout_marginStart="80dp"
-            android:layout_marginEnd="80dp"
             android:layout_marginTop="10dp"
-            android:backgroundTint="#bfa134"
-            android:background="@color/colorPrimary"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/custom_tablayout"
             app:tabGravity="fill"
             app:tabMode="fixed"
-            app:tabSelectedTextColor="#fff"
+            app:tabSelectedTextColor="@color/black"
+            app:tabBackground="@drawable/custom_tablayout_selector"
+            app:tabTextColor="@color/gray_text"
+            app:tabIndicatorColor="@null"
             >
         </android.support.design.widget.TabLayout>
         <android.support.v4.view.ViewPager

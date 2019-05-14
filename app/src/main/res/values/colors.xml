@@ -5,14 +5,12 @@
     <color name="colorAccent">#D81B60</color>
     <color name="iron">#CCCCCC</color>
     <color name="black">#000000</color>
-    <color name="primary">#bfa134</color>
+    <color name="primary">#2FB89A</color>
     <color name="black_semi_transparent">#B2000000</color>
     <color name="background">#e5e5e5</color>
-    <color name="half_black">#808080</color>
+    <color name="gray">#29292C</color>
+    <color name="gray_text">#787F81</color>
     <color name="white">#fafafa</color>
-    <color name="white_pressed">#f1f1f1</color>
-    <color name="pink">#e91e63</color>
-    <color name="pink_pressed">#ec407a</color>
-    <color name="blue_semi_transparent">#805677fc</color>
-    <color name="blue_semi_transparent_pressed">#80738ffe</color>
+    <color name="yellow1">#dfb375</color>
+    <color name="yellow2">#eace9a</color>
 </resources>

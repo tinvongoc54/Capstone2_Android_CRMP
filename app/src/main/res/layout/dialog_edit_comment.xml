@@ -14,12 +14,10 @@
         android:id="@+id/editTextEditComment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:outlineAmbientShadowColor="#bfa134"
-        android:outlineSpotShadowColor="#bfa134"
-        android:shadowColor="#bfa134"
-        android:textColor="#bfa134"
-        android:textColorHighlight="#bfa134"
-        android:textColorHint="#bfa134"
+        android:shadowColor="@color/yellow1"
+        android:textColor="@color/yellow1"
+        android:textColorHighlight="@color/yellow1"
+        android:textColorHint="@color/yellow1"
         />
     <Button
         android:id="@+id/buttonEditComment"
@@ -27,7 +25,7 @@
         android:layout_height="30dp"
         android:layout_marginBottom="20dp"
         android:layout_marginTop="10dp"
-        android:background="#bfa134"
+        android:background="@color/yellow1"
         android:text="Edit"
         />
 </LinearLayout>

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,10 +59,10 @@ public class RecyclerViewNewsAdapter
         viewHolder.mTextViewArea.setText(
                 mCrimeReportList.get(i).getArea());
 
-        if (mCrimeReportList.get(i).getDescription().length() > 120) {
+        if (mCrimeReportList.get(i).getDescription().length() > 60) {
             viewHolder.mTextViewDes.setText(mCrimeReportList.get(i)
                     .getDescription()
-                    .substring(0, 119) + "...");
+                    .substring(0, 59) + "...");
         } else {
             viewHolder.mTextViewDes.setText(
                     mCrimeReportList.get(i).getDescription());
@@ -69,7 +70,7 @@ public class RecyclerViewNewsAdapter
 
         viewHolder.mTextViewTime.setText(APIUtils.convertTime(
                 mCrimeReportList.get(i).getTime()));
-        viewHolder.mRelativeLayout.setOnClickListener(new View.OnClickListener() {
+        viewHolder.mCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, DetailCrimeActivity.class);
@@ -87,7 +88,7 @@ public class RecyclerViewNewsAdapter
     class ViewHolder extends RecyclerView.ViewHolder {
         ImageView mImageView;
         TextView mTextViewTitle, mTextViewArea, mTextViewDes, mTextViewTime;
-        RelativeLayout mRelativeLayout;
+        CardView mCardView;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -96,7 +97,7 @@ public class RecyclerViewNewsAdapter
             mTextViewArea = itemView.findViewById(R.id.textViewArea);
             mTextViewDes = itemView.findViewById(R.id.textViewDescription);
             mTextViewTime = itemView.findViewById(R.id.textViewTime);
-            mRelativeLayout = itemView.findViewById(R.id.relativeLayoutNew);
+            mCardView = itemView.findViewById(R.id.cardViewNews);
         }
     }
 }

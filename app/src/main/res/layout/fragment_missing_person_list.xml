@@ -26,11 +26,10 @@
                     android:id="@+id/textViewMissingPerson"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/recyclerViewSpecial"
                     android:layout_marginBottom="5dp"
                     android:layout_marginTop="5dp"
                     android:text="@string/missing_person_news"
-                    android:textColor="#bfa134"
+                    android:textColor="@color/white"
                     android:textSize="15sp"
                     android:textStyle="bold"
                     />

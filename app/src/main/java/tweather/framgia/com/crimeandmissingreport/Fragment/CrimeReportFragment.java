@@ -289,19 +289,21 @@ public class CrimeReportFragment extends Fragment implements LocationListener {
             public void onResponse(@NonNull Call<JSONObject> call,
                                    @NonNull Response<JSONObject> response) {
                 if (response.body() != null) {
-                    mProgressDialog.dismiss();
-                    mProgressDialog = null;
                     clearInput();
                     Toast.makeText(getContext(), "Post successfully!", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getContext(), "Post failure!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Post failure! Please again!", Toast.LENGTH_SHORT).show();
                 }
+                mProgressDialog.dismiss();
+                mProgressDialog = null;
             }
 
             @Override
             public void onFailure(@NonNull Call<JSONObject> call, @NonNull Throwable t) {
                 Log.d("checkFailPostReport", t.getMessage());
-                Toast.makeText(getContext(), "Post failure!", Toast.LENGTH_SHORT).show();
+                mProgressDialog.dismiss();
+                mProgressDialog = null;
+                Toast.makeText(getContext(), "Post failure! Please again!", Toast.LENGTH_SHORT).show();
             }
         });
     }

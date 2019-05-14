@@ -31,6 +31,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.security.MessageDigest;
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static final int MY_PERMISSION_REQUEST_SMS = 4;
     public static String mDistrictName = "";
     LocationManager locationManager;
+    Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -368,8 +370,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    @SuppressLint("ResourceAsColor")
     private void initView() {
-        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+        mToolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Crime Report");
 
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.frameLayout, new CrimeFragment())

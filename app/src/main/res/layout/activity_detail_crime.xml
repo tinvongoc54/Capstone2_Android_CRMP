@@ -1,141 +1,185 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/background_login"
     android:orientation="vertical"
     android:weightSum="10"
-    tools:context=".Activity.DetailCrimeActivity"
-    >
+    tools:context=".Activity.DetailCrimeActivity">
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbarCrimeDetail"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.8"
-        android:background="#bfa134"
-        />
+        android:layout_weight="0.7"
+        android:background="@color/yellow1" />
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayoutDetailCrime"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="9.2"
-        >
+        android:layout_weight="9.3">
+
         <android.support.v4.widget.NestedScrollView
             android:id="@+id/nestedScrollViewDetailCrime"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="match_parent">
+
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
-                <ImageView
-                    android:id="@+id/imageViewDetail"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cardViewImage"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:scaleType="centerCrop"
-                    />
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    app:cardBackgroundColor="@android:color/transparent"
+                    app:cardCornerRadius="10dp">
+
+                    <ImageView
+                        android:id="@+id/imageViewDetail"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:scaleType="centerCrop" />
+                </android.support.v7.widget.CardView>
+
                 <TextView
                     android:id="@+id/textViewTitleDetail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/imageViewDetail"
+                    android:layout_below="@+id/cardViewImage"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
                     android:layout_marginEnd="5dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="5dp"
                     android:text="@string/title"
-                    android:textColor="#bfa134"
+                    android:textColor="@color/yellow1"
                     android:textSize="17sp"
-                    android:textStyle="bold"
-                    />
-                <TextView
-                    android:id="@+id/textViewAreaDetail"
+                    android:textStyle="bold" />
+
+                <RelativeLayout
+                    android:id="@+id/relativeLayoutDetailPost"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/textViewTitleDetail"
-                    android:layout_marginEnd="10dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="5dp"
-                    android:text="@string/area"
-                    android:textColor="#c2c2bf"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    />
-                <TextView
-                    android:id="@+id/textViewTime"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/textViewAreaDetail"
                     android:layout_marginEnd="10dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="5dp"
-                    android:text="@string/date_submitted"
-                    android:textColor="#c2c2bf"
-                    android:textSize="15sp"
-                    />
-                <TextView
-                    android:id="@+id/textViewDescriptionDetail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/textViewTime"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="5dp"
-                    android:text="@string/description"
-                    android:textColor="#c2c2bf"
-                    android:textSize="15sp"
-                    />
+                    android:background="@drawable/background_report_border"
+                    android:layout_below="@id/textViewTitleDetail">
+
+                    <TextView
+                        android:id="@+id/textViewAreaDetail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="10dp"
+                        android:text="@string/area"
+                        android:textColor="#c2c2bf"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textViewTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/textViewAreaDetail"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="10dp"
+                        android:text="@string/date_submitted"
+                        android:textColor="#c2c2bf"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/textViewDescriptionDetail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/textViewTime"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:text="@string/description"
+                        android:textColor="#c2c2bf"
+                        android:textSize="15sp" />
+                </RelativeLayout>
+
                 <TextView
                     android:id="@+id/textViewCommentDetail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/textViewDescriptionDetail"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginStart="5dp"
+                    android:layout_below="@+id/relativeLayoutDetailPost"
+                    android:layout_marginStart="10dp"
                     android:layout_marginTop="20dp"
+                    android:layout_marginEnd="5dp"
                     android:text="@string/comment"
-                    android:textColor="#bfa134"
+                    android:textColor="@color/yellow1"
                     android:textSize="17sp"
-                    android:textStyle="bold"
-                    />
+                    android:textStyle="bold" />
+
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recyclerViewCommentDetail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/textViewCommentDetail"
-                    android:layout_marginEnd="10dp"
                     android:layout_marginStart="10dp"
-                    app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-                    />
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="10dp"
+                    app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+
+                <!--<EditText-->
+                    <!--android:id="@+id/editTextComment"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_below="@+id/recyclerViewCommentDetail"-->
+                    <!--android:layout_marginStart="10dp"-->
+                    <!--android:layout_marginEnd="10dp"-->
+                    <!--android:hint="@string/write_your_comment"-->
+                    <!--android:textColor="#c2c2bf"-->
+                    <!--android:textColorHint="#535353"-->
+                    <!--android:textSize="15sp"-->
+                    <!--android:textStyle="italic" />-->
+
                 <EditText
                     android:id="@+id/editTextComment"
-                    android:layout_width="match_parent"
+                    android:layout_width="270dp"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/recyclerViewCommentDetail"
-                    android:layout_marginEnd="10dp"
                     android:layout_marginStart="10dp"
-                    android:hint="@string/write_your_comment"
-                    android:textColor="#c2c2bf"
-                    android:textColorHint="#535353"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:inputType="text"
+                    android:textColor="@color/yellow1"
                     android:textSize="15sp"
                     android:textStyle="italic"
+                    android:hint="Write your comment..."
+                    android:paddingLeft="7dp"
+                    android:drawableLeft="@drawable/pencil"
+                    android:drawablePadding="5dp"
+                    android:textColorHint="@color/gray_text"
+                    android:background="@drawable/background_report_border"
                     />
+
                 <Button
                     android:id="@+id/buttonPostComment"
                     android:layout_width="70dp"
-                    android:layout_height="25dp"
+                    android:layout_height="30dp"
+                    android:layout_toEndOf="@+id/editTextComment"
+                    android:layout_below="@+id/recyclerViewCommentDetail"
                     android:layout_alignParentEnd="true"
-                    android:layout_below="@+id/editTextComment"
+                    android:layout_marginStart="5dp"
                     android:layout_marginEnd="10dp"
+                    android:layout_marginTop="5dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@drawable/custom_button"
+                    android:background="@drawable/custom_button_post"
                     android:text="@string/post"
-                    android:textColor="@drawable/custom_text_color"
-                    android:textSize="13sp"
-                    />
+                    android:textColor="@color/black"
+                    android:textSize="13sp" />
             </RelativeLayout>
         </android.support.v4.widget.NestedScrollView>
     </android.support.v4.widget.SwipeRefreshLayout>

@@ -1,48 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/relativeLayoutMissingPerson"
     android:layout_width="match_parent"
-    android:layout_height="70dp"
-    android:layout_marginBottom="5dp">
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_marginEnd="5dp"
-        android:layout_width="80dp"
-        android:layout_height="70dp"
-        android:scaleType="centerCrop"
-        />
-    <TextView
-        android:id="@+id/textViewTitle"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        android:textColor="#ffffff"
-        android:text="@string/title"
-        android:layout_toEndOf="@+id/imageView"
-        android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardViewNews"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        />
-    <TextView
-        android:id="@+id/textViewDescription"
-        android:textSize="12sp"
-        android:textColor="#c1c1c1"
-        android:text="@string/area"
-        android:layout_below="@+id/textViewTitle"
-        android:layout_toEndOf="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
-    <TextView
-        android:id="@+id/textViewTime"
-        android:text="@string/date"
-        android:textStyle="italic"
-        android:textColor="#ffffff"
-        android:textSize="10sp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:ignore="SmallSp"
-        />
+        android:layout_margin="5dp"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:dividerHeight="0.0px"
+        android:elevation="8dp"
+        app:cardBackgroundColor="@color/gray"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="10dp"
+        app:cardPreventCornerOverlap="false">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="90dp">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_marginEnd="5dp"
+                android:layout_width="100dp"
+                android:layout_height="90dp"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:id="@+id/textViewTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/imageView"
+                android:text="@string/title"
+                android:layout_marginStart="5dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="5dp"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/textViewDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewTitle"
+                android:layout_toEndOf="@+id/imageView"
+                android:layout_marginStart="5dp"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="@color/gray_text"/>
+
+            <TextView
+                android:id="@+id/textViewTime"
+                android:textStyle="italic"
+                android:textColor="@color/white"
+                android:textSize="10sp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:ignore="SmallSp" />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
 </RelativeLayout>
