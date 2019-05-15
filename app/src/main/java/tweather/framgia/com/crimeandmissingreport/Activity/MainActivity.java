@@ -62,7 +62,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static final int MY_PERMISSION_REQUEST_SMS = 4;
     public static String mDistrictName = "";
     LocationManager locationManager;
-    Toolbar mToolbar;
     BottomNavigationView bottomNavigationView;
     Button mButtonCallHotline;
 
@@ -73,10 +72,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         initView();
         statusCheck();
-        printKey();
     }
 
-    private void printKey() {
+    private void printKeySHA() {
         try {
             @SuppressLint("PackageManagerGetSignatures") PackageInfo infor = getPackageManager()
                     .getPackageInfo("tweather.framgia.com.crimeandmissingreport",
@@ -102,15 +100,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-//            case R.id.buttonCrime:
-//                initCrimeLayout();
-//                break;
-//            case R.id.buttonMissingPerson:
-//                initMissingPersonLayout();
-//                break;
-//            case R.id.buttonProfile:
-//                initProfileLayout();
-//                break;
             case R.id.buttonCallHotline:
                 checkLocationPermission();
                 checkCallPhonePermission();
@@ -118,54 +107,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             default:
                 break;
         }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.currentLocation:
-                checkLocationPermission();
-                statusCheck();
-                break;
-            case R.id.selectLocation:
-                showDialogSelectArea();
-                break;
-            default:
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void showDialogSelectArea() {
-        final Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.dialog_select_area);
-        final Spinner spinnerArea = dialog.findViewById(R.id.spinnerSelectArea);
-        getSpinnerArea(spinnerArea);
-        Button buttonSelect = dialog.findViewById(R.id.buttonSelect);
-        buttonSelect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                callRequestFilter(spinnerArea.getSelectedItem().toString());
-            }
-        });
-        dialog.show();
-    }
-
-    private void getSpinnerArea(Spinner spinner) {
-        ArrayList<String> arrayList = new ArrayList<>();
-        arrayList.add("Cẩm Lệ");
-        arrayList.add("Hải Châu");
-        arrayList.add("Liên Chiểu");
-        arrayList.add("Thanh Khê");
-        arrayList.add("Sơn Trà");
-        arrayList.add("Ngũ Hành Sơn");
-
-        ArrayAdapter<String> adapter =
-                new ArrayAdapter<>(this, R.layout.spinner_textview,
-                        arrayList);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
     }
 
     private void checkLocationPermission() {
@@ -187,9 +128,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     mDistrictName = "";
                 }
             } else {
-                locationManager.requestLocationUpdates(
-                        String.valueOf(locationManager.getBestProvider(new Criteria(), true)),
-                        1000, 0, this);
+                //check enable or disable location
+                final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+                if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    buildAlertMessageNoGps();
+                } else {
+                    locationManager.requestLocationUpdates(
+                            String.valueOf(locationManager.getBestProvider(new Criteria(), true)),
+                            1000, 0, this);
+                }
             }
         }
     }
@@ -210,36 +158,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             buildAlertMessageNoGps();
-        } else {
-            callRequestFilter(mDistrictName);
         }
     }
 
-    public void callRequestFilter(String location) {
-        Call<List<Report>> call = APIUtils.getData(APIUtils.BASE_URL)
-                .GetCrimesByArea(APIUtils.API_GET_CRIMES_BY_AREA + location);
-        call.enqueue(new Callback<List<Report>>() {
-            @Override
-            public void onResponse(Call<List<Report>> call, Response<List<Report>> response) {
-                if (response.isSuccessful()) {
-                    if (response.body().size() > 0) {
-                        CrimeListFragment.crimeReportArrayList = (ArrayList<Report>) response.body();
-                        CrimeListFragment.mRecyclerViewNewsAdapter =
-                                new RecyclerViewNewsAdapter(CrimeListFragment.crimeReportArrayList,
-                                        MainActivity.this);
-                        CrimeListFragment.mRecyclerViewNew.setAdapter(CrimeListFragment.mRecyclerViewNewsAdapter);
-                    } else {
-                        Toast.makeText(MainActivity.this, "No report about this location!", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
 
-            @Override
-            public void onFailure(Call<List<Report>> call, Throwable t) {
-                Log.d("checkFail", t.getMessage());
-            }
-        });
-    }
 
     private void buildAlertMessageNoGps() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dark_Dialog);

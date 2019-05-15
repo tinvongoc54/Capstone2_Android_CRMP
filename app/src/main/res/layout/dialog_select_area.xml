@@ -2,51 +2,39 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_login"
     android:orientation="vertical"
     android:paddingLeft="20dp"
-    android:paddingRight="20dp"
     android:paddingTop="20dp"
-    android:background="@drawable/background_login">
+    android:paddingRight="20dp">
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="70dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="15dp"
-        android:src="@drawable/avatar"
         android:contentDescription="@string/todo"
-        />
-    <RelativeLayout
+        android:src="@drawable/avatar" />
+
+    <Spinner
+        android:id="@+id/spinnerSelectArea"
+        style="@style/spinner_style"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        >
-        <TextView
-            android:id="@+id/textViewArea"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:text="@string/area"
-            android:textColor="#bfa134"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            />
-        <Spinner
-            android:id="@+id/spinnerSelectArea"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_toEndOf="@+id/textViewArea"
-            />
-    </RelativeLayout>
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_toEndOf="@+id/textViewArea" />
+
     <Button
-        android:layout_gravity="center_horizontal"
         android:id="@+id/buttonSelect"
         android:layout_width="match_parent"
         android:layout_height="30dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
         android:layout_marginBottom="20dp"
-        android:text="Select"
-        android:background="@drawable/custom_button_login"
-        />
+        android:background="@drawable/custom_button_post"
+        android:text="Select" />
 </LinearLayout>

@@ -68,7 +68,6 @@ public class DetailMissingPersonActivity extends AppCompatActivity {
     ImageView mImageView;
     TextView mTextViewTitle, mTextViewDes, mTextViewTime;
     NestedScrollView mNestedScrollView;
-    Toolbar mToolbar;
     Button mButtonPostComment;
     EditText mEditTextComment;
     RecyclerView mRecyclerViewComment;

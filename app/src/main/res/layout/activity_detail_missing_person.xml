@@ -8,13 +8,6 @@
     android:orientation="vertical"
     tools:context=".Activity.DetailMissingPersonActivity">
 
-    <!--<android.support.v7.widget.Toolbar-->
-        <!--android:id="@+id/toolbarMissingPersonDetail"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="0dp"-->
-        <!--android:layout_weight="0.6"-->
-        <!--android:background="@color/primary" />-->
-
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayoutDetailMissing"
         android:layout_width="match_parent"
@@ -31,98 +24,113 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent">
 
-                    <ImageView
-                        android:id="@+id/imageViewDetail"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:scaleType="centerCrop" />
-
-                    <TextView
-                        android:id="@+id/textViewTitleDetail"
+                    <RelativeLayout
+                        android:id="@+id/test"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/imageViewDetail"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:text="@string/title"
-                        android:textColor="@color/yellow1"
-                        android:textSize="17sp"
-                        android:textStyle="bold" />
+                        android:background="@drawable/coner_bottom">
 
-                    <TextView
-                        android:id="@+id/textViewTimeDetail"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/textViewTitleDetail"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginEnd="10dp"
-                        android:text="@string/date_submitted"
-                        android:textColor="#c2c2bf"
-                        android:textSize="15sp" />
+                        <android.support.v7.widget.CardView
+                            android:id="@+id/cardViewImage"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardBackgroundColor="@android:color/transparent"
+                            app:cardCornerRadius="10dp">
 
-                    <TextView
-                        android:id="@+id/textViewDescriptionDetail"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/textViewTimeDetail"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginEnd="10dp"
-                        android:text="@string/description"
-                        android:textColor="#c2c2bf"
-                        android:textSize="15sp" />
+                            <ImageView
+                                android:id="@+id/imageViewDetail"
+                                android:layout_width="match_parent"
+                                android:layout_height="280dp"
+                                android:scaleType="fitXY" />
+                        </android.support.v7.widget.CardView>
 
-                    <TextView
-                        android:id="@+id/textViewCommentDetail"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/textViewDescriptionDetail"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginEnd="5dp"
-                        android:text="@string/comment"
-                        android:textColor="@color/yellow1"
-                        android:textSize="17sp"
-                        android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/textViewTitleDetail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/cardViewImage"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginEnd="5dp"
+                            android:text="@string/title"
+                            android:textColor="@color/black"
+                            android:textSize="17sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/textViewTimeDetail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/textViewTitleDetail"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginEnd="10dp"
+                            android:text="@string/date_submitted"
+                            android:textColor="@color/black"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:id="@+id/textViewDescriptionDetail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/textViewTimeDetail"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:text="@string/description"
+                            android:textColor="@color/black"
+                            android:textSize="15sp" />
+
+                    </RelativeLayout>
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/recyclerViewCommentDetail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/textViewCommentDetail"
+                        android:layout_below="@+id/test"
                         android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
                         android:layout_marginEnd="10dp"
                         app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 
                     <EditText
                         android:id="@+id/editTextComment"
-                        android:layout_width="match_parent"
+                        android:layout_width="270dp"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/recyclerViewCommentDetail"
                         android:layout_marginStart="10dp"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginEnd="10dp"
-                        android:hint="@string/write_your_comment"
-                        android:textColor="#c2c2bf"
-                        android:textColorHint="#535353"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/background_report_border"
+                        android:drawableLeft="@drawable/pencil"
+                        android:drawablePadding="5dp"
+                        android:hint="Write your comment..."
+                        android:inputType="text"
+                        android:paddingLeft="7dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:textColor="@color/yellow1"
+                        android:textColorHint="@color/gray_text"
                         android:textSize="15sp"
                         android:textStyle="italic" />
 
                     <Button
                         android:id="@+id/buttonPostComment"
                         android:layout_width="70dp"
-                        android:layout_height="25dp"
-                        android:layout_below="@+id/editTextComment"
+                        android:layout_height="30dp"
+                        android:layout_below="@+id/recyclerViewCommentDetail"
                         android:layout_alignParentEnd="true"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
                         android:layout_marginEnd="10dp"
                         android:layout_marginBottom="10dp"
-                        android:background="@drawable/custom_button"
+                        android:layout_toEndOf="@+id/editTextComment"
+                        android:background="@drawable/custom_button_post"
                         android:text="@string/post"
-                        android:textColor="@drawable/custom_text_color"
+                        android:textColor="@color/black"
                         android:textSize="13sp" />
                 </RelativeLayout>
             </android.support.v4.widget.NestedScrollView>
@@ -135,11 +143,10 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginEnd="15dp"
                 android:layout_marginBottom="15dp"
-                app:fab_addButtonColorNormal="@color/primary"
+                app:fab_addButtonColorNormal="@color/yellow1"
                 app:fab_addButtonColorPressed="@color/black"
-                app:fab_addButtonPlusIconColor="@color/black">
-            </com.getbase.floatingactionbutton.FloatingActionsMenu>
-
+                app:fab_addButtonPlusIconColor="@color/black"
+                />
         </RelativeLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

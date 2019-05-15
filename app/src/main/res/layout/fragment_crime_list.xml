@@ -48,17 +48,32 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/recyclerViewSpecial"
                     android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
                     android:text="@string/tinmoinhat"
                     android:textColor="@color/white"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
+                <Spinner
+                    android:id="@+id/spinnerFilter"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_below="@+id/recyclerViewSpecial"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="7dp"
+                    android:paddingEnd="7dp"
+                    android:paddingTop="-3dp"
+                    android:paddingBottom="-3dp"
+                    android:background="@drawable/custom_button_post"
+                    android:popupBackground="@drawable/background_gradient"/>
+
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recyclerViewNew"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/textViewNew"
+                    android:layout_below="@id/spinnerFilter"
                     app:layoutManager="android.support.v7.widget.LinearLayoutManager"
                     />
             </RelativeLayout>
