@@ -5,9 +5,11 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
@@ -17,6 +19,7 @@ import tweather.framgia.com.crimeandmissingreport.R;
 public class AboutUsFragment extends Fragment {
 
     ImageView mImageViewTin, mImageViewQuy, mImageViewThang, mImageViewThuan;
+    CardView mCardViewTin, mCardViewQuy, mCardViewThang, mCardViewThuan;
     NestedScrollView mNestedScrollView;
 
     @Nullable
@@ -24,6 +27,7 @@ public class AboutUsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_about_us, container, false);
         initView(view);
+        initAnimation();
         return view;
     }
 
@@ -35,6 +39,9 @@ public class AboutUsFragment extends Fragment {
                         "672089236268228_1711446391877795840_n.jpg?_nc_cat=100&_nc_oc=AQnV4fzkzRV8B" +
                         "MriCK8hWVSrpgZwwtqSlukZdp0nQtxtptLxqa2XAUtZZoNYDg4ProhKEG_BoQvjV-QVS_OvPXqx&_nc_ht=scontent.fdad1-1.fna&oh=b0feba16c9ed8da9c55bd269c9bab6a8&oe=5D68DA20")
                 .into(mImageViewTin);
+        mCardViewTin = view.findViewById(R.id.cardViewTin);
+        mCardViewTin.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.item_animation_down_to_up_2));
+
         mImageViewQuy = view.findViewById(R.id.imageViewQuy);
         Picasso.get()
                 .load("https://scontent.fdad1-1.fna.fbcdn.net/v/t1.0-9/51777824_181" +
@@ -42,6 +49,9 @@ public class AboutUsFragment extends Fragment {
                         "FjAlsPAFMdzznG9I5rtm8mGsU8A_AEpD_scu42gjTAtXCy-pJ9xxexxskXTgh9J_LPTupebgz" +
                         "UvNrJ0&_nc_ht=scontent.fdad1-1.fna&oh=9d67427d3af3fff41750e51d0d155a83&oe=5D75EE95")
                 .into(mImageViewQuy);
+        mCardViewQuy = view.findViewById(R.id.cardViewQuy);
+        mCardViewQuy.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.item_animation_down_to_up_2));
+
         mImageViewThang = view.findViewById(R.id.imageViewThang);
         Picasso.get()
                 .load("https://scontent.fdad1-1.fna.fbcdn.net/v/t1.0-9/52444278_235489" +
@@ -49,6 +59,9 @@ public class AboutUsFragment extends Fragment {
                         "SwedVCCKMW6kBCWQOn6QQYO3vuYFILtv8bsxRJK9aRGPjEOf58WBJ2bgQ6-a4Qz_2YOYqa7&_nc_ht=s" +
                         "content.fdad1-1.fna&oh=c79e184b0ad5ad5a733690914861c01b&oe=5D6FD5BB")
                 .into(mImageViewThang);
+        mCardViewThang = view.findViewById(R.id.cardViewThang);
+        mCardViewThang.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.item_animation_down_to_up_2));
+
         mImageViewThuan = view.findViewById(R.id.imageViewThuan);
         Picasso.get()
                 .load("https://scontent.fdad1-1.fna.fbcdn.net/v/t1.0-9/51924594_1" +
@@ -56,5 +69,41 @@ public class AboutUsFragment extends Fragment {
                         "8-opByf7iXI9conZ6-OYYr0lwd7LQQ-ktCEciQ6EvQk3bmg4pSHnkBRBNVS3Cb0TAcHdBc&_nc_ht=scont" +
                         "ent.fdad1-1.fna&oh=6aaf00d9689595e3282e8367dfeedcc4&oe=5D64EBD1")
                 .into(mImageViewThuan);
+        mCardViewThuan = view.findViewById(R.id.cardViewThuan);
+        mCardViewThuan.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.item_animation_down_to_up_2));
+    }
+
+    private void initAnimation() {
+        mCardViewTin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.clearAnimation();
+                v.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.item_animation_rotate));
+            }
+        });
+
+        mCardViewQuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.clearAnimation();
+                v.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.item_animation_rotate));
+            }
+        });
+
+        mCardViewThang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.clearAnimation();
+                v.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.item_animation_rotate));
+            }
+        });
+
+        mCardViewThuan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.clearAnimation();
+                v.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.item_animation_rotate));
+            }
+        });
     }
 }

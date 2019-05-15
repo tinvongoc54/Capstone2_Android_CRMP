@@ -19,14 +19,15 @@
     </android.support.v7.widget.CardView>
     <TextView
         android:id="@+id/textViewTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="190dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/cardViewNews"
         android:layout_centerInParent="true"
+        android:gravity="center_horizontal"
         android:layout_marginTop="1dp"
         android:background="@android:color/transparent"
         android:text="@string/toiphamtruyna"
         android:textColor="#c1c1c1"
         android:textSize="14sp"
-        android:fontFamily="@font/montserratbold" />
+        android:fontFamily="@font/montserratmedium" />
 </RelativeLayout>

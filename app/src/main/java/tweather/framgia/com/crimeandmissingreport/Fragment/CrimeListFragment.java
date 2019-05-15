@@ -28,11 +28,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -61,7 +63,6 @@ public class CrimeListFragment extends Fragment {
     NestedScrollView mNestedScrollView;
     SwipeRefreshLayout mSwipeRefreshLayout;
     Spinner mSpinner;
-
 
     @Nullable
     @Override
@@ -292,8 +293,12 @@ public class CrimeListFragment extends Fragment {
     }
 
     private void initRecyclerViewNew() {
+        mRecyclerViewNew.setLayoutAnimation(AnimationUtils
+                .loadLayoutAnimation(getContext(),
+                        R.anim.layout_animation_down_to_up));
         mRecyclerViewNewsAdapter = new RecyclerViewNewsAdapter(crimeReportArrayList, getContext());
         mRecyclerViewNew.setAdapter(mRecyclerViewNewsAdapter);
+        mRecyclerViewNew.scheduleLayoutAnimation();
     }
 
     public void initRecyclerViewSpecial() {

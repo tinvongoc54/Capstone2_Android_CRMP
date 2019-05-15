@@ -54,7 +54,11 @@ public class RecyclerViewMissingPersonAdapter
             viewHolder.mImageView.setImageResource(R.drawable.avatar);
         }
 
-        viewHolder.mTextViewTitle.setText(mReportList.get(i).getTitle());
+        if (mReportList.get(i).getTitle().length() > 23) {
+            viewHolder.mTextViewTitle.setText(mReportList.get(i).getTitle().substring(0, 22) + "...");
+        } else {
+            viewHolder.mTextViewTitle.setText(mReportList.get(i).getTitle());
+        }
 
         if (mReportList.get(i).getDescription().length() > 120) {
             viewHolder.mTextViewDes.setText(

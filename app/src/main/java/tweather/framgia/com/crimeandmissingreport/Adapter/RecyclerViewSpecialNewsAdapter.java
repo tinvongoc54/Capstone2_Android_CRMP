@@ -40,6 +40,7 @@ public class RecyclerViewSpecialNewsAdapter
         return new ViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder,
             @SuppressLint("RecyclerView") final int i) {
@@ -52,8 +53,14 @@ public class RecyclerViewSpecialNewsAdapter
             viewHolder.mImageView.setImageResource(R.drawable.avatar);
         }
 
-        viewHolder.mTextView.setText(
-                mCrimeReportList.get(i).getTitle());
+        if (mCrimeReportList.get(i).getTitle().length() > 35) {
+            viewHolder.mTextView.setText(
+                    mCrimeReportList.get(i).getTitle().substring(0, 34) + "...");
+        } else {
+            viewHolder.mTextView.setText(
+                    mCrimeReportList.get(i).getTitle());
+        }
+
         viewHolder.mRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -1,6 +1,7 @@
 package tweather.framgia.com.crimeandmissingreport.Activity;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -13,12 +14,14 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,20 +41,21 @@ import tweather.framgia.com.crimeandmissingreport.Fragment.CrimeListFragment;
 import tweather.framgia.com.crimeandmissingreport.Fragment.ProfileCrimeReportListFragment;
 import tweather.framgia.com.crimeandmissingreport.Object.Comment;
 import tweather.framgia.com.crimeandmissingreport.Object.Report;
+import tweather.framgia.com.crimeandmissingreport.Object.ReportCategory;
 import tweather.framgia.com.crimeandmissingreport.R;
 import tweather.framgia.com.crimeandmissingreport.Retrofit.APIUtils;
 
 public class DetailCrimeActivity extends AppCompatActivity {
 
-    ImageView mImageView;
+    ImageView mImageView, mImageViewReport;
     TextView mTextViewTitle, mTextViewArea, mTextViewDes, mTextViewTime;
     EditText mEditTextComment;
     Button mButtonPostComment;
     NestedScrollView mNestedScrollView;
-    Toolbar mToolbar;
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mRecyclerViewComment;
     Report crimeReport;
+    Spinner spinnerReportCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,14 +73,12 @@ public class DetailCrimeActivity extends AppCompatActivity {
 
     private void initView() {
         mImageView = findViewById(R.id.imageViewDetail);
+        mImageViewReport = findViewById(R.id.imageViewReport);
         mTextViewTitle = findViewById(R.id.textViewTitleDetail);
         mTextViewArea = findViewById(R.id.textViewAreaDetail);
         mTextViewDes = findViewById(R.id.textViewDescriptionDetail);
         mTextViewTime = findViewById(R.id.textViewTime);
         mNestedScrollView = findViewById(R.id.nestedScrollViewDetailCrime);
-//        mToolbar = findViewById(R.id.toolbarCrimeDetail);
-//        setSupportActionBar(mToolbar);
-//        mToolbar.setNavigationIcon(R.drawable.back);
         mRecyclerViewComment = findViewById(R.id.recyclerViewCommentDetail);
         mEditTextComment = findViewById(R.id.editTextComment);
         mButtonPostComment = findViewById(R.id.buttonPostComment);
@@ -117,7 +119,7 @@ public class DetailCrimeActivity extends AppCompatActivity {
         callComment.enqueue(new Callback<List<Comment>>() {
             @Override
             public void onResponse(@NonNull Call<List<Comment>> call,
-                    @NonNull Response<List<Comment>> response) {
+                                   @NonNull Response<List<Comment>> response) {
                 if (response.body() != null) {
                     ArrayList<Comment> commentArrayList = (ArrayList<Comment>) response.body();
                     initRecyclerView(commentArrayList);
@@ -132,6 +134,10 @@ public class DetailCrimeActivity extends AppCompatActivity {
     }
 
     private void initRecyclerView(ArrayList<Comment> commentArrayList) {
+        mRecyclerViewComment.setLayoutAnimation(AnimationUtils
+                .loadLayoutAnimation(this,
+                        R.anim.layout_animation_down_to_up));
+
         RecyclerViewCommentAdapter recyclerViewCommentAdapter =
                 new RecyclerViewCommentAdapter(commentArrayList, this, true,
                         crimeReport.getUserId());
@@ -171,19 +177,76 @@ public class DetailCrimeActivity extends AppCompatActivity {
     }
 
     public void initEvent() {
-//        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                finish();
-//                startActivity(new Intent(DetailCrimeActivity.this, MainActivity.class));
-//            }
-//        });
         mButtonPostComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!mEditTextComment.equals("")) {
                     postComment();
                 }
+            }
+        });
+        mImageViewReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogReport();
+            }
+        });
+    }
+
+    private void showDialogReport() {
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_send_report);
+        spinnerReportCategory = dialog.findViewById(R.id.spinnerSelectArea);
+        getSpinnerReport();
+        Button buttonSelect = dialog.findViewById(R.id.buttonSelect);
+        buttonSelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                postReport(((ReportCategory) spinnerReportCategory.getSelectedItem()).getId());
+            }
+        });
+        dialog.show();
+    }
+
+    private void getSpinnerReport() {
+        Call<List<ReportCategory>> call = APIUtils.getData(APIUtils.BASE_URL)
+                .GetReportCategory(APIUtils.API_GET_REPORT_CATEGORY_URL);
+        call.enqueue(new Callback<List<ReportCategory>>() {
+            @Override
+            public void onResponse(Call<List<ReportCategory>> call, Response<List<ReportCategory>> response) {
+                if (response.isSuccessful()) {
+                    ArrayList<ReportCategory> arrayList = (ArrayList<ReportCategory>) response.body();
+
+                    ArrayAdapter<ReportCategory> adapter =
+                            new ArrayAdapter<>(DetailCrimeActivity.this, R.layout.spinner_textview,
+                                    Objects.requireNonNull(arrayList));
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerReportCategory.setAdapter(adapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ReportCategory>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void postReport(int reportId) {
+        Call<JSONObject> call = APIUtils.getData(APIUtils.BASE_URL)
+                .PostReport(1, crimeReport.getId(), reportId);
+        call.enqueue(new Callback<JSONObject>() {
+            @Override
+            public void onResponse(Call<JSONObject> call, Response<JSONObject> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(DetailCrimeActivity.this, "Send!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JSONObject> call, Throwable t) {
+
             }
         });
     }
@@ -201,7 +264,7 @@ public class DetailCrimeActivity extends AppCompatActivity {
             call.enqueue(new Callback<JSONObject>() {
                 @Override
                 public void onResponse(@NonNull Call<JSONObject> call,
-                        @NonNull Response<JSONObject> response) {
+                                       @NonNull Response<JSONObject> response) {
                     Log.d("checkComment", response.toString());
                     if (response.body() != null) {
                         getListComment();
@@ -211,7 +274,7 @@ public class DetailCrimeActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(@NonNull Call<JSONObject> call,
-                        @NonNull Throwable throwable) {
+                                      @NonNull Throwable throwable) {
                     Log.d("checkFailPostComment", throwable.getMessage());
                 }
             });
