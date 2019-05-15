@@ -18,6 +18,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
             android:text="ABOUT US"
+            android:fontFamily="@font/montserratlight"
             android:textColor="@color/yellow1"
             android:textSize="30sp" />
 
@@ -28,6 +29,7 @@
             android:layout_below="@+id/textViewAboutUs"
             android:layout_marginStart="15dp"
             android:layout_marginTop="10dp"
+            android:fontFamily="@font/montserratlight"
             android:text="What we do?"
             android:textColor="@color/yellow1"
             android:textSize="20sp" />
@@ -39,6 +41,7 @@
             android:layout_below="@+id/textViewTitle"
             android:layout_marginStart="15dp"
             android:layout_marginTop="5dp"
+            android:fontFamily="@font/montserratmedium"
             android:text="Hello this is XLZ group was founded from the young people passionate about technology. We work with mobile and web application projects, bringing practical applications to life."
             android:textColor="@color/white"
             android:textSize="15sp" />
@@ -51,6 +54,7 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="20dp"
             android:text="Who we are?"
+            android:fontFamily="@font/montserratlight"
             android:textColor="@color/yellow1"
             android:textSize="20sp" />
 

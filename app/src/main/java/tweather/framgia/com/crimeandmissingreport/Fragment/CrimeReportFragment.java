@@ -113,8 +113,8 @@ public class CrimeReportFragment extends Fragment implements LocationListener {
         mRadioButtonPresentLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                statusCheck();
                 checkPermissionAndGetLocationName();
+                statusCheck();
             }
         });
         mRadioButtonSelectLocation.setOnCheckedChangeListener(
@@ -163,9 +163,16 @@ public class CrimeReportFragment extends Fragment implements LocationListener {
                     mLocationName = "";
                 }
             } else {
-                mLocationManager.requestLocationUpdates(
-                        String.valueOf(mLocationManager.getBestProvider(new Criteria(), true)),
-                        1000, 0, this);
+                //check enable or disable location
+                final LocationManager manager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+
+                if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    buildAlertMessageNoGps();
+                } else {
+                    mLocationManager.requestLocationUpdates(
+                            String.valueOf(mLocationManager.getBestProvider(new Criteria(), true)),
+                            1000, 0, this);
+                }
             }
         }
         Toast.makeText(getContext(), mLocationName, Toast.LENGTH_SHORT).show();
@@ -370,16 +377,16 @@ public class CrimeReportFragment extends Fragment implements LocationListener {
 
     private void buildAlertMessageNoGps() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.AppTheme_Dark_Dialog);
-        builder.setMessage("Your GPS seems to be disabled, do you want to enable it?")
+        builder.setMessage("Your location seems to be disabled, do you want to enable it?")
                 .setCancelable(false)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(final DialogInterface dialog, final int id) {
-                        startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-                    }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                .setPositiveButton("No", new DialogInterface.OnClickListener() {
                     public void onClick(final DialogInterface dialog, final int id) {
                         dialog.cancel();
+                    }
+                })
+                .setNegativeButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, final int id) {
+                        startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
                     }
                 });
         final AlertDialog alert = builder.create();

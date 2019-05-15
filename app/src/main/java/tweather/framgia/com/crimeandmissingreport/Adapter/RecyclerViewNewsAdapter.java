@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -44,7 +43,7 @@ public class RecyclerViewNewsAdapter
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder,
-            @SuppressLint("RecyclerView") final int i) {
+                                 @SuppressLint("RecyclerView") final int i) {
         if (!mCrimeReportList.get(i).getImage().equals("")) {
             Picasso.get()
                     .load(mCrimeReportList.get(i).getImage())
