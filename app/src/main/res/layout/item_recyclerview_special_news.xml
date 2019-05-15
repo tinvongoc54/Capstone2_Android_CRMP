@@ -28,5 +28,5 @@
         android:text="@string/toiphamtruyna"
         android:textColor="#c1c1c1"
         android:textSize="14sp"
-        android:textStyle="bold" />
+        android:fontFamily="@font/montserratbold" />
 </RelativeLayout>
