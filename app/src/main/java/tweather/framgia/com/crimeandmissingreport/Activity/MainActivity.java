@@ -20,6 +20,7 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -45,6 +46,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import tweather.framgia.com.crimeandmissingreport.Adapter.RecyclerViewNewsAdapter;
+import tweather.framgia.com.crimeandmissingreport.Fragment.AboutUsFragment;
 import tweather.framgia.com.crimeandmissingreport.Fragment.CrimeFragment;
 import tweather.framgia.com.crimeandmissingreport.Fragment.CrimeListFragment;
 import tweather.framgia.com.crimeandmissingreport.Fragment.MissingPersonFragment;
@@ -61,6 +63,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static String mDistrictName = "";
     LocationManager locationManager;
     Toolbar mToolbar;
+    BottomNavigationView bottomNavigationView;
+    Button mButtonCallHotline;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,15 +102,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.buttonCrime:
-                initCrimeLayout();
-                break;
-            case R.id.buttonMissingPerson:
-                initMissingPersonLayout();
-                break;
-            case R.id.buttonProfile:
-                initProfileLayout();
-                break;
+//            case R.id.buttonCrime:
+//                initCrimeLayout();
+//                break;
+//            case R.id.buttonMissingPerson:
+//                initMissingPersonLayout();
+//                break;
+//            case R.id.buttonProfile:
+//                initProfileLayout();
+//                break;
             case R.id.buttonCallHotline:
                 checkLocationPermission();
                 checkCallPhonePermission();
@@ -336,9 +340,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case 3:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this,"Permission Granted, Now your application can access CAMERA.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Permission Granted, Now your application can access CAMERA.", Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(this,"Permission Canceled, Now your application cannot access CAMERA.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Permission Canceled, Now your application cannot access CAMERA.", Toast.LENGTH_LONG).show();
                 }
                 break;
         }
@@ -376,13 +380,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setSupportActionBar(mToolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle("Crime Report");
 
+        mButtonCallHotline = findViewById(R.id.buttonCallHotline);
+
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.frameLayout, new CrimeFragment())
                 .commit();
 
-        findViewById(R.id.buttonCrime).setOnClickListener(this);
-        findViewById(R.id.buttonMissingPerson).setOnClickListener(this);
-        findViewById(R.id.buttonProfile).setOnClickListener(this);
+        bottomNavigationView = findViewById(R.id.bnv);
+        bottomNavigationView.setOnNavigationItemSelectedListener(navLister);
+
+//        findViewById(R.id.buttonCrime).setOnClickListener(this);
+//        findViewById(R.id.buttonMissingPerson).setOnClickListener(this);
+//        findViewById(R.id.buttonProfile).setOnClickListener(this);
         findViewById(R.id.buttonCallHotline).setOnClickListener(this);
 
         if (getSharedPreferences(LoginDialog.SHAREDPREFERENCES, MODE_PRIVATE)
@@ -391,16 +400,47 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    private BottomNavigationView.OnNavigationItemSelectedListener navLister =
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    switch (item.getItemId()) {
+                        case R.id.nav_crime:
+                            initCrimeLayout();
+                            return true;
+                        case R.id.nav_missing:
+                            initMissingPersonLayout();
+                            return true;
+                        case R.id.nav_profile:
+                            initProfileLayout();
+                            return true;
+                        case R.id.nav_about_us:
+                            initAbooutUsLayout();
+                            return true;
+                    }
+                    return false;
+                }
+            };
+
+    private void initAbooutUsLayout() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frameLayout, new AboutUsFragment())
+                .commit();
+        mButtonCallHotline.setVisibility(View.INVISIBLE);
+    }
+
     private void initCrimeLayout() {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.frameLayout, new CrimeFragment())
                 .commit();
+        mButtonCallHotline.setVisibility(View.VISIBLE);
     }
 
     private void initMissingPersonLayout() {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.frameLayout, new MissingPersonFragment())
                 .commit();
+        mButtonCallHotline.setVisibility(View.VISIBLE);
     }
 
     private void initProfileLayout() {
@@ -412,6 +452,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Toast.makeText(this, "You are not logged in!", Toast.LENGTH_SHORT).show();
             new LoginDialog(MainActivity.this).clickButtonProfile();
         }
+        mButtonCallHotline.setVisibility(View.VISIBLE);
     }
 
     @Override

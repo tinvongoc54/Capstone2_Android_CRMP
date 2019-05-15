@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent">
+
+    <ImageView
+        android:id="@+id/imageViewLogoAboutUs"
+        android:layout_width="180dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/avatar" />
+
+    <RelativeLayout
+        android:layout_below="@id/imageViewLogoAboutUs"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardViewTin"
+            android:layout_width="150dp"
+            android:layout_height="200dp"
+            app:cardBackgroundColor="@color/gray"
+            app:cardCornerRadius="5dp">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/imageViewTin"
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp"
+                    android:scaleType="fitXY"
+                    android:layout_marginBottom="3dp" />
+
+                <TextView
+                    android:id="@+id/textViewTin"
+                    android:text="Võ Ngọc Tín"
+                    android:textStyle="bold"
+                    android:textColor="@color/yellow1"
+                    android:gravity="center_horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imageViewTin"
+                    android:layout_marginBottom="3dp" />
+
+                <TextView
+                    android:id="@+id/textViewDesTin"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/textViewTin"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="3dp" />
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardViewQuy"
+            android:layout_width="150dp"
+            android:layout_height="200dp"
+            android:layout_marginEnd="15dp"
+            android:layout_alignParentEnd="true"
+            app:cardBackgroundColor="@color/gray"
+            app:cardCornerRadius="5dp">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/imageViewQuy"
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp"
+                    android:scaleType="fitXY"
+                    android:layout_marginBottom="3dp" />
+
+                <TextView
+                    android:id="@+id/textViewQuy"
+                    android:text="Nguyễn Cao Quý"
+                    android:textStyle="bold"
+                    android:textColor="@color/yellow1"
+                    android:gravity="center_horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imageViewQuy"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="3dp" />
+
+                <TextView
+                    android:id="@+id/textViewDesQuy"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/textViewQuy"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="3dp" />
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardViewThang"
+            android:layout_width="150dp"
+            android:layout_height="200dp"
+            android:layout_below="@+id/cardViewTin"
+            android:layout_marginTop="20dp"
+            app:cardBackgroundColor="@color/gray"
+            app:cardCornerRadius="5dp">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/imageViewThang"
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp"
+                    android:scaleType="fitXY"
+                    android:layout_marginBottom="3dp" />
+
+                <TextView
+                    android:id="@+id/textViewThang"
+                    android:text="Nguyễn Quốc Thắng"
+                    android:textStyle="bold"
+                    android:textColor="@color/yellow1"
+                    android:gravity="center_horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imageViewThang"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="3dp" />
+
+                <TextView
+                    android:id="@+id/textViewDesThang"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/textViewThang"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="3dp" />
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardViewThuan"
+            android:layout_width="150dp"
+            android:layout_height="200dp"
+            android:layout_below="@+id/cardViewQuy"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="15dp"
+            app:cardBackgroundColor="@color/gray"
+            app:cardCornerRadius="5dp">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/imageViewThuan"
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp"
+                    android:scaleType="fitXY"
+                    android:layout_marginBottom="3dp" />
+
+                <TextView
+                    android:id="@+id/textViewThuan"
+                    android:text="Nguyễn Văn Thuận"
+                    android:textStyle="bold"
+                    android:textColor="@color/yellow1"
+                    android:gravity="center_horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imageViewThuan"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="3dp" />
+
+                <TextView
+                    android:id="@+id/textViewDesThuan"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/textViewThuan"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="3dp" />
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+    </RelativeLayout>
+</RelativeLayout>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/background_login"
     android:orientation="vertical"
     android:weightSum="10">
@@ -29,42 +29,19 @@
             android:background="@drawable/call" />
     </FrameLayout>
 
-    <LinearLayout
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bnv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.7"
-        android:orientation="horizontal"
-        android:background="@drawable/background_gradient"
-        android:weightSum="3">
+        android:background="?android:attr/windowBackground"
+        app:itemBackground="@color/yellow1"
+        android:foreground="?attr/selectableItemBackground"
+        app:itemTextColor="@color/gray"
+        app:itemIconTint="@color/gray"
+        app:menu="@menu/menu_button_navigation_view"
+        >
 
-        <Button
-            android:id="@+id/buttonCrime"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Crime"
-            android:textSize="13sp"
-            android:background="@android:color/transparent"
-            tools:ignore="NestedWeights" />
+    </android.support.design.widget.BottomNavigationView>
 
-        <Button
-            android:id="@+id/buttonMissingPerson"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Missing Person"
-            android:textSize="13sp"
-            android:background="@android:color/transparent"
-            tools:ignore="NestedWeights" />
-
-        <Button
-            android:id="@+id/buttonProfile"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Profile"
-            android:textSize="13sp"
-            android:background="@android:color/transparent"
-            tools:ignore="NestedWeights" />
-    </LinearLayout>
 </LinearLayout>
