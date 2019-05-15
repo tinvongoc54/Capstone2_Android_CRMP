@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_login"
+    android:background="@android:color/transparent"
     >
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
@@ -51,7 +51,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="5"
                     android:text="@string/present_location"
-                    android:textColor="@color/gray_text"
+                    android:textColor="@color/white"
                     android:buttonTint="@color/yellow1"
                     />
                 <RadioButton
@@ -60,7 +60,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="5"
                     android:text="@string/choose_location"
-                    android:textColor="@color/gray_text"
+                    android:textColor="@color/white"
                     android:buttonTint="@color/yellow1"
                     />
             </RadioGroup>
@@ -93,7 +93,7 @@
                 android:paddingLeft="7dp"
                 android:drawableLeft="@drawable/pencil"
                 android:drawablePadding="5dp"
-                android:textColorHint="@color/gray_text"
+                android:textColorHint="@color/white"
                 android:background="@drawable/background_report_border"
                 />
             <EditText
@@ -115,7 +115,7 @@
                 android:paddingLeft="7dp"
                 android:drawableStart="@drawable/pencil"
                 android:drawablePadding="5dp"
-                android:textColorHint="@color/gray_text"
+                android:textColorHint="@color/white"
                 android:background="@drawable/background_report_border"
                 />
             <Button

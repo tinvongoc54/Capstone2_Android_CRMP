@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_login"
+    android:background="@android:color/transparent"
     >
     <RelativeLayout
         android:layout_width="match_parent"
@@ -29,7 +29,7 @@
             android:paddingStart="7dp"
             android:drawableStart="@drawable/pencil"
             android:drawablePadding="5dp"
-            android:textColorHint="@color/gray_text"
+            android:textColorHint="@color/white"
             android:background="@drawable/background_report_border"
             />
         <EditText
@@ -51,7 +51,7 @@
             android:paddingLeft="7dp"
             android:drawableStart="@drawable/pencil"
             android:drawablePadding="5dp"
-            android:textColorHint="@color/gray_text"
+            android:textColorHint="@color/white"
             android:background="@drawable/background_report_border"
             />
         <Button

@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
         android:outlineSpotShadowColor="#bfa134"
-        android:textColorHint="#bfa134"
+        android:textColorHint="@drawable/custom_text_color"
         android:outlineAmbientShadowColor="#bfa134"
         >
         <EditText
@@ -35,12 +35,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/email"
-            android:textColor="#bfa134"
-            android:textColorHint="#bfa134"
+            android:textColor="@drawable/custom_text_color"
+            android:textColorHint="@drawable/custom_text_color"
             android:textColorHighlight="#bfa134"
             android:shadowColor="#bfa134"
-            android:outlineAmbientShadowColor="#bfa134"
-            android:outlineSpotShadowColor="#bfa134"
+            android:outlineAmbientShadowColor="@drawable/custom_text_color"
+            android:outlineSpotShadowColor="@drawable/custom_text_color"
             android:inputType="textEmailAddress"
             />
     </android.support.design.widget.TextInputLayout>
@@ -52,15 +52,15 @@
         android:layout_marginBottom="5dp"
         android:outlineSpotShadowColor="#bfa134"
         android:outlineAmbientShadowColor="#bfa134"
-        android:textColorHint="#bfa134"
+        android:textColorHint="@drawable/custom_text_color"
         >
         <EditText
             android:id="@+id/editTextPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/password"
-            android:textColor="#bfa134"
-            android:textColorHint="#bfa134"
+            android:textColor="@drawable/custom_text_color"
+            android:textColorHint="@drawable/custom_text_color"
             android:inputType="textPassword"
             />
     </android.support.design.widget.TextInputLayout>
@@ -68,7 +68,7 @@
     <CheckBox
         android:id="@+id/checkboxRemember"
         android:text="@string/remember_password"
-        android:textColor="#bfa134"
+        android:textColor="@drawable/custom_text_color"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />
@@ -80,7 +80,7 @@
         android:layout_marginBottom="10dp"
         android:layout_marginTop="20dp"
         android:text="@string/login"
-        android:background="#bfa134"
+        android:background="@drawable/custom_button_post"
         />
 
     <TextView
@@ -92,6 +92,6 @@
         android:textStyle="italic|bold"
         android:text="@string/no_account_yet_create_one"
         android:textSize="15sp"
-        android:textColor="#bfa134"
+        android:textColor="@drawable/custom_text_color"
         />
 </LinearLayout>
