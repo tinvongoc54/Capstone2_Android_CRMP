@@ -8,13 +8,6 @@
     android:orientation="vertical"
     tools:context=".Activity.DetailCrimeActivity">
 
-    <!--<android.support.v7.widget.Toolbar-->
-    <!--android:id="@+id/toolbarCrimeDetail"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="0dp"-->
-    <!--android:layout_weight="0.7"-->
-    <!--android:background="@color/yellow1" />-->
-
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayoutDetailCrime"
         android:layout_width="match_parent"
@@ -45,8 +38,8 @@
                         <ImageView
                             android:id="@+id/imageViewDetail"
                             android:layout_width="match_parent"
-                            android:layout_height="200dp"
-                            android:scaleType="centerCrop" />
+                            android:layout_height="280dp"
+                            android:scaleType="fitXY" />
                     </android.support.v7.widget.CardView>
 
                     <TextView
@@ -54,7 +47,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/cardViewImage"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginStart="15dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginEnd="5dp"
                         android:text="@string/title"
@@ -67,7 +60,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/textViewTitleDetail"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginStart="5dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginEnd="10dp">
 
@@ -85,9 +78,9 @@
 
                         <TextView
                             android:id="@+id/textViewTime"
-                            android:layout_width="match_parent"
+                            android:layout_width="306dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
+                            android:layout_marginStart="19dp"
                             android:layout_marginTop="5dp"
                             android:layout_marginEnd="10dp"
                             android:layout_toEndOf="@+id/textViewAreaDetail"
@@ -119,19 +112,6 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
-
-                <!--<EditText-->
-                <!--android:id="@+id/editTextComment"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_below="@+id/recyclerViewCommentDetail"-->
-                <!--android:layout_marginStart="10dp"-->
-                <!--android:layout_marginEnd="10dp"-->
-                <!--android:hint="@string/write_your_comment"-->
-                <!--android:textColor="#c2c2bf"-->
-                <!--android:textColorHint="#535353"-->
-                <!--android:textSize="15sp"-->
-                <!--android:textStyle="italic" />-->
 
                 <EditText
                     android:id="@+id/editTextComment"

@@ -13,4 +13,6 @@
     <color name="white">#fafafa</color>
     <color name="yellow1">#dfb375</color>
     <color name="yellow2">#eace9a</color>
+    <color name="red">#FF0000</color>
+    <color name="yellow">#FFBE00</color>
 </resources>
