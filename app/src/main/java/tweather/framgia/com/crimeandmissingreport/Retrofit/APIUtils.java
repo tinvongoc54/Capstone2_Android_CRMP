@@ -15,8 +15,10 @@ public class APIUtils {
     public static final String API_GET_COMMENT_OF_CRIME_REPORT_URL = API_URL + "crime/";
     public static final String API_GET_COMMENT_OF_MISSING_REPORT_URL = API_URL + "missing/";
     public static final String API_GET_HOTLINE_BY_LOCATION_URL = API_URL + "hotline/";
+    public static final String API_GET_REPORT_CATEGORY_URL = API_URL + "reportcategories";
     public static final String API_POST_COMMENT_CRIME_URL = API_URL + "commentcrimes/";
     public static final String API_POST_COMMENT_MISSING_URL = API_URL + "commentmissings/";
+    public static final String API_POST_REPORT_URL = API_URL + "reports/";
     public static final String API_USERS_URL = API_URL + "users";
     public static final String API_UPDATE_USER_URL = API_URL + "users/";
     public static final String API_CHECK_LOGIN_URL = API_URL + "login";

@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import java.util.ArrayList;
@@ -88,8 +89,15 @@ public class MissingPersonListFragment extends Fragment {
         mRecyclerViewMissingPerson.setHasFixedSize(true);
         mRecyclerViewMissingPerson.setLayoutManager(
                 new LinearLayoutManager(getActivity(), LinearLayout.VERTICAL, false));
+
+        //set animation
+        mRecyclerViewMissingPerson.setLayoutAnimation(AnimationUtils
+                .loadLayoutAnimation(getContext(),
+                        R.anim.layout_animation_down_to_up));
+
         RecyclerViewMissingPersonAdapter recyclerViewMissingPersonAdapter =
                 new RecyclerViewMissingPersonAdapter(missingPersonReportArrayList, getContext());
         mRecyclerViewMissingPerson.setAdapter(recyclerViewMissingPersonAdapter);
+        mRecyclerViewMissingPerson.scheduleLayoutAnimation();
     }
 }

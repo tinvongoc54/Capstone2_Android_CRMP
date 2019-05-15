@@ -22,6 +22,7 @@ import tweather.framgia.com.crimeandmissingreport.Object.CrimeCategory;
 import tweather.framgia.com.crimeandmissingreport.Object.Hotline;
 import tweather.framgia.com.crimeandmissingreport.Object.ImageResponse;
 import tweather.framgia.com.crimeandmissingreport.Object.Report;
+import tweather.framgia.com.crimeandmissingreport.Object.ReportCategory;
 import tweather.framgia.com.crimeandmissingreport.Object.User;
 
 public interface DataClient {
@@ -132,4 +133,12 @@ public interface DataClient {
 
     @GET
     Call<List<Hotline>> GetHotlineByLocation(@Url String url);
+
+    @FormUrlEncoded
+    @POST(APIUtils.API_POST_REPORT_URL)
+    Call<JSONObject> PostReport(@Field("status") int status,
+                                @Field("id") int userId, @Field("reportcategory_id") int reportId);
+
+    @GET
+    Call<List<ReportCategory>> GetReportCategory(@Url String url);
 }

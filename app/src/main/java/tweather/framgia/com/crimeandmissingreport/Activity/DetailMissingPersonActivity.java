@@ -24,6 +24,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -306,6 +307,10 @@ public class DetailMissingPersonActivity extends AppCompatActivity {
     }
 
     private void initRecyclerView(ArrayList<Comment> commentArrayList) {
+        mRecyclerViewComment.setLayoutAnimation(AnimationUtils
+                .loadLayoutAnimation(this,
+                        R.anim.layout_animation_down_to_up));
+
         RecyclerViewCommentAdapter recyclerViewCommentAdapter =
                 new RecyclerViewCommentAdapter(commentArrayList, this, false,
                         missingReport.getUserId());

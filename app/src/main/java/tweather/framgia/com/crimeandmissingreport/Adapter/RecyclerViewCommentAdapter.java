@@ -184,7 +184,7 @@ public class RecyclerViewCommentAdapter
     private void confirmDelete(final int id) {
         AlertDialog.Builder builder =
                 new AlertDialog.Builder(mContext, R.style.AppTheme_Dark_Dialog);
-        builder.setMessage("Do you want to delete this report?")
+        builder.setMessage("Do you want to delete this comment?")
                 .setCancelable(false)
                 .setNegativeButton("Yes", new DialogInterface.OnClickListener() {
                     @Override

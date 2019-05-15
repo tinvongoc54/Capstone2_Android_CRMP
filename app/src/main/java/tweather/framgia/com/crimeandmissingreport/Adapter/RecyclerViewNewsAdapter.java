@@ -53,15 +53,20 @@ public class RecyclerViewNewsAdapter
             viewHolder.mImageView.setImageResource(R.drawable.avatar);
         }
 
-        viewHolder.mTextViewTitle.setText(
-                mCrimeReportList.get(i).getTitle());
+        if (mCrimeReportList.get(i).getTitle().length() > 26) {
+            viewHolder.mTextViewTitle.setText(
+                    mCrimeReportList.get(i).getTitle().substring(0, 25) + "...");
+        } else {
+            viewHolder.mTextViewTitle.setText(
+                    mCrimeReportList.get(i).getTitle());
+        }
         viewHolder.mTextViewArea.setText(
                 mCrimeReportList.get(i).getArea());
 
-        if (mCrimeReportList.get(i).getDescription().length() > 60) {
+        if (mCrimeReportList.get(i).getDescription().length() > 65) {
             viewHolder.mTextViewDes.setText(mCrimeReportList.get(i)
                     .getDescription()
-                    .substring(0, 59) + "...");
+                    .substring(0, 64) + "...");
         } else {
             viewHolder.mTextViewDes.setText(
                     mCrimeReportList.get(i).getDescription());

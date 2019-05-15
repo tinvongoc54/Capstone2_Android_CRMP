@@ -26,21 +26,21 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:outlineSpotShadowColor="#bfa134"
-        android:textColorHint="#bfa134"
-        android:outlineAmbientShadowColor="#bfa134"
+        android:outlineSpotShadowColor="@color/yellow1"
+        android:textColorHint="@color/yellow1"
+        android:outlineAmbientShadowColor="@color/yellow1"
         >
         <EditText
             android:id="@+id/editTextTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Title"
-            android:textColor="#bfa134"
-            android:textColorHint="#bfa134"
-            android:textColorHighlight="#bfa134"
-            android:shadowColor="#bfa134"
-            android:outlineAmbientShadowColor="#bfa134"
-            android:outlineSpotShadowColor="#bfa134"
+            android:textColor="@color/yellow1"
+            android:textColorHint="@color/yellow1"
+            android:textColorHighlight="@color/yellow1"
+            android:shadowColor="@color/yellow1"
+            android:outlineAmbientShadowColor="@color/yellow1"
+            android:outlineSpotShadowColor="@color/yellow1"
             android:inputType="text"
             />
     </android.support.design.widget.TextInputLayout>
@@ -48,8 +48,8 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:outlineSpotShadowColor="#bfa134"
-        android:outlineAmbientShadowColor="#bfa134"
+        android:outlineSpotShadowColor="@color/yellow1"
+        android:outlineAmbientShadowColor="@color/yellow1"
         android:textColorHint="#bfa134"
         >
         <EditText
@@ -57,8 +57,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Discription"
-            android:textColor="#bfa134"
-            android:textColorHint="#bfa134"
+            android:textColor="@color/yellow1"
+            android:textColorHint="@color/yellow1"
             android:inputType="text|textMultiLine"
             tools:ignore="TextFields" />
     </android.support.design.widget.TextInputLayout>
@@ -67,7 +67,7 @@
         android:id="@+id/textViewImage"
         android:layout_marginTop="15dp"
         android:textSize="20dp"
-        android:textColor="#bfa134"
+        android:textColor="@color/yellow1"
         android:text="Image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -101,7 +101,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp"
             android:text="Edit"
-            android:background="#bfa134"
+            android:background="@drawable/custom_button_post"
             />
 
 </LinearLayout>
