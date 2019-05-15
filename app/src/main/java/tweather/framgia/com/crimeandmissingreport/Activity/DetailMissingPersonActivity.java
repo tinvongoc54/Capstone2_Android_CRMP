@@ -121,9 +121,9 @@ public class DetailMissingPersonActivity extends AppCompatActivity {
         mTextViewDes = findViewById(R.id.textViewDescriptionDetail);
         mTextViewTime = findViewById(R.id.textViewTimeDetail);
         mNestedScrollView = findViewById(R.id.nestedScrollViewDetailMissing);
-        mToolbar = findViewById(R.id.toolbarMissingPersonDetail);
-        setSupportActionBar(mToolbar);
-        mToolbar.setNavigationIcon(R.drawable.back);
+//        mToolbar = findViewById(R.id.toolbarMissingPersonDetail);
+//        setSupportActionBar(mToolbar);
+//        mToolbar.setNavigationIcon(R.drawable.back);
         mButtonPostComment = findViewById(R.id.buttonPostComment);
         mEditTextComment = findViewById(R.id.editTextComment);
         mRecyclerViewComment = findViewById(R.id.recyclerViewCommentDetail);
@@ -224,7 +224,7 @@ public class DetailMissingPersonActivity extends AppCompatActivity {
                     ProfileMissingReportListFragment.reportArrayList.get(positionProfileMissing);
         }
 
-        mToolbar.setTitle(Objects.requireNonNull(missingReport).getTitle());
+//        mToolbar.setTitle(Objects.requireNonNull(missingReport).getTitle());
         if (!missingReport.getImage().equals("")) {
             Picasso.get()
                     .load(missingReport.getImage())
@@ -256,13 +256,13 @@ public class DetailMissingPersonActivity extends AppCompatActivity {
     }
 
     public void initEvent() {
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(DetailMissingPersonActivity.this, MainActivity.class));
-                finish();
-            }
-        });
+//        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(DetailMissingPersonActivity.this, MainActivity.class));
+//                finish();
+//            }
+//        });
         mButtonPostComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/nestedScrollView">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent">
+
+        <TextView
+            android:id="@+id/textViewAboutUs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="ABOUT US"
+            android:textColor="@color/yellow1"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/textViewTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewAboutUs"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:text="What we do?"
+            android:textColor="@color/yellow1"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/textViewTitle2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewTitle"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:text="Hello this is XLZ group was founded from the young people passionate about technology. We work with mobile and web application projects, bringing practical applications to life."
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/textViewTitle3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewTitle2"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="20dp"
+            android:text="Who we are?"
+            android:textColor="@color/yellow1"
+            android:textSize="20sp" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewTitle3"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@android:color/transparent">
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardViewTin"
+                android:layout_width="150dp"
+                android:layout_height="200dp"
+                app:cardBackgroundColor="@color/colorPrimary"
+                app:cardCornerRadius="5dp">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/imageViewTin"
+                        android:layout_width="match_parent"
+                        android:layout_height="130dp"
+                        android:layout_marginBottom="3dp"
+                        android:scaleType="fitXY" />
+
+                    <TextView
+                        android:id="@+id/textViewTin"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/imageViewTin"
+                        android:layout_marginBottom="3dp"
+                        android:gravity="center_horizontal"
+                        android:text="Võ Ngọc Tín"
+                        android:textColor="@color/yellow1"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textViewDesTin"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/textViewTin"
+                        android:layout_centerHorizontal="true"
+                        android:layout_margin="2dp"
+                        android:gravity="center_horizontal"
+                        android:text="Life is the story, makes yours the best seller."
+                        android:textColor="@color/white"
+                        android:textSize="13dp" />
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardViewQuy"
+                android:layout_width="150dp"
+                android:layout_height="200dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="15dp"
+                app:cardBackgroundColor="@color/colorPrimary"
+                app:cardCornerRadius="5dp">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/imageViewQuy"
+                        android:layout_width="match_parent"
+                        android:layout_height="130dp"
+                        android:layout_marginBottom="3dp"
+                        android:scaleType="fitXY" />
+
+                    <TextView
+                        android:id="@+id/textViewQuy"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/imageViewQuy"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="3dp"
+                        android:gravity="center_horizontal"
+                        android:text="Nguyễn Cao Quý"
+                        android:textColor="@color/yellow1"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textViewDesQuy"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/textViewQuy"
+                        android:layout_centerHorizontal="true"
+                        android:layout_margin="2dp"
+                        android:gravity="center_horizontal"
+                        android:text="Life is trying things to see if they work."
+                        android:textColor="@color/white"
+                        android:textSize="13dp" />
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardViewThang"
+                android:layout_width="150dp"
+                android:layout_height="200dp"
+                android:layout_below="@+id/cardViewTin"
+                android:layout_marginTop="20dp"
+                app:cardBackgroundColor="@color/colorPrimary"
+                app:cardCornerRadius="5dp">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/imageViewThang"
+                        android:layout_width="match_parent"
+                        android:layout_height="130dp"
+                        android:layout_marginBottom="3dp"
+                        android:scaleType="fitXY" />
+
+                    <TextView
+                        android:id="@+id/textViewThang"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/imageViewThang"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="3dp"
+                        android:gravity="center_horizontal"
+                        android:text="Nguyễn Quốc Thắng"
+                        android:textColor="@color/yellow1"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textViewDesThang"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/textViewThang"
+                        android:layout_centerHorizontal="true"
+                        android:layout_margin="2dp"
+                        android:gravity="center_horizontal"
+                        android:text="Life is short, smile while you still live."
+                        android:textColor="@color/white"
+                        android:textSize="13dp" />
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardViewThuan"
+                android:layout_width="150dp"
+                android:layout_height="200dp"
+                android:layout_below="@+id/cardViewQuy"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="15dp"
+                app:cardBackgroundColor="@color/colorPrimary"
+                app:cardCornerRadius="5dp">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/imageViewThuan"
+                        android:layout_width="match_parent"
+                        android:layout_height="130dp"
+                        android:layout_marginBottom="3dp"
+                        android:scaleType="fitXY" />
+
+                    <TextView
+                        android:id="@+id/textViewThuan"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/imageViewThuan"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="3dp"
+                        android:gravity="center_horizontal"
+                        android:text="Nguyễn Văn Thuận"
+                        android:textColor="@color/yellow1"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textViewDesThuan"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/textViewThuan"
+                        android:layout_centerHorizontal="true"
+                        android:layout_margin="2dp"
+                        android:gravity="center_horizontal"
+                        android:text="Life has nothing without lucky."
+                        android:textColor="@color/white"
+                        android:textSize="13dp" />
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+        </RelativeLayout>
+    </RelativeLayout>
+</android.support.v4.widget.NestedScrollView>

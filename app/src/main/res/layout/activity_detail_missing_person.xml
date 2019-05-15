@@ -4,23 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_login"
+    android:background="@drawable/backgroundtest"
     android:orientation="vertical"
-    android:weightSum="10"
     tools:context=".Activity.DetailMissingPersonActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbarMissingPersonDetail"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.6"
-        android:background="@color/primary" />
+    <!--<android.support.v7.widget.Toolbar-->
+        <!--android:id="@+id/toolbarMissingPersonDetail"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_weight="0.6"-->
+        <!--android:background="@color/primary" />-->
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayoutDetailMissing"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="9.4">
+        android:layout_height="match_parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -50,7 +48,7 @@
                         android:layout_marginTop="5dp"
                         android:layout_marginEnd="5dp"
                         android:text="@string/title"
-                        android:textColor="@color/primary"
+                        android:textColor="@color/yellow1"
                         android:textSize="17sp"
                         android:textStyle="bold" />
 
@@ -87,7 +85,7 @@
                         android:layout_marginTop="20dp"
                         android:layout_marginEnd="5dp"
                         android:text="@string/comment"
-                        android:textColor="@color/primary"
+                        android:textColor="@color/yellow1"
                         android:textSize="17sp"
                         android:textStyle="bold" />
 

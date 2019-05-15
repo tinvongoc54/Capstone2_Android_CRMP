@@ -7,6 +7,6 @@
     android:textSize="15sp"
     android:gravity="center"
     android:textStyle="bold"
-    android:textColor="@color/gray_text"
+    android:textColor="@color/white"
     tools:ignore="RtlHardcoded"
     />

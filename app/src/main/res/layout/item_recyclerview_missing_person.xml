@@ -11,14 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:clipChildren="false"
-        android:clipToPadding="false"
-        android:dividerHeight="0.0px"
-        android:elevation="8dp"
-        app:cardBackgroundColor="@color/gray"
-        app:cardCornerRadius="5dp"
-        app:cardElevation="10dp"
-        app:cardPreventCornerOverlap="false">
+        app:cardBackgroundColor="@android:color/transparent"
+        app:cardCornerRadius="5dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -52,8 +46,7 @@
                 android:layout_toEndOf="@+id/imageView"
                 android:layout_marginStart="5dp"
                 android:textSize="12sp"
-                android:textStyle="bold"
-                android:textColor="@color/gray_text"/>
+                android:textColor="@color/white"/>
 
             <TextView
                 android:id="@+id/textViewTime"

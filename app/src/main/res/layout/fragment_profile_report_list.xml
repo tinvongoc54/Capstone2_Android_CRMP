@@ -2,31 +2,34 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="10dp"
     >
+
     <TextView
         android:id="@+id/textViewCrimeReportListProfile"
-        android:text="..."
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
+        android:layout_marginEnd="8dp"
         android:gravity="start"
+        android:text="..."
         android:textAlignment="textStart"
-        android:textColor="@color/primary"
+        android:textColor="@color/yellow1"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        />
+        tools:ignore="MissingConstraints" />
 
     <View
         android:id="@+id/view2"
         android:layout_width="0dp"
         android:layout_height="2dp"
         android:layout_marginTop="8dp"
-        android:background="@color/primary"
+        android:background="@color/yellow1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewCrimeReportListProfile"

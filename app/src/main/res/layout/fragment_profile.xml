@@ -6,7 +6,7 @@
     android:id="@+id/nestedScrollViewProfile"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_login"
+    android:background="@android:color/transparent"
     tools:context=".MainActivity"
     >
 
@@ -64,7 +64,7 @@
             android:layout_marginStart="8dp"
             android:text="John Doe"
             android:textAlignment="center"
-            android:textColor="@color/primary"
+            android:textColor="@color/yellow1"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/imageViewAvatar"

@@ -74,9 +74,9 @@ public class DetailCrimeActivity extends AppCompatActivity {
         mTextViewDes = findViewById(R.id.textViewDescriptionDetail);
         mTextViewTime = findViewById(R.id.textViewTime);
         mNestedScrollView = findViewById(R.id.nestedScrollViewDetailCrime);
-        mToolbar = findViewById(R.id.toolbarCrimeDetail);
-        setSupportActionBar(mToolbar);
-        mToolbar.setNavigationIcon(R.drawable.back);
+//        mToolbar = findViewById(R.id.toolbarCrimeDetail);
+//        setSupportActionBar(mToolbar);
+//        mToolbar.setNavigationIcon(R.drawable.back);
         mRecyclerViewComment = findViewById(R.id.recyclerViewCommentDetail);
         mEditTextComment = findViewById(R.id.editTextComment);
         mButtonPostComment = findViewById(R.id.buttonPostComment);
@@ -154,7 +154,7 @@ public class DetailCrimeActivity extends AppCompatActivity {
             crimeReport = ProfileCrimeReportListFragment.reportArrayList.get(positionProfileCrime);
         }
 
-        mToolbar.setTitle(Objects.requireNonNull(crimeReport).getTitle());
+//        mToolbar.setTitle(Objects.requireNonNull(crimeReport).getTitle());
         if (!crimeReport.getImage().equals("")) {
             Picasso.get()
                     .load(crimeReport.getImage())
@@ -163,21 +163,21 @@ public class DetailCrimeActivity extends AppCompatActivity {
             mImageView.setImageResource(R.drawable.avatar);
         }
         mTextViewTitle.setText(crimeReport.getTitle());
-        mTextViewArea.setText("District: " + crimeReport.getArea());
-        mTextViewTime.setText("Posted: " + APIUtils.convertTime(crimeReport.getTime()));
+        mTextViewArea.setText(crimeReport.getArea());
+        mTextViewTime.setText(APIUtils.convertTime(crimeReport.getTime()));
         mTextViewDes.setText(crimeReport.getDescription());
 
         getListComment();
     }
 
     public void initEvent() {
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-                startActivity(new Intent(DetailCrimeActivity.this, MainActivity.class));
-            }
-        });
+//        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                finish();
+//                startActivity(new Intent(DetailCrimeActivity.this, MainActivity.class));
+//            }
+//        });
         mButtonPostComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
