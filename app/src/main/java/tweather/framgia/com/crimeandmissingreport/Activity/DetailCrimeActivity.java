@@ -241,12 +241,14 @@ public class DetailCrimeActivity extends AppCompatActivity {
             public void onResponse(Call<JSONObject> call, Response<JSONObject> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(DetailCrimeActivity.this, "Send!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(DetailCrimeActivity.this, "Please try again!", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<JSONObject> call, Throwable t) {
-
+                Toast.makeText(DetailCrimeActivity.this, "Please try again!", Toast.LENGTH_SHORT).show();
             }
         });
     }

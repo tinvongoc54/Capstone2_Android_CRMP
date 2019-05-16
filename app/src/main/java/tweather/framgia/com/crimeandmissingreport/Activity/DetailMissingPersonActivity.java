@@ -3,6 +3,7 @@ package tweather.framgia.com.crimeandmissingreport.Activity;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -25,9 +26,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,6 +62,7 @@ import tweather.framgia.com.crimeandmissingreport.Fragment.MissingPersonListFrag
 import tweather.framgia.com.crimeandmissingreport.Fragment.ProfileMissingReportListFragment;
 import tweather.framgia.com.crimeandmissingreport.Object.Comment;
 import tweather.framgia.com.crimeandmissingreport.Object.Report;
+import tweather.framgia.com.crimeandmissingreport.Object.ReportCategory;
 import tweather.framgia.com.crimeandmissingreport.R;
 import tweather.framgia.com.crimeandmissingreport.Retrofit.APIUtils;
 
@@ -66,7 +70,7 @@ import static tweather.framgia.com.crimeandmissingreport.Activity.MainActivity.M
 import static tweather.framgia.com.crimeandmissingreport.Activity.MainActivity.MY_PERMISSION_REQUEST_SMS;
 
 public class DetailMissingPersonActivity extends AppCompatActivity {
-    ImageView mImageView;
+    ImageView mImageView, mImageViewReport;
     TextView mTextViewTitle, mTextViewDes, mTextViewTime;
     NestedScrollView mNestedScrollView;
     Button mButtonPostComment;
@@ -78,6 +82,7 @@ public class DetailMissingPersonActivity extends AppCompatActivity {
     FloatingActionsMenu mActionMenu;
     CallbackManager mCallbackManager;
     ShareDialog mShareDialog;
+    Spinner spinnerReportCategory;
 
 //    Target target = new Target() {
 //        @Override
@@ -117,6 +122,7 @@ public class DetailMissingPersonActivity extends AppCompatActivity {
 
     private void initView() {
         mImageView = findViewById(R.id.imageViewDetail);
+        mImageViewReport = findViewById(R.id.imageViewReport);
         mTextViewTitle = findViewById(R.id.textViewTitleDetail);
         mTextViewDes = findViewById(R.id.textViewDescriptionDetail);
         mTextViewTime = findViewById(R.id.textViewTimeDetail);
@@ -210,6 +216,66 @@ public class DetailMissingPersonActivity extends AppCompatActivity {
         });
     }
 
+    private void showDialogReport() {
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_send_report);
+        spinnerReportCategory = dialog.findViewById(R.id.spinnerSelectArea);
+        getSpinnerReport();
+        Button buttonSelect = dialog.findViewById(R.id.buttonSelect);
+        buttonSelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                postReport(((ReportCategory) spinnerReportCategory.getSelectedItem()).getId());
+            }
+        });
+        dialog.show();
+    }
+
+    private void getSpinnerReport() {
+        Call<List<ReportCategory>> call = APIUtils.getData(APIUtils.BASE_URL)
+                .GetReportCategory(APIUtils.API_GET_REPORT_CATEGORY_URL);
+        call.enqueue(new Callback<List<ReportCategory>>() {
+            @Override
+            public void onResponse(Call<List<ReportCategory>> call, Response<List<ReportCategory>> response) {
+                if (response.isSuccessful()) {
+                    ArrayList<ReportCategory> arrayList = (ArrayList<ReportCategory>) response.body();
+
+                    ArrayAdapter<ReportCategory> adapter =
+                            new ArrayAdapter<>(DetailMissingPersonActivity.this, R.layout.spinner_textview,
+                                    Objects.requireNonNull(arrayList));
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerReportCategory.setAdapter(adapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ReportCategory>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void postReport(int reportId) {
+        Call<JSONObject> call = APIUtils.getData(APIUtils.BASE_URL)
+                .PostReport(1, missingReport.getId(), reportId);
+        call.enqueue(new Callback<JSONObject>() {
+            @Override
+            public void onResponse(Call<JSONObject> call, Response<JSONObject> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(DetailMissingPersonActivity.this, "Send!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(DetailMissingPersonActivity.this, "Please try again!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JSONObject> call, Throwable t) {
+                Toast.makeText(DetailMissingPersonActivity.this, "Please try again!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     @SuppressLint("SetTextI18n")
     public void getData() {
         Intent intent = getIntent();
@@ -256,13 +322,13 @@ public class DetailMissingPersonActivity extends AppCompatActivity {
     }
 
     public void initEvent() {
-//        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(DetailMissingPersonActivity.this, MainActivity.class));
-//                finish();
-//            }
-//        });
+        mImageViewReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogReport();
+            }
+        });
+
         mButtonPostComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -58,6 +58,7 @@ public class CrimeListFragment extends Fragment {
     public static RecyclerViewNewsAdapter mRecyclerViewNewsAdapter;
     public static RecyclerViewSpecialNewsAdapter mRecyclerViewSpecialNewsAdapter;
     public static ArrayList<Report> crimeReportArrayList = new ArrayList<>();
+    public static ArrayList<Report> crimeSpecialReportArrayList = new ArrayList<>();
     public static String mDistrictName = "";
     LocationManager locationManager;
     NestedScrollView mNestedScrollView;
@@ -251,6 +252,7 @@ public class CrimeListFragment extends Fragment {
                                    @NonNull Response<List<Report>> response) {
                 if (response.body() != null) {
                     crimeReportArrayList = (ArrayList<Report>) response.body();
+
                     initRecyclerViewSpecial();
                     initRecyclerViewNew();
                 } else {

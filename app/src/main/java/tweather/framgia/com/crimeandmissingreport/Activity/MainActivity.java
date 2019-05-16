@@ -29,6 +29,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -356,6 +357,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .replace(R.id.frameLayout, new CrimeFragment())
                 .commit();
         mButtonCallHotline.setVisibility(View.VISIBLE);
+        mButtonCallHotline.startAnimation(AnimationUtils.loadAnimation(this, R.anim.item_animation_rotate_2));
     }
 
     private void initMissingPersonLayout() {
@@ -363,6 +365,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .replace(R.id.frameLayout, new MissingPersonFragment())
                 .commit();
         mButtonCallHotline.setVisibility(View.VISIBLE);
+        mButtonCallHotline.startAnimation(AnimationUtils.loadAnimation(this, R.anim.item_animation_rotate_2));
     }
 
     private void initProfileLayout() {
@@ -375,6 +378,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             new LoginDialog(MainActivity.this).clickButtonProfile();
         }
         mButtonCallHotline.setVisibility(View.VISIBLE);
+        mButtonCallHotline.startAnimation(AnimationUtils.loadAnimation(this, R.anim.item_animation_rotate_2));
     }
 
     @Override
