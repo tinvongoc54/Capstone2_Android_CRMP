@@ -59,6 +59,16 @@
                             android:textSize="17sp"
                             android:textStyle="bold" />
 
+                        <ImageView
+                            android:id="@+id/imageViewReport"
+                            android:layout_alignParentEnd="true"
+                            android:layout_below="@+id/cardViewImage"
+                            android:layout_marginEnd="15dp"
+                            android:layout_marginTop="10dp"
+                            android:src="@drawable/menu"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp" />
+
                         <RelativeLayout
                             android:id="@+id/relativeLayoutDetailPost"
                             android:layout_width="match_parent"
@@ -155,15 +165,6 @@
                         android:textSize="13sp" />
                 </RelativeLayout>
             </android.support.v4.widget.NestedScrollView>
-            <ImageView
-                android:id="@+id/imageViewReport"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="20dp"
-                android:src="@drawable/report"
-                android:layout_width="50dp"
-                android:layout_height="50dp" />
         </RelativeLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
 

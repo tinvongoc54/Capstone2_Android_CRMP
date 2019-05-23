@@ -137,7 +137,7 @@ public interface DataClient {
     @FormUrlEncoded
     @POST(APIUtils.API_POST_REPORT_URL)
     Call<JSONObject> PostReport(@Field("status") int status,
-                                @Field("id") int userId, @Field("reportcategory_id") int reportId);
+                                @Field("post_id") int userId, @Field("reportcategory_id") int reportId);
 
     @GET
     Call<List<ReportCategory>> GetReportCategory(@Url String url);
